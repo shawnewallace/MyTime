@@ -14,8 +14,9 @@ namespace MyTime.App.Models.Tests
 		[Fact] public void EntriesIsEmptyByDefault() => _day.Entries.ShouldBeEmpty();
 		[Fact] public void EntriesIsInstantiatedByDefault() => _day.Entries.ShouldNotBeNull();
 		[Fact] public void MonthShouldBe5() => _day.Month.ShouldBe(5);
-		[Fact] public void TotalIsZeroWithoutEntries() => _day.Total().ShouldBe(0.0F);
 		[Fact] public void YearShouldBe202() => _day.Year.ShouldBe(2021);
+
+		[Fact] public void TotalIsZeroWithoutEntries() => _day.Total().ShouldBe(0.0F);
 
 		[Fact]
 		public void TotalSumsAllDurations()
