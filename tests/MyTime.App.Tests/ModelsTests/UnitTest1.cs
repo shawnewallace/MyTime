@@ -4,14 +4,22 @@ using Xunit;
 
 namespace MyTime.App.Models.Tests
 {
+	public class EntryModelTests
+	{
+		private readonly Entry _entry;
+
+		public EntryModelTests() => _entry = new Entry();
+
+		[Fact] public void DefaultDurationIsZero() => _entry.Duration.ShouldBe(0.0F);
+		[Fact] public void DefaultIsUtilizationIsTrue() => _entry.IsUtilization.ShouldBeTrue();
+
+	}
+
 	public class DayModelTests
 	{
 		private readonly Day _day;
 
-		public DayModelTests()
-		{
-			_day = new Day();
-		}
+		public DayModelTests() => _day = new Day();
 
 		private void AddSampleEntries()
 		{
@@ -21,6 +29,9 @@ namespace MyTime.App.Models.Tests
 			_day.Entries.Add(new Entry { Duration = 4.0F, IsUtilization = false });
 			_day.Entries.Add(new Entry { Duration = 7.3F, IsUtilization = false });
 		}
+
+		[Fact] public void EntriesIsInstantiatedByDefault() => _day.Entries.ShouldNotBeNull();
+		[Fact] public void EntriesIsEmptyByDefault() => _day.Entries.ShouldBeEmpty();
 
 		[Fact]
 		public void TotalIsZeroWithoutEntries()
