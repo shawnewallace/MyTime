@@ -1,6 +1,8 @@
-namespace MyTime.App.Models
+using MyTime.App.Infrastructure;
+
+namespace MyTime.App.Entities
 {
-	public class Entry
+	public class Entry : AppEntityBase
 	{
 		public string Description { get; set; }
 		public float Duration { get; set; } = 0.0F;

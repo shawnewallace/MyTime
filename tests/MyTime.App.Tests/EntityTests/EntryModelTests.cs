@@ -1,7 +1,8 @@
+using MyTime.App.Entities;
 using Shouldly;
 using Xunit;
 
-namespace MyTime.App.Models.Tests
+namespace MyTime.App.Tests.EntityTests
 {
 	public class EntryModelTests
 	{
