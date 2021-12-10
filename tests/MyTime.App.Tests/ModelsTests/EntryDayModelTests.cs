@@ -1,5 +1,5 @@
-using MyTime.App.Entities;
 using MyTime.App.Models;
+using MyTime.Persistence.Entities;
 using Shouldly;
 using System;
 using Xunit;
@@ -8,9 +8,9 @@ namespace MyTime.App.Tests.ModelTests
 {
 	public class EntryDayModelTests
 	{
-		private readonly EntryDay _day;
+		private readonly EntryDayModel _day;
 
-		public EntryDayModelTests() => _day = new EntryDay(2021, 5, 14);
+		public EntryDayModelTests() => _day = new EntryDayModel(2021, 5, 14);
 
 		[Fact] public void DayOfMonthShouldBe14() => _day.DayOfMonth.ShouldBe(14);
 		[Fact] public void EntriesIsEmptyByDefault() => _day.Entries.ShouldBeEmpty();

@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using MyTime.App.Entities;
+using MyTime.Persistence.Entities;
 
 namespace MyTime.Persistence
 {
@@ -8,7 +8,6 @@ namespace MyTime.Persistence
 	{
 		public DbSet<Entry> Entries { get; set; }
 
-		public MyTimeSqlDbContext() { }
 		public MyTimeSqlDbContext(DbContextOptions<MyTimeSqlDbContext> options) : base(options) { }
 	}
 }

@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using MyTime.App.Entities;
+using MyTime.Persistence.Entities;
 
 namespace MyTime.App.Models
 {
-	public class EntryDay
+	public class EntryDayModel
 	{
 		public List<Entry> Entries { get; set; } = new List<Entry>();
 		public int Year { get; }
 		public int Month { get; }
 		public int DayOfMonth { get; }
 
-		public EntryDay() { }
-		public EntryDay(int year, int month, int day)
+		public EntryDayModel() { }
+		public EntryDayModel(int year, int month, int day)
 		{
 			Year = year;
 			Month = month;

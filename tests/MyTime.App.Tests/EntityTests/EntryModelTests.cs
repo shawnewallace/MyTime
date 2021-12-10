@@ -1,4 +1,4 @@
-using MyTime.App.Entities;
+using MyTime.Persistence.Entities;
 using Shouldly;
 using Xunit;
 
