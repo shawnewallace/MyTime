@@ -5,13 +5,27 @@ using Microsoft.AspNetCore.Mvc;
 using Mytime.App.Entries.GetEntryList;
 using MyTime.Api.Models;
 using MyTime.App.Entries.CreateNewEntry;
+using MyTime.App.EntryDays.GetEntryDayList;
 using MyTime.App.Models;
 
 namespace MyTime.Api.Controllers
 {
 	public class EntryDayController : ApiControllerBase
 	{
-		public EntryDayController() : base() {}
+		public EntryDayController() : base() { }
+
+		[HttpGet]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<List<EntryDayModel>> List([FromBody] EntryDayQuery model)
+		{
+			var query = new GetEntryDayListQuery();
+			query.Year = model.Year;
+			query.Month = model.Month;
+			query.Day = model.Day;
+
+			return await Mediator.Send(query);
+		}
 	}
 
 	public class EntryController : ApiControllerBase

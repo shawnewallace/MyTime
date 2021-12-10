@@ -16,13 +16,14 @@ namespace Mytime.App.Entries.GetEntryList
 		{
 			_context = context;
 		}
+		
 		public async Task<List<EntryModel>> Handle(GetEntryListQuery request, CancellationToken cancellationToken)
 		{
 			var result = await _context.Entries.ToListAsync(cancellationToken);
 
 			var response = new List<EntryModel>();
 
-			foreach(var item in result)
+			foreach (var item in result)
 			{
 				response.Add(new EntryModel(item));
 			}

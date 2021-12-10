@@ -16,6 +16,7 @@ namespace MyTime.App.Models
 		public DateTime WhenUpdated { get; set; }
 		public bool IsDeleted { get; set; }
 
+		public EntryModel(){}
 		public EntryModel(Entry entry)
 		{
 			Id = entry.Id;

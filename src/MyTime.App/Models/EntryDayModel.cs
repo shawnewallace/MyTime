@@ -6,7 +6,7 @@ namespace MyTime.App.Models
 {
 	public class EntryDayModel
 	{
-		public List<Entry> Entries { get; set; } = new List<Entry>();
+		public List<EntryModel> Entries { get; set; } = new List<EntryModel>();
 		public int Year { get; }
 		public int Month { get; }
 		public int DayOfMonth { get; }
@@ -19,7 +19,7 @@ namespace MyTime.App.Models
 			DayOfMonth = day;
 		}
 
-		public float Total() => Entries.Sum(m => m.Duration);
-		public float UtilizedTotal() => Entries.Where(m => m.IsUtilization).Sum(m => m.Duration);
+		public float Total { get { return Entries.Sum(m => m.Duration); } }
+		public float UtilizedTotal { get { return Entries.Where(m => m.IsUtilization).Sum(m => m.Duration); } }
 	}
 }
