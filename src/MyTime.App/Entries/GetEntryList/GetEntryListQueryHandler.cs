@@ -8,8 +8,6 @@ using MyTime.Persistence;
 
 namespace Mytime.App.Entries.GetEntryList
 {
-		public class GetEntryListQuery : IRequest<List<EntryModel>>{}
-
 	public class GetEntryListQueryHandler : IRequestHandler<GetEntryListQuery, List<EntryModel>>
 	{
 		private readonly MyTimeSqlDbContext _context;

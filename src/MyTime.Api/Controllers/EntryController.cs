@@ -9,10 +9,14 @@ using MyTime.App.Models;
 
 namespace MyTime.Api.Controllers
 {
+	public class EntryDayController : ApiControllerBase
+	{
+		public EntryDayController() : base() {}
+	}
 
 	public class EntryController : ApiControllerBase
 	{
-		public EntryController() : base(){}
+		public EntryController() : base() { }
 
 		[HttpGet]
 		[Produces("application/json")]
