@@ -21,7 +21,6 @@ namespace MyTime.Integration.Tests
 		{
 			_context = fixture.Context;
 			_handler = new GetEntryListQueryHandler(_context);
-
 		}
 
 		[Fact]
