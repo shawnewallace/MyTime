@@ -4,6 +4,7 @@ using MyTime.Persistence.Entities;
 
 namespace MyTime.App.Models
 {
+
 	public class EntryDayModel
 	{
 		public List<EntryModel> Entries { get; set; } = new List<EntryModel>();

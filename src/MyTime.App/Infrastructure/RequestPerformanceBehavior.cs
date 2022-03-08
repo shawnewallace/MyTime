@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace MyTime.App.Infrastructure
 {
-	public class RequestPerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+	public class RequestPerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 	{
 		private readonly Stopwatch _timer;
 		private readonly ILogger<TRequest> _logger;

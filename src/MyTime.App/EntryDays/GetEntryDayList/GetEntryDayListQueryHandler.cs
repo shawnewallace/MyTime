@@ -22,9 +22,15 @@ namespace MyTime.App.EntryDays.GetEntryDayList
 		{
 			var query = _context.Entries.Select(e => e);
 
-			if (request.Year > 1) query = query.Where(e => e.OnDate.Year == request.Year);
-			if (request.Month > 1) query = query.Where(e => e.OnDate.Month == request.Month);
-			if (request.Day > 1) query = query.Where(e => e.OnDate.Day == request.Day);
+			if (request.From.HasValue) {
+				var from = request.From.Value.Date;
+				query = query.Where(e => e.OnDate >= from);
+			}
+
+			if (request.To.HasValue) {
+				var to = request.To.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+				query = query.Where(e => e.OnDate <= to);
+			}
 
 			var result = await query.ToListAsync();
 
