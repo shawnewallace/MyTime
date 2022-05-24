@@ -11,6 +11,7 @@ using MyTime.App.Models;
 
 namespace MyTime.Api.Controllers
 {
+
 	public class EntryDayController : ApiControllerBase
 	{
 		public EntryDayController() : base() { }
@@ -18,7 +19,7 @@ namespace MyTime.Api.Controllers
 		[HttpPost("day")]
 		[Produces("application/json")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<List<EntryDayModel>> Day([FromBody] EntryDayQuery model)
+		public async Task<EntryRangeModel> Day([FromBody] EntryDayQuery model)
 		{
 			var query = new GetEntryDayListQuery
 			{
@@ -31,7 +32,7 @@ namespace MyTime.Api.Controllers
 		[HttpPost("between/{from}/{to}")]
 		[Produces("application/json")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<List<EntryDayModel>> List(DateTime from, DateTime to)
+		public async Task<EntryRangeModel> GetRange(DateTime from, DateTime to)
 		{
 			var query = new GetEntryDayListQuery
 			{
@@ -41,8 +42,10 @@ namespace MyTime.Api.Controllers
 
 			var result = await Mediator.Send(query);
 
+			return result;
 
-			return result.OrderBy(r => r.Year).ThenBy(r => r.Month).ThenBy(r => r.DayOfMonth).ToList();
+
+			// return result.OrderBy(r => r.Year).ThenBy(r => r.Month).ThenBy(r => r.DayOfMonth).ToList();
 		}
 	}
 }

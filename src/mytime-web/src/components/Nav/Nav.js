@@ -4,7 +4,7 @@ import styles from './Nav.module.css';
 
 const Nav = () => (
   <div className={styles.Nav}>
-    Nav Component
+    [Your Time]
   </div>
 );
 
