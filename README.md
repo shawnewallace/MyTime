@@ -1,5 +1,7 @@
 # MyTime
 
+[![.NET](https://github.com/shawnewallace/MyTime/actions/workflows/dotnet.yml/badge.svg)](https://github.com/shawnewallace/MyTime/actions/workflows/dotnet.yml)
+
 
 ## Run CosmosDB Emulator Locally
 https://docs.microsoft.com/en-us/azure/cosmos-db/linux-emulator?tabs=ssl-netstd21
