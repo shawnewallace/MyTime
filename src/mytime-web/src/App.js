@@ -18,7 +18,7 @@ function App() {
 		<div className="App">
 			{process.env.REACT_APP_API_URL}
 			<Nav />
-			<Month />
+			<Month currentMonth={today} />
 			<Day day={today} entries={entries} />
 		</div>
 	);

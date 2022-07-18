@@ -1,12 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Mytime.App.Entries.GetEntryList;
 using MyTime.Api.Models;
 using MyTime.App.EntryDays.GetEntryDayList;
+using MyTime.App.Infrastructure;
 using MyTime.App.Models;
 
 namespace MyTime.Api.Controllers
@@ -43,9 +41,14 @@ namespace MyTime.Api.Controllers
 			var result = await Mediator.Send(query);
 
 			return result;
+		}
 
-
-			// return result.OrderBy(r => r.Year).ThenBy(r => r.Month).ThenBy(r => r.DayOfMonth).ToList();
+		[HttpPost("week")]
+		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<EntryRangeModel> GetWeekContainingDate(DateTime dayOfWeek)
+		{
+			return await GetRange(dayOfWeek.FirstDayOfWeek(), dayOfWeek.LastDayOfWeek());
 		}
 	}
 }

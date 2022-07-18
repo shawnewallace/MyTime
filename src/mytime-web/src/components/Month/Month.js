@@ -9,8 +9,8 @@ import startOfWeek from 'date-fns/startOfWeek';
 import endOfWeek from 'date-fns/endOfWeek';
 import startOfMonth from 'date-fns/startOfMonth';
 import endOfMonth from 'date-fns/endOfMonth';
-import isSameMonth from 'date-fns/isSameMonth'
-import isSameDay from 'date-fns/isSameDay'
+// import isSameMonth from 'date-fns/isSameMonth'
+// import isSameDay from 'date-fns/isSameDay'
 import styles from './Month.module.css';
 // import Day from '../Day/Day'
 
@@ -57,9 +57,11 @@ class Month extends React.Component {
 
 		for (let i = 0; i < 7; i++) {
 			days.push(
+				<th>
 				<div className="col col-center" key={i}>
 					{format(addDays(startDate, i), dateFormat)}
 				</div>
+				</th>
 			);
 		}
 
@@ -85,21 +87,25 @@ class Month extends React.Component {
 				formattedDate = format(day, dateFormat);
 				// const cloneDay = day;
 				days.push(
-					<div className={`col cell ${!isSameMonth(day, monthStart)
-							? "disabled"
-							: isSameDay(day, selectedDate) ? "selected" : ""
-						}`}
-						key={day}>
-						<span className="number">{formattedDate}</span>
-						{/* <span className="bg">{formattedDate}</span> */}
-					</div>
+					// <div className={`col cell ${!isSameMonth(day, monthStart)
+					// 		? "disabled"
+					// 		: isSameDay(day, selectedDate) ? "selected" : ""
+					// 	}`}
+					// 	key={day}>
+					// 	<span className="number">{formattedDate}</span>
+					// 	{/* <Day day={day} /> */}
+					// 	{/* <span className="bg">{formattedDate}</span> */}
+					// </div>
+					<td>{formattedDate}</td>
 				);
 				day = addDays(day, 1);
 			}
 			rows.push(
-				<div className='row' key={day}>
+				// <div className='row' key={day}>
+				<tr>
 					{days}
-				</div>
+				</tr>
+				// </div>
 			);
 			days = [];
 		}
@@ -125,8 +131,12 @@ class Month extends React.Component {
 		return (
 			<div className={styles.Month}>
 				{this.renderHeader()}
-				{this.renderDays()}
-				{this.renderCells()}
+				<table>
+					<tr>
+						{this.renderDays()}
+					</tr>
+					{this.renderCells()}
+				</table>
 			</div>
 		);
 	}
