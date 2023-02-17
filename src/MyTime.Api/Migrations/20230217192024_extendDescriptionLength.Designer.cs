@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyTime.Persistence;
 
@@ -11,9 +12,10 @@ using MyTime.Persistence;
 namespace MyTime.Api.Migrations
 {
     [DbContext(typeof(MyTimeSqlDbContext))]
-    partial class MyTimeSqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230217192024_extendDescriptionLength")]
+    partial class extendDescriptionLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

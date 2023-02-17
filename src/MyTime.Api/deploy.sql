@@ -1,4 +1,5 @@
-
+Build started...
+Build succeeded.
 IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
 BEGIN
     CREATE TABLE [__EFMigrationsHistory] (
@@ -101,6 +102,31 @@ IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'2023
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
     VALUES (N'20230217181554_addCorrelationIdToEntry', N'6.0.8');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230217192024_extendDescriptionLength')
+BEGIN
+    DECLARE @var1 sysname;
+    SELECT @var1 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Entries]') AND [c].[name] = N'Description');
+    IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [Entries] DROP CONSTRAINT [' + @var1 + '];');
+    ALTER TABLE [Entries] ALTER COLUMN [Description] nvarchar(255) NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230217192024_extendDescriptionLength')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20230217192024_extendDescriptionLength', N'6.0.8');
 END;
 GO
 

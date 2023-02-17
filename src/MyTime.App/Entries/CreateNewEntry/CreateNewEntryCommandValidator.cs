@@ -11,7 +11,7 @@ namespace MyTime.App.Entries.CreateNewEntry
 
 			RuleFor(x => x.Description)
 				.NotEmpty()
-				.MaximumLength(50);
+				.MaximumLength(255);
 
 			RuleFor(x => x.Duration)
 				.GreaterThanOrEqualTo(0.0F)

@@ -19,7 +19,7 @@ namespace MyTime.App.Entries.CreateNewEntry
 			var newEntry = new Entry();
 			
 			newEntry.OnDate = request.OnDate;
-			newEntry.Description = request.Description;
+			newEntry.Description = request.Description.Length > 255 ? request.Description.Substring(0, 255) : request.Description;
 			newEntry.Duration = request.Duration;
 			newEntry.IsUtilization = request.IsUtilization;
 			newEntry.Notes = request.Notes;
