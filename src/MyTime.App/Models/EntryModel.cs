@@ -15,6 +15,7 @@ namespace MyTime.App.Models
 		public DateTime WhenCreated { get; set; }
 		public DateTime WhenUpdated { get; set; }
 		public bool IsDeleted { get; set; }
+		public string CorrelationId { get; set; }
 
 		public EntryModel(){}
 		public EntryModel(Entry entry)
@@ -28,6 +29,7 @@ namespace MyTime.App.Models
 			WhenCreated = entry.WhenCreated;
 			WhenUpdated = entry.WhenUpdated;
 			IsDeleted = entry.IsDeleted;
+			CorrelationId = entry.CorrelationId;
 		}
 	}
 }

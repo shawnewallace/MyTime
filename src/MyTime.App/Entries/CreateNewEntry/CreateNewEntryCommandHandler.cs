@@ -23,6 +23,7 @@ namespace MyTime.App.Entries.CreateNewEntry
 			newEntry.Duration = request.Duration;
 			newEntry.IsUtilization = request.IsUtilization;
 			newEntry.Notes = request.Notes;
+			newEntry.CorrelationId = request.CorrelationId;
 
 			await _context.Entries.AddAsync(newEntry, cancellationToken);
 			await _context.SaveChangesAsync(cancellationToken);

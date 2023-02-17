@@ -12,5 +12,6 @@ namespace MyTime.App.Entries.CreateNewEntry
 		public bool IsUtilization { get; set; }
 		public string Category { get; set; }
 		public string Notes { get; set; }
+		public string CorrelationId { get; set; } = String.Empty;
 	}
 }

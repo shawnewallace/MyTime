@@ -10,21 +10,28 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
 using System.Text;
 using Azure.Storage.Blobs;
+using MyTime.App.Entries.CreateNewEntry;
+using MediatR;
 
 namespace MyTime.Fns;
 
 public class EventStarting
 {
 	private readonly MyOptions _settings;
+	private IMediator _mediator;
 
-	public EventStarting(IOptions<MyOptions> options)
+	// protected IMediator Mediator => _mediator ?? (_mediator = ControllerContext.HttpContext.RequestServices.GetService<IMediator>());
+
+
+	public EventStarting(IOptions<MyOptions> options, IMediator mediator)
 	{
 		_settings = options.Value;
+		_mediator = mediator;
 	}
 
 	[FunctionName("EventStarting")]
 	public async Task<IActionResult> RunAsync(
-			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] AppointmentStartingNotification req,
+			[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] AppointmentStartingNotification req,
 			ILogger log)
 	{
 		log.LogInformation("C# HTTP trigger function processed a request.");
@@ -35,9 +42,18 @@ public class EventStarting
 
 		await WriteEventToBlobStorage("AppointmentStarting", req, log);
 
-		string responseMessage = "This HTTP triggered function executed successfully.";
+		var command = new CreateNewEntryCommand
+		{
+			OnDate = req.startTime.Date,
+			Description = req.subject,
+			Notes = "Created Automatically by EventStarting function",
+			CorrelationId = req.eventId
+		};
 
-		return new OkObjectResult(responseMessage);
+		var newEntry = await _mediator.Send(command);
+
+		return new CreatedResult("", newEntry);
+		// return new OkObjectResult(responseMessage);
 	}
 
 	private async Task WriteEventToBlobStorage(string eventName, AppointmentStartingNotification evt, ILogger log)
@@ -45,7 +61,7 @@ public class EventStarting
 		var blobStorageConnectionString = _settings.BlobStorageConnectionString;
 		var blobStorageContainerName = _settings.BlobStorageContainerName;
 
-		var correlationId = evt.eventId;
+		var correlationId = Guid.NewGuid();
 		var rightNowUtc = DateTime.UtcNow;
 		var blobName = $"{rightNowUtc:yyyyMMddHHmmssfff}-{eventName}-{correlationId}.json";
 
@@ -59,12 +75,4 @@ public class EventStarting
 			await blob.UploadAsync(ms);
 		}
 	}
-}
-
-public class AppointmentStartingNotification
-{
-	public string eventId { get; set; }
-	public string subject { get; set; }
-	public DateTime startTime { get; set; }
-	public string name { get; set; }
 }
