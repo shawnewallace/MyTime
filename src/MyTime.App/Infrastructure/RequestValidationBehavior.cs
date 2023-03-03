@@ -10,17 +10,16 @@ namespace MyTime.App.Infrastructure
 {
 
 	public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-				where TRequest : IRequest<TResponse>
+				where TRequest : class, IRequest<TResponse>
 	{
 		private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-		public RequestValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
-		{
-			_validators = validators;
-		}
+		public RequestValidationBehavior(IEnumerable<IValidator<TRequest>> validators) => _validators = validators;
 
-		public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+		public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
 		{
+			if (!_validators.Any()) return await next();
+
 			var context = new ValidationContext<TRequest>(request);
 
 			var failures = _validators
@@ -34,7 +33,7 @@ namespace MyTime.App.Infrastructure
 				throw new Exceptions.ValidationException(failures);
 			}
 
-			return next();
+			return await next();
 		}
 	}
 }

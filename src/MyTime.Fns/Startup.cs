@@ -10,6 +10,7 @@ using System.Reflection;
 using MyTime.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
+using MyTime.Fns.Configuration;
 
 [assembly: FunctionsStartup(typeof(MyTime.Fns.Startup))]
 namespace MyTime.Fns
@@ -18,25 +19,22 @@ namespace MyTime.Fns
 	{
 		public override void Configure(IFunctionsHostBuilder builder)
 		{
-			builder.Services.AddOptions<MyOptions>()
+			var configuration = builder
+				.Services
+				.BuildServiceProvider()
+				.GetService<IConfiguration>();
+
+			builder.Services
+				.AddOptions<MyOptions>()
 				.Configure<IConfiguration>((settings, configuration) =>
 				{
 					configuration.GetSection(nameof(MyOptions)).Bind(settings);
 				});
 
-			builder.Services.AddLogging();
-
-			// Add MediatR and load handlers from Lib project
-			builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
-			builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
-			builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-			builder.Services.AddMediatR(typeof(CreateNewEntryCommandHandler).GetTypeInfo().Assembly);
-
-			// FOR DEMONSTRATION PURPOSES
-			builder.Services.AddDbContext<MyTimeSqlDbContext>(
-					options => options.UseSqlServer(
-							Environment.GetEnvironmentVariable("MyTimeSqlDbContextConnectionString"))
-			);
+			builder.Services
+				.InstallServices(
+					configuration,
+					typeof(IServiceInstaller).Assembly);
 		}
 	}
 }
