@@ -15,11 +15,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-builder.Services.AddMediatR(typeof(CreateNewEntryCommandHandler).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(CreateNewEntryCommandHandler).GetTypeInfo().Assembly));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -32,20 +31,6 @@ var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateTime.Now.AddDays(index),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
 
 app.MapPost("/entry", async (HttpContext httpContext, IMediator mediator, NewEntryModel model) =>
 {
@@ -65,11 +50,6 @@ app.MapPost("/entry", async (HttpContext httpContext, IMediator mediator, NewEnt
 }).WithName("CreateNewEntry");
 
 app.Run();
-
-record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
 
 public class NewEntryModel : IEntry
 {

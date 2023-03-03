@@ -2,7 +2,7 @@ using System;
 
 namespace MyTime.App.Infrastructure
 {
-	public static partial class DateTimeExtentions
+	public static partial class DateTimeExtensions
 	{
 		public static DateTime FirstDayOfWeek(this DateTime dt)
 		{

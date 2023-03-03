@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using MediatR;
-using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,15 +26,12 @@ public class ApplicationServiceInstaller : IServiceInstaller
 
 
 		// Add MediatR and load handlers from Lib project
-		services.AddMediatR(typeof(CreateNewEntryCommandHandler).GetTypeInfo().Assembly);
+		var cqrsAssembly = typeof(CreateNewEntryCommandHandler).GetTypeInfo().Assembly;
+		services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(cqrsAssembly));
+		services.AddValidatorsFromAssembly(cqrsAssembly);
 
 		// services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
 		// services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
-		services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-
-		services.AddValidatorsFromAssembly(
-			typeof(CreateNewEntryCommandHandler).GetTypeInfo().Assembly,
-			includeInternalTypes: true);
 	}
 }
 
