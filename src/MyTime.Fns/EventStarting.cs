@@ -20,9 +20,6 @@ public class EventStarting
 	private readonly MyOptions _settings;
 	private IMediator _mediator;
 
-	// protected IMediator Mediator => _mediator ?? (_mediator = ControllerContext.HttpContext.RequestServices.GetService<IMediator>());
-
-
 	public EventStarting(IOptions<MyOptions> options, IMediator mediator)
 	{
 		_settings = options.Value;

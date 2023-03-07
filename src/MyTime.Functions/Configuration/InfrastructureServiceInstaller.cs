@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyTime.Persistence;
 
-namespace MyTime.Fns.Configuration;
+namespace MyTime.Functions.Configuration;
 
 public class InfrastructureServiceInstaller : IServiceInstaller
 {
@@ -12,7 +12,7 @@ public class InfrastructureServiceInstaller : IServiceInstaller
 	{
 		services.AddDbContext<MyTimeSqlDbContext>(
 					options => options.UseSqlServer(
-							configuration.GetValue<string>("MyTimeSqlDbContextConnectionString"))
+							Environment.GetEnvironmentVariable("MyTimeSqlDbContextConnectionString"))
 			);
 	}
 }
