@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "MyTime_Fns": {
-      "commandName": "Project",
-      "commandLineArgs": "--port 7179",
-      "launchBrowser": false
-    }
-  }
-}
