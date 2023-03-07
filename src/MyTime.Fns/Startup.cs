@@ -11,18 +11,29 @@ using MyTime.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using MyTime.Fns.Configuration;
+using System.IO;
 
 [assembly: FunctionsStartup(typeof(MyTime.Fns.Startup))]
 namespace MyTime.Fns
 {
 	public class Startup : FunctionsStartup
 	{
+		public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
+		{
+			FunctionsHostBuilderContext context = builder.GetContext();
+
+			builder.ConfigurationBuilder
+				.AddJsonFile(Path.Combine(context.ApplicationRootPath, "local.settings.json"), optional: true, reloadOnChange: false)
+				.AddEnvironmentVariables();
+		}
+
 		public override void Configure(IFunctionsHostBuilder builder)
 		{
-			var configuration = builder
-				.Services
+			var configuration = builder.Services
 				.BuildServiceProvider()
 				.GetService<IConfiguration>();
+
+			// var configuration = builder.GetContext().Configuration;
 
 			builder.Services
 				.AddOptions<MyOptions>()
