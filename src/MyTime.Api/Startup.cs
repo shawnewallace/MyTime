@@ -49,7 +49,7 @@ namespace MyTime.Api
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-			services.AddMediatR(typeof(CreateNewEntryCommandHandler).GetTypeInfo().Assembly);
+			services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(CreateNewEntryCommandHandler).Assembly));
 
 			// services.AddSwaggerDocument(document =>
 			// {
