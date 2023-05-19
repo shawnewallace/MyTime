@@ -1,7 +1,25 @@
+using MediatR;
+using MediatR.Pipeline;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MyTime.App.Entries.CreateNewEntry;
+using MyTime.App.Infrastructure;
+using MyTime.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(CreateNewEntryCommandHandler).Assembly));
+
+builder.Services.AddDbContext<MyTimeSqlDbContext>(
+					options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyTimeSqlDbContextConnectionString")
+)
+			);
 
 var app = builder.Build();
 

@@ -37,21 +37,7 @@ namespace MyTime.App.EntryDays.GetEntryDayList
 
 			var result = await query.ToListAsync();
 
-			var response = new EntryRangeModel(from, to);
-
-			foreach(var thing in result.Select(m => m.OnDate).Distinct())
-			{
-				var newDay = new EntryDayModel(thing.Year, thing.Month, thing.Day);
-
-				var newDayEntries = result.Where(m => m.OnDate.Year == newDay.Year && m.OnDate.Month == newDay.Month && m.OnDate.Day == newDay.DayOfMonth);
-
-				foreach(var entry in newDayEntries)
-				{
-					newDay.Entries.Add(new EntryModel(entry));
-				}
-
-				response.Add(newDay);
-			}
+			var response = new EntryRangeModel(from, to, result);
 
 			return response;
 		}

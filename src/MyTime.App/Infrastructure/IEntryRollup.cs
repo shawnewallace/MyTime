@@ -4,5 +4,6 @@ namespace MyTime.App.Infrastructure
 	{
 		float Total { get; }
 		float UtilizedTotal { get; }
+		int NumEntries { get; }
 	}
 }

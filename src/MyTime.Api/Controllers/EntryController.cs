@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mytime.App.Entries.GetEntryList;
 using MyTime.Api.Models;
 using MyTime.App.Entries.CreateNewEntry;
+using MyTime.App.EntryDays.GetEntryDayList;
 using MyTime.App.Models;
 
 namespace MyTime.Api.Controllers

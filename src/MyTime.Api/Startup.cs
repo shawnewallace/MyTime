@@ -41,7 +41,10 @@ namespace MyTime.Api
 			{
 				options.AddPolicy("development", builder =>
 							{
-								builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+								builder
+									.AllowAnyOrigin()
+									.AllowAnyMethod()
+									.AllowAnyHeader();
 							});
 			});
 
@@ -85,7 +88,7 @@ namespace MyTime.Api
 
 			app.UseRouting();
 
-			app.UseCors("developement");
+			app.UseCors("development");
 
 			app.UseAuthorization();
 

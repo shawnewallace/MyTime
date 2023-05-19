@@ -1,8 +1,33 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
+@model MyTime.Web.Controllers.MonthModel;
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class='header'>
+	<i class="bi bi-chevron-left"><</i>
+			@Model.Description
+			<i class="bi bi-chevron-right">></i>
 </div>
+
+<div class="divTableRow">
+	@for (var i = 0; i < 7; i++)
+	{
+		<div class="divTableHead">
+			@Model.FirstDay.AddDays(i).ToString("dddd")
+		</div>
+	}
+</div>
+
+@{
+	var day = Model.FirstDay;
+}
+@while (day <= Model.LastDay)
+{
+	<div class="divTableRow">
+		@for(var i = 0; i < 7; i++)
+		{
+			<div class="divTableCell">@day.ToShortDateString()</div>
+			day = day.AddDays(1);
+		}
+	</div>
+}
