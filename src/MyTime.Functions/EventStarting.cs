@@ -30,7 +30,7 @@ namespace MyTime.Functions
 			var _logger = context.GetLogger("EventStarting");
 			_logger.LogInformation("C# HTTP trigger function processed a request.");
 
-			var eventDetails = await req.ReadFromJsonAsync<AppointmentStartingNotification>();
+			var eventDetails = await req.ReadFromJsonAsync<AppointmentStartingNotification>() ?? new();
 			var eventDetailsAsString = JsonSerializer.Serialize(eventDetails);
 
 			_logger.LogInformation("The Payload {x}", eventDetailsAsString);

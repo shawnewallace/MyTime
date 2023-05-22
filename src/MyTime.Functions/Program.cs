@@ -11,6 +11,8 @@ var host = new HostBuilder()
 				.BuildServiceProvider()
 				.GetService<IConfiguration>();
 
+			if (configuration is null) throw new ArgumentException("Application could not start.");
+
 			builder.Services
 			.AddOptions<MyOptions>()
 			.Configure<IConfiguration>((settings, configuration) =>
