@@ -12,8 +12,6 @@ namespace MyTime.Api.Controllers
 
 		protected IMediator Mediator => _mediator ?? (_mediator = ControllerContext.HttpContext.RequestServices.GetService<IMediator>());
 
-		public ApiControllerBase()
-		{
-		}
+		public ApiControllerBase() { }
 	}
 }
