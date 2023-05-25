@@ -9,32 +9,30 @@ using MyTime.Persistence;
 using Shouldly;
 using Xunit;
 
-namespace MyTime.Integration.Tests
+namespace MyTime.Integration.Tests;
+[Collection("QueryCollection")]
+public class GetEntryListQueryHandlerTests
 {
-	[Collection("QueryCollection")]
-	public class GetEntryListQueryHandlerTests
+	private MyTimeSqlDbContext _context;
+	private readonly GetEntryListQueryHandler _handler;
+
+	public GetEntryListQueryHandlerTests(QueryTestFixture fixture)
 	{
-		private MyTimeSqlDbContext _context;
-		private readonly GetEntryListQueryHandler _handler;
+		_context = fixture.Context;
+		_handler = new GetEntryListQueryHandler(_context);
+	}
 
-		public GetEntryListQueryHandlerTests(QueryTestFixture fixture)
-		{
-			_context = fixture.Context;
-			_handler = new GetEntryListQueryHandler(_context);
-		}
+	[Fact]
+	public async Task ReturnsTheCorrectType()
+	{
+		var result = await _handler.Handle(new GetEntryListQuery(), CancellationToken.None);
+		result.ShouldBeOfType<List<EntryModel>>();
+	}
 
-		[Fact]
-		public async Task ReturnsTheCorrectType()
-		{
-			var result = await _handler.Handle(new GetEntryListQuery(), CancellationToken.None);
-			result.ShouldBeOfType<List<EntryModel>>();
-		}
-
-		[Fact]
-		public async Task ResultShouldNotBeEmpty()
-		{
-			var result = await _handler.Handle(new GetEntryListQuery(), CancellationToken.None);
-			result.Count.ShouldBeGreaterThanOrEqualTo(3);
-		}
+	[Fact]
+	public async Task ResultShouldNotBeEmpty()
+	{
+		var result = await _handler.Handle(new GetEntryListQuery(), CancellationToken.None);
+		result.Count.ShouldBeGreaterThanOrEqualTo(3);
 	}
 }

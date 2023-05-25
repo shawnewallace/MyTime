@@ -9,4 +9,5 @@ public class GetEntryDayListQuery : IRequest<EntryRangeModel>
 {
 	public DateTime? From { get; set; }
 	public DateTime? To { get; set; }
+	public bool IncludeDeleted { get; set; } = false;
 }

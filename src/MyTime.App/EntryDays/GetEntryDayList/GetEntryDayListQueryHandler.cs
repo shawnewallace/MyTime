@@ -35,6 +35,11 @@ namespace MyTime.App.EntryDays.GetEntryDayList
 				query = query.Where(e => e.OnDate <= to);
 			}
 
+			if (!request.IncludeDeleted)
+			{
+				query = query.Where(e => !e.IsDeleted);
+			}
+
 			var result = await query.ToListAsync();
 
 			var response = new EntryRangeModel(from, to, result);
