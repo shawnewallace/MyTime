@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mytime.App.Entries.GetEntryList;
@@ -16,7 +17,7 @@ namespace MyTime.Api.Controllers
 
 	public class EntryController : ApiControllerBase
 	{
-		public EntryController() : base() { }
+		public EntryController(IMediator mediator) : base(mediator) { }
 
 		[HttpGet]
 		[Produces("application/json")]

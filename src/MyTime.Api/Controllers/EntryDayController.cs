@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyTime.Api.Models;
@@ -12,7 +13,7 @@ namespace MyTime.Api.Controllers
 
 	public class EntryDayController : ApiControllerBase
 	{
-		public EntryDayController() : base() { }
+		public EntryDayController(IMediator mediator) : base(mediator) { }
 
 		[HttpPost("/day")]
 		[Produces("application/json")]

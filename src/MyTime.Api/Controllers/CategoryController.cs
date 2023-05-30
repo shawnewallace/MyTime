@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyTime.Api.Models;
@@ -10,7 +11,7 @@ namespace MyTime.Api.Controllers
 {
 	public class CategoryController : ApiControllerBase
 	{
-		public CategoryController() : base() { }
+		public CategoryController(IMediator mediator) : base(mediator) { }
 
 		[HttpGet("/categories/lookup")]
 		[Produces("application/json")]
