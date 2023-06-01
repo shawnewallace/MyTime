@@ -10,7 +10,7 @@ const Navigation = () => {
 		<div className="collapse navbar-collapse" id="navbarNav">
 			<ul className="navbar-nav">
 				<li className="nav-item"><Link className="nav-link" to="/">Calendar</Link></li>
-				<li className="nav-item"><Link className="nav-link" to="/entry">New Entry For Today</Link></li>
+				{/* <li className="nav-item"><Link className="nav-link" to="/entry">New Entry For Today</Link></li> */}
 				<li className="nav-item"><Link className="nav-link" to="/day-view">Day View</Link></li>
 			</ul>
 		</div>

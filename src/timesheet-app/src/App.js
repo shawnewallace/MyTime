@@ -91,62 +91,33 @@ const App = () => {
 	};
 
 	return (
-		// <div classname="app">
-		// 	<Navigation />
-		// 	<div className="container-fluid h-100">
-		// 		<div className="row h-100">
-		// 			<div className="col">
-		// 				<Routes>
-		// 					<Route path="/" element={
-		// 						<Calendar
-		// 							localizer={localizer}
-		// 							events={events}
-		// 							startAccessor="start"
-		// 							endAccessor="end"
-		// 							className="full-height-calendar calendar-bootstrap"
-		// 							views={views}
-		// 							components={components}
-		// 							onNavigate={handleNavigate}
-		// 						/>} />
-		// 					<Route path="/entry" element={<NewEntryPage onSave={handleSaveEntry} />} />
-		// 					<Route path="day-view" element={<DayView />} />
-		// 				</Routes>
-		// 			</div>
-		// 		</div>
-		// 	</div>
-
-		// </div>
-
-
 		<Router>
-			<div className="container app-container">
-				<nav>
+			<div className="container-fluid app">
+				<Navigation />
+				{/* <nav>
 					<ul>
 						<li><Link to="/">Calendar</Link></li>
 						<li><Link to="/entry">New Entry For Today</Link></li>
 						<li><Link to="/day-view">Day View</Link></li>
 					</ul>
-				</nav>
+				</nav> */}
 				<Routes>
 					<Route path="/" element={
-							<Calendar
-								localizer={localizer}
-								events={events}
-								startAccessor="start"
-								endAccessor="end"
-								className="full-height-calendar"
-								views={views}
-								components={components}
-								onNavigate={handleNavigate}	
-							/>} />
-					<Route path="/entry" element={<NewEntryPage onSave={handleSaveEntry} />} />
+						<Calendar
+							localizer={localizer}
+							events={events}
+							startAccessor="start"
+							endAccessor="end"
+							className="full-height-calendar"
+							views={views}
+							components={components}
+							onNavigate={handleNavigate}
+						/>} />
+					{/* <Route path="/entry" element={<NewEntryPage onSave={handleSaveEntry} />} /> */}
 					<Route path="day-view" element={<DayView />} />
 				</Routes>
 			</div>
 		</Router>
-
-
-
 	);
 };
 
