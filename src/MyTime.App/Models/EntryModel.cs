@@ -17,7 +17,8 @@ namespace MyTime.App.Models
 		public bool IsDeleted { get; set; }
 		public string CorrelationId { get; set; }
 		public string Category { get; set; }
-
+		public string UserId { get; set; }
+		
 		public EntryModel() { }
 		public EntryModel(Entry entry)
 		{
@@ -32,6 +33,7 @@ namespace MyTime.App.Models
 			IsDeleted = entry.IsDeleted;
 			CorrelationId = entry.CorrelationId;
 			Category = entry.Category;
+			UserId = entry.UserId;
 		}
 	}
 }

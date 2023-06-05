@@ -12,6 +12,7 @@ namespace MyTime.Persistence.Entities
 		public bool IsUtilization { get; set; } = true;
 		[StringLength(50)] public string Category { get; set; }
 		public string Notes { get; set; }
-		public string CorrelationId { get; set; } = String.Empty;
+		public string CorrelationId { get; set; } = string.Empty;
+		[Required] public string UserId { get; set; } = string.Empty;
 	}
 }

@@ -25,6 +25,7 @@ namespace MyTime.App.Entries.CreateNewEntry
 			newEntry.Notes = request.Notes;
 			newEntry.CorrelationId = request.CorrelationId;
 			newEntry.Category = request.Category;
+			newEntry.UserId = request.UserId;
 
 			await _context.Entries.AddAsync(newEntry, cancellationToken);
 			await _context.SaveChangesAsync(cancellationToken);

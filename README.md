@@ -23,13 +23,8 @@ docker run -e "ACCEPT_EULA=1" -e "MSSQL_SA_PASSWORD=MyPass@word" -e "MSSQL_PID=D
    * UserSecrets
    * Environment Variables
 
-
-
-
-
-
+<hr />
 
 "MyTimeSqlDbContextConnectionString": "Server=tcp:mytimeproddb.database.windows.net,1433;Initial Catalog=my_time_dev;Persist Security Info=False;User ID=mytimesa;Password=01taLdBsmyYt6u4;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
-
 
 "MyTimeSqlDbContextConnectionString": "Data Source=localhost;Initial Catalog=mytime_app_dev;User Id=sa;Password=MyPass@word;Encrypt=false"

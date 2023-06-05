@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.AspNetCore.Http;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Mytime.App.Entries.GetEntryList;
 using MyTime.Api.Models;
 using MyTime.App.Entries.CreateNewEntry;
 using MyTime.App.Entries.MergeEntries;
-using MyTime.App.EntryDays.GetEntryDayList;
 using MyTime.App.Exceptions;
 using MyTime.App.Models;
 

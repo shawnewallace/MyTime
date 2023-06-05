@@ -19,6 +19,10 @@ namespace MyTime.App.Entries.CreateNewEntry
 
 			RuleFor(x => x.Category)
 				.MaximumLength(50);
+
+			RuleFor(x => x.UserId)
+				.NotEmpty()
+				.MaximumLength(50);
 		}
 	}
 }

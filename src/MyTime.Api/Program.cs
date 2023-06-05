@@ -10,9 +10,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
-	options.AddPolicy("development", builder =>
+	options.AddPolicy("development", corsPolicyBuilder =>
 	{
-		builder
+		corsPolicyBuilder
 			.AllowAnyOrigin()
 			.AllowAnyMethod()
 			.AllowAnyHeader();
@@ -32,7 +32,7 @@ using(var scope = app.Services.CreateScope())
 	try
 	{
 		var context = scope.ServiceProvider.GetService<MyTimeSqlDbContext>();
-		context.Database.Migrate();
+		context?.Database.Migrate();
 
 		MyTimeSqlDbContextInitializer.Initialize(context);
 	}

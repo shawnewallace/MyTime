@@ -15,5 +15,10 @@ public class GetActiveCategoriesListQueryHandler : IRequestHandler<GetActiveCate
 
 	public GetActiveCategoriesListQueryHandler(MyTimeSqlDbContext context) => _context = context;
 
-	public async Task<List<Category>> Handle(GetActiveCategoriesListQuery request, CancellationToken cancellationToken) => await _context.Categories.Where(c => !c.IsDeleted).OrderBy(c => c.Name).ToListAsync();
+	public async Task<List<Category>> Handle(GetActiveCategoriesListQuery request, CancellationToken cancellationToken) => 
+		await _context
+			.Categories
+			.Where(c => !c.IsDeleted)
+			.OrderBy(c => c.Name)
+			.ToListAsync(cancellationToken: cancellationToken);
 }

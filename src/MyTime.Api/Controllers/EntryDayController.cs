@@ -1,7 +1,4 @@
-using System;
-using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyTime.Api.Models;
 using MyTime.App.EntryDays.GetEntryDayList;

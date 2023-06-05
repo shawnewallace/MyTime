@@ -1,6 +1,5 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MyTime.Api.Controllers
 {
@@ -8,13 +7,11 @@ namespace MyTime.Api.Controllers
 	[Route("[controller]")]
 	public abstract class ApiControllerBase : ControllerBase
 	{
-		private IMediator _mediator;
-
 		protected ApiControllerBase(IMediator mediator)
 		{
-			_mediator = mediator;
+			Mediator = mediator;
 		}
 
-		protected IMediator Mediator => _mediator;
+		protected IMediator Mediator { get; }
 	}
 }
