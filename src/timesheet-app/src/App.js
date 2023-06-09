@@ -71,7 +71,11 @@ const App = () => {
 
 		return (
 			<div className='custom-date-header'>
-				<div>{dayData.dayOfMonth || dayOfMonth}</div>
+				<div>
+					<Link to={`/day-view/${date.toISOString()}`}>
+						{dayData.dayOfMonth || dayOfMonth}
+					</Link>
+				</div>
 				<div>
 					<small>Num:{dayData.numEntries}</small>&nbsp;&nbsp;
 					<small>Billable:{dayData.utilizedTotal.toFixed(2)}</small>&nbsp;&nbsp;
@@ -92,30 +96,29 @@ const App = () => {
 
 	return (
 		<Router>
-			<div className="container-fluid app">
-				<Navigation />
-				{/* <nav>
-					<ul>
-						<li><Link to="/">Calendar</Link></li>
-						<li><Link to="/entry">New Entry For Today</Link></li>
-						<li><Link to="/day-view">Day View</Link></li>
-					</ul>
-				</nav> */}
-				<Routes>
-					<Route path="/" element={
-						<Calendar
-							localizer={localizer}
-							events={events}
-							startAccessor="start"
-							endAccessor="end"
-							className="full-height-calendar"
-							views={views}
-							components={components}
-							onNavigate={handleNavigate}
-						/>} />
-					{/* <Route path="/entry" element={<NewEntryPage onSave={handleSaveEntry} />} /> */}
-					<Route path="day-view" element={<DayView />} />
-				</Routes>
+			<div className="d-flex flex-column min-vh-100 app">
+				<header className="bg-light">
+					<Navigation />
+				</header>
+				<main className="flex-grow-1">
+					<Routes>
+						<Route path="/" element={
+							<Calendar
+								localizer={localizer}
+								events={events}
+								startAccessor="start"
+								endAccessor="end"
+								views={views}
+								components={components}
+								onNavigate={handleNavigate}
+							/>} />
+						{/* <Route path="/entry" element={<NewEntryPage onSave={handleSaveEntry} />} /> */}
+						<Route path="day-view/:initialDate" element={<DayView />} />
+					</Routes>
+				</main>
+				<footer className="bg-light py-3 mt-auto text-center">
+					<p>&copy; {new Date().getFullYear()} Shawn Wallace. All rights reserved.</p>
+				</footer>
 			</div>
 		</Router>
 	);

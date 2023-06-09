@@ -48,6 +48,39 @@ const apiService = {
 			throw new Error('API request failed');
 		}
 	},
+	getEntryById: async (id) => {
+		const response = await fetch(`${BASE_URL}/entry/${id}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			}
+		});
+		const data = await response.json();
+		return data;
+	},
+	createEntry: async (onDate, description, category, duration, isUtilization, notes) => {
+		try {
+			const response = await fetch(`${BASE_URL}/entry`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					onDate,
+					description,
+					category,
+					duration,
+					isUtilization,
+					notes,
+				}),
+			});
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
 };
 
 export default apiService;

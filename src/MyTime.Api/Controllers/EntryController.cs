@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mytime.App.Entries.GetEntryList;
 using MyTime.Api.Models;
 using MyTime.App.Entries.CreateNewEntry;
+using MyTime.App.Entries.GetEntry;
 using MyTime.App.Entries.MergeEntries;
 using MyTime.App.Exceptions;
 using MyTime.App.Models;
@@ -19,6 +20,19 @@ namespace MyTime.Api.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<List<EntryModel>> List() => await Mediator.Send(new GetEntryListQuery());
 
+		[HttpGet("/entry/{id}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<IActionResult> GetEntry(string id, CancellationToken ctx)
+		{
+			var result = await Mediator.Send(new GetEntryQuery(new Guid(id)), ctx);
+
+			if (result is null) return NotFound();
+
+			return Ok(result);
+		}
+
+
 		[HttpPost]
 		[Produces("application/json")]
 		[Consumes("application/json")]
@@ -30,13 +44,15 @@ namespace MyTime.Api.Controllers
 			{
 				OnDate = model.OnDate,
 				Description = model.Description,
+				Category = model.Category,
 				Duration = model.Duration,
 				IsUtilization = model.IsUtilization,
-				Notes = model.Notes
+				Notes = model.Notes,
+				UserId = "not implemented"
 			};
 
 			var newEntry = await Mediator.Send(command);
-			return Created("", newEntry);
+			return CreatedAtAction(nameof(GetEntry), new { id = newEntry.Id}, newEntry);
 		}
 
 		[HttpPut("/entries/merge/{primary}/{secondary}")]
