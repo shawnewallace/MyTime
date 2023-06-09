@@ -22,9 +22,10 @@ const App = () => {
 
 	const [events, setEvents] = useState([]);
 	const [days, setDays] = useState([]);
+	const [categories, setCategories] = useState([]);
 
-	const handleSaveEntry = (entry) => {
-		setEvents([...events, entry]);
+	const handleSaveEntry = async (entry) => {
+		await apiService.createEntry(entry);
 	};
 
 	useEffect(() => {
@@ -32,6 +33,7 @@ const App = () => {
 		var start = new Date(date.getFullYear(), date.getMonth(), 1);
 		var end = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 		fetchEvents(start, end);
+		fetchCategories();
 	}, []);
 
 	const fetchEvents = async (start, end) => {
@@ -49,6 +51,15 @@ const App = () => {
 			setDays(rawDays);
 		} catch (error) {
 			console.error('Error fetching events:', error);
+		}
+	};
+
+	const fetchCategories = async () => {
+		try {
+			const data = await apiService.getCategories();
+			setCategories(data);
+		} catch (error) {
+			console.error('Error fetching categories:', error);
 		}
 	};
 
@@ -77,7 +88,6 @@ const App = () => {
 					</Link>
 				</div>
 				<div>
-					<small>Num:{dayData.numEntries}</small>&nbsp;&nbsp;
 					<small>Billable:{dayData.utilizedTotal.toFixed(2)}</small>&nbsp;&nbsp;
 					<small>Total:{dayData.total.toFixed(2)}</small>
 				</div>
@@ -102,7 +112,7 @@ const App = () => {
 				</header>
 				<main className="flex-grow-1">
 					<Routes>
-						<Route path="/" element={
+						<Route name="home" path="/" element={
 							<Calendar
 								localizer={localizer}
 								events={events}
@@ -112,8 +122,8 @@ const App = () => {
 								components={components}
 								onNavigate={handleNavigate}
 							/>} />
-						{/* <Route path="/entry" element={<NewEntryPage onSave={handleSaveEntry} />} /> */}
-						<Route path="day-view/:initialDate" element={<DayView />} />
+						<Route name='newEntry' path="/entry" element={<NewEntryPage onSave={handleSaveEntry} categories={categories} />} />
+						<Route name='dayView' path="day-view/:initialDate" element={<DayView onSave={handleSaveEntry} cats={categories} />} />
 					</Routes>
 				</main>
 				<footer className="bg-light py-3 mt-auto text-center">

@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -11,26 +13,46 @@ namespace MyTime.App.Entries.CreateNewEntry
 	{
 		private readonly MyTimeSqlDbContext _context;
 
-		public CreateNewEntryCommandHandler(MyTimeSqlDbContext context) { 
+		public CreateNewEntryCommandHandler(MyTimeSqlDbContext context)
+		{
 			_context = context;
 		}
 		public async Task<EntryModel> Handle(CreateNewEntryCommand request, CancellationToken cancellationToken)
 		{
-			var newEntry = new Entry();
-			
-			newEntry.OnDate = request.OnDate;
-			newEntry.Description = request.Description.Length > 255 ? request.Description.Substring(0, 255) : request.Description;
-			newEntry.Duration = request.Duration;
-			newEntry.IsUtilization = request.IsUtilization;
-			newEntry.Notes = request.Notes;
-			newEntry.CorrelationId = request.CorrelationId;
-			newEntry.Category = request.Category;
-			newEntry.UserId = request.UserId;
+			var newEntry = new Entry
+			{
+				OnDate = request.OnDate,
+				Description = request.Description.Length > 255 ? request.Description[..255] : request.Description,
+				Duration = request.Duration,
+				IsUtilization = request.IsUtilization,
+				Notes = request.Notes,
+				CorrelationId = request.CorrelationId,
+				Category = request.Category,
+				UserId = request.UserId
+			};
 
 			await _context.Entries.AddAsync(newEntry, cancellationToken);
+
+			if (ShouldCreateCategory(request.Category))
+			{
+				var newCategory = new Category
+				{
+					Name = request.Category
+				};
+				await _context.Categories.AddAsync(newCategory, cancellationToken);
+			}
+
 			await _context.SaveChangesAsync(cancellationToken);
 
 			return new EntryModel(newEntry);
+		}
+
+		private bool ShouldCreateCategory(string category)
+		{
+			if (string.IsNullOrWhiteSpace(category)) return false;
+			if (_context.Categories.Any(c => c.Name.ToLower() == category.ToLower())) return false;
+
+			return true;
 		}
 	}
 }

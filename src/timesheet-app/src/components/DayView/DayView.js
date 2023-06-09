@@ -6,39 +6,30 @@ import NewEntryPage from '../NewEntryPage/NewEntryPage';
 import apiService from '../../apiService';
 import { useParams } from "react-router-dom";
 
-const DayView = () => {
-	let { initialDate } = useParams();
+const DayView = ({ onSave, cats }) => {
+	let params = useParams();
+	let initialDate = params.initialDate;
 	const [entries, setEntries] = useState([]);
-	const [selectedDate, setSelectedDate] = useState(new Date(initialDate));
-	const [categories, setCategories] = useState([]);
+	const [selectedDate, setSelectedDate] = useState(initialDate ? new Date(initialDate) : new Date())
+	const [categories] = useState(cats);
 	const [billable, setBillable] = useState(0);
 	const [total, setTotal] = useState(0);
 
 	useEffect(() => {
 		setSelectedDate(selectedDate);
-		fetchCategories();
 		fetchEntries(selectedDate);
-	}, []);
+	}, [selectedDate]);
 
-	const fetchCategories = async () => {
-		try {
-			const data = await apiService.getCategories();
-			setCategories(data);
-		} catch (error) {
-			console.error('Error fetching categories:', error);
-		}
-	};
-
-	const fetchEntries = async (day) => {
+	async function fetchEntries(day) {
 		const data = await apiService.getEntriesForDay(day);
 		setEntries(data.entries);
 		setBillable(data.utilizedTotal);
 		setTotal(data.total);
-}
+	}
 
 	const handleSaveEntry = (entry) => {
-		alert(entry);
-		setEntries([...entries, entry]);
+		onSave(entry);
+		fetchEntries(selectedDate);
 	};
 
 	const handleDateChange = (date) => {
@@ -47,22 +38,23 @@ const DayView = () => {
 	};
 
 	const visibleDate = moment(selectedDate).format('YYYY-MM-DD');
-	const dayEntries = entries;
 
 	return (
-		<div>
-			<h2>Day View - {visibleDate}</h2>
-
-			<div>
-				<DatePicker selected={selectedDate} onChange={handleDateChange} />
+		<div className="container">
+			<div className='row'>
+				<h2><DatePicker selected={selectedDate} onChange={handleDateChange} /></h2>
 			</div>
 
-			<NewEntryPage onSave={handleSaveEntry} categories={categories} />
+			<div className='row'>
+				<div className="col-sm-7">
+					<NewEntryPage initialDate={selectedDate} onSave={handleSaveEntry} categories={categories} />
+				</div>
+			</div>
 
 			<div>
 				<h3>Entries for {visibleDate}</h3>
-				{dayEntries.length > 0 ? (
-					<table>
+				{entries.length > 0 ? (
+					<table className="table table-striped">
 						<thead>
 							<tr>
 								<th></th>
@@ -80,10 +72,10 @@ const DayView = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{dayEntries.map((entry, index) => (
+							{entries.map((entry, index) => (
 								<tr key={entry.id}>
 									<td>{entry.description}</td>
-									<td>{entry.category === "NULL" ? "" : entry.cateegory }</td>
+									<td>{entry.category === "NULL" ? "" : entry.category}</td>
 									<td>{entry.duration.toFixed(2)}</td>
 									<td>{entry.isUtilization ? 'Yes' : 'No'}</td>
 									<td>{entry.notes}</td>

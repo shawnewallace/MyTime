@@ -58,21 +58,27 @@ const apiService = {
 		const data = await response.json();
 		return data;
 	},
-	createEntry: async (onDate, description, category, duration, isUtilization, notes) => {
+	createEntry: async (entry) => {
+		var date = entry.onDate;
+		let newEntry = {
+			OnDate: date,
+			Description: entry.description,
+			Category: entry.category.value,
+			Duration: entry.duration,
+			IsUtilization: entry.billable,
+			Notes: entry.notes
+		};
+
+		var jsonEntry = JSON.stringify(newEntry);
+		alert(jsonEntry);
+
 		try {
 			const response = await fetch(`${BASE_URL}/entry`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({
-					onDate,
-					description,
-					category,
-					duration,
-					isUtilization,
-					notes,
-				}),
+				body: jsonEntry,
 			});
 			const data = await response.json();
 			return data;
