@@ -1,17 +1,18 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyTime.Api.Controllers
-{
-	[ApiController]
-	[Route("[controller]")]
-	public abstract class ApiControllerBase : ControllerBase
-	{
-		protected ApiControllerBase(IMediator mediator)
-		{
-			Mediator = mediator;
-		}
+namespace MyTime.Api.Controllers;
 
-		protected IMediator Mediator { get; }
+[ApiController]
+[Route("[controller]")]
+public abstract class ApiControllerBase : ControllerBase
+{
+	protected ApiControllerBase(IMediator mediator)
+	{
+		Mediator = mediator;
 	}
+
+	protected IMediator Mediator { get; }
+
+	protected string GetCurrentUserId() => "not implemented";
 }
