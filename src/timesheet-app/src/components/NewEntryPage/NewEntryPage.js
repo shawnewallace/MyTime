@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import CreatableSelect from 'react-select/creatable';
+import { useParams } from "react-router-dom";
+import apiService from '../../apiService';
 
 
 const NewEntryPage = ({ initialDate, onSave, categories }) => {
+	const params = useParams();
+	const entryId = params.entryId;
+
 	const [onDate, setOnDate] = useState(initialDate ? new Date(initialDate) : new Date())
 	const [description, setDescription] = useState('');
 	const [category, setCategory] = useState('');
@@ -15,6 +20,29 @@ const NewEntryPage = ({ initialDate, onSave, categories }) => {
 		value: item.name,
 		label: item.name
 	}));
+
+	useEffect(() => {
+		const fetchEntryDetails = async () => {
+			try {
+				const entry = await apiService.getEntryById(entryId);
+
+				console.log(entry.onDate);
+
+				setOnDate(entry.onDate);
+
+				setDescription(entry.description);
+				setCategory(entry.category);
+				setDuration(entry.duration);
+				setBillable(entry.isUtilization);
+				setNotes(entry.Notes);
+			}
+			catch (error) {
+				console.error('Error fetching entry details:', error);
+			}
+		};
+
+		fetchEntryDetails();
+	}, [entryId, onDate]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -53,6 +81,7 @@ const NewEntryPage = ({ initialDate, onSave, categories }) => {
 	return (
 		<div>
 			<form onSubmit={handleSubmit}>
+				{entryId}
 				<div className='form-group row'>
 					<label htmlFor='selectedDate' className='col-sm-4'>Create New Entry for</label>
 					<div className='col-sm-7'>

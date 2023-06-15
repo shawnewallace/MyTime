@@ -1,6 +1,6 @@
 namespace MyTime.Api.Models;
 
-public class AppointmentStartingNotification
+public class AppointmentStartingNotificationModel
 {
 	public string eventId { get; set; } = String.Empty;
 	public string subject { get; set; } = string.Empty;

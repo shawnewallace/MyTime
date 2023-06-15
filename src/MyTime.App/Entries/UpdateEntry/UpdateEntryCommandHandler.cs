@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using MyTime.App.Exceptions;
+using MyTime.App.Infrastructure;
 using MyTime.App.Models;
 using MyTime.Persistence;
 using MyTime.Persistence.Entities;
@@ -20,7 +21,7 @@ namespace MyTime.App.Entries.UpdateEntry
 		public async Task<EntryModel> Handle(UpdateEntryCommand request, CancellationToken cancellationToken)
 		{
 			var entry = await _context.Entries.FindAsync(request.Id);
-			if (entry is null) throw new ValidationException();
+			if (entry is null) throw new EntryNotFoundException(request.Id);
 
 			if (request.OnDate.HasValue) entry.OnDate = request.OnDate.Value;
 			if (!string.IsNullOrWhiteSpace(request.Description)) entry.Description = request.Description;

@@ -4,14 +4,14 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import NewEntryPage from '../NewEntryPage/NewEntryPage';
 import apiService from '../../apiService';
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const DayView = ({ onSave, cats }) => {
 	let params = useParams();
 	let initialDate = params.initialDate;
 	const [entries, setEntries] = useState([]);
 	const [selectedDate, setSelectedDate] = useState(initialDate ? new Date(initialDate) : new Date())
-	const [categories] = useState(cats);
+	// const [categories] = useState(cats);
 	const [billable, setBillable] = useState(0);
 	const [total, setTotal] = useState(0);
 
@@ -27,10 +27,10 @@ const DayView = ({ onSave, cats }) => {
 		setTotal(data.total);
 	}
 
-	const handleSaveEntry = (entry) => {
-		onSave(entry);
-		fetchEntries(selectedDate);
-	};
+	// const handleSaveEntry = (entry) => {
+	// 	onSave(entry);
+	// 	fetchEntries(selectedDate);
+	// };
 
 	const handleDateChange = (date) => {
 		setSelectedDate(date);
@@ -42,17 +42,16 @@ const DayView = ({ onSave, cats }) => {
 	return (
 		<div className="container">
 			<div className='row'>
-				<h2><DatePicker selected={selectedDate} onChange={handleDateChange} /></h2>
+				<h3>Entries for: <DatePicker selected={selectedDate} onChange={handleDateChange} /></h3>
 			</div>
 
-			<div className='row'>
+			{/* <div className='row'>
 				<div className="col-sm-7">
 					<NewEntryPage initialDate={selectedDate} onSave={handleSaveEntry} categories={categories} />
 				</div>
-			</div>
+			</div> */}
 
 			<div>
-				<h3>Entries for {visibleDate}</h3>
 				{entries.length > 0 ? (
 					<table className="table table-striped">
 						<thead>
@@ -74,7 +73,11 @@ const DayView = ({ onSave, cats }) => {
 						<tbody>
 							{entries.map((entry, index) => (
 								<tr key={entry.id}>
-									<td>{entry.description}</td>
+									<td>
+										<Link className="link" to={`/entry/${entry.id}`}>
+										{entry.description}
+										</Link>
+									</td>
 									<td>{entry.category === "NULL" ? "" : entry.category}</td>
 									<td>{entry.duration.toFixed(2)}</td>
 									<td>{entry.isUtilization ? 'Yes' : 'No'}</td>

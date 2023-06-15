@@ -5,6 +5,8 @@ using MyTime.Api.Models;
 using MyTime.App.Entries.CreateNewEntry;
 using MyTime.App.Entries.GetEntry;
 using MyTime.App.Entries.MergeEntries;
+using MyTime.App.Entries.UpdateEntry;
+using MyTime.App.Infrastructure;
 using MyTime.App.Exceptions;
 using MyTime.App.Models;
 
@@ -53,6 +55,40 @@ public class EntryController : ApiControllerBase
 		var newEntry = await Mediator.Send(command);
 		return CreatedAtAction(nameof(GetEntry), new { id = newEntry.Id }, newEntry);
 	}
+
+	[HttpPut("/entry/{id}")]
+	[Produces("application/json")]
+	[Consumes("application/json")]
+	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	public async Task<IActionResult> Update(string id, [FromBody] UpdateEntryModel model, CancellationToken cancellationToken)
+	{
+		var entryId = new Guid(id);
+
+		var command = new UpdateEntryCommand()
+		{
+			Id = entryId,
+			OnDate = model.OnDate,
+			Description = model.Description,
+			Category = model.Category,
+			Duration = model.Duration,
+			IsUtilization = model.IsUtilization,
+			Notes = model.Notes
+		};
+
+		try
+		{
+			var updatedEntry = await Mediator.Send(command, cancellationToken);
+
+			return Ok(updatedEntry);
+		}
+		catch (EntryNotFoundException)
+		{
+			return NotFound(id);
+		}
+	}
+
+
 
 	[HttpPut("/entries/merge/{primary}/{secondary}")]
 	[Produces("application/json")]

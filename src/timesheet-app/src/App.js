@@ -122,7 +122,7 @@ const App = () => {
 								components={components}
 								onNavigate={handleNavigate}
 							/>} />
-						<Route name='newEntry' path="/entry" element={<NewEntryPage onSave={handleSaveEntry} categories={categories} />} />
+						<Route name='newEntry' path="/entry/:entryId" element={<NewEntryPage onSave={handleSaveEntry} categories={categories} />} />
 						<Route name='dayView' path="day-view/:initialDate" element={<DayView onSave={handleSaveEntry} cats={categories} />} />
 					</Routes>
 				</main>

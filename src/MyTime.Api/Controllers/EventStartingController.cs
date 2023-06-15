@@ -14,7 +14,7 @@ public class EventStartingController : ApiControllerBase
 	[Consumes("application/json")]
 	[ProducesResponseType(StatusCodes.Status201Created)]
 	[ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-	public async Task<IActionResult> EventStarting([FromBody] AppointmentStartingNotification eventDetails)
+	public async Task<IActionResult> EventStarting([FromBody] AppointmentStartingNotificationModel eventDetails)
 	{
 		var command = new CreateNewEntryCommand
 		{

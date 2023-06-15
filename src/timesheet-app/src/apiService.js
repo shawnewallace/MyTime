@@ -70,11 +70,38 @@ const apiService = {
 		};
 
 		var jsonEntry = JSON.stringify(newEntry);
-		alert(jsonEntry);
 
 		try {
 			const response = await fetch(`${BASE_URL}/entry`, {
 				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: jsonEntry,
+			});
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
+	updateEntry: async(entry) => {
+		var date = entry.onDate;
+		let entryPayload = {
+			OnDate: date,
+			Description: entry.description,
+			Category: entry.category.value,
+			Duration: entry.duration,
+			IsUtilization: entry.billable,
+			Notes: entry.notes
+		};
+
+		var jsonEntry = JSON.stringify(entryPayload);
+
+		try {
+			const response = await fetch(`${BASE_URL}/entry/${entry.id}`, {
+				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
 				},
