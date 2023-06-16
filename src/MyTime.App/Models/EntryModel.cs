@@ -23,7 +23,7 @@ namespace MyTime.App.Models
 		public EntryModel(Entry entry)
 		{
 			Id = entry.Id;
-			OnDate = entry.OnDate;
+			OnDate = entry.OnDate.ToUniversalTime();
 			Description = entry.Description;
 			Duration = entry.Duration;
 			IsUtilization = entry.IsUtilization;

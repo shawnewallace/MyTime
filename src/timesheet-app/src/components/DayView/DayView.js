@@ -74,7 +74,7 @@ const DayView = ({ onSave, cats }) => {
 							{entries.map((entry, index) => (
 								<tr key={entry.id}>
 									<td>
-										<Link className="link" to={`/entry/${entry.id}`}>
+										<Link className="link" to={`/entry/${entry.id}/edit`}>
 										{entry.description}
 										</Link>
 									</td>

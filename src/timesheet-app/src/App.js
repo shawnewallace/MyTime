@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navigation from './components/Navigation/Navigation';
 import NewEntryPage from './components/NewEntryPage/NewEntryPage';
+import EntryForm from './components/EntryForm/EntryForm';
 import DayView from './components/DayView/DayView'
 import apiService from './apiService';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -104,8 +105,10 @@ const App = () => {
 		}
 	};
 
+	const blankEntry = { };
+
 	return (
-		<Router>
+		<BrowserRouter>
 			<div className="d-flex flex-column min-vh-100 app">
 				<header className="bg-light">
 					<Navigation />
@@ -122,7 +125,26 @@ const App = () => {
 								components={components}
 								onNavigate={handleNavigate}
 							/>} />
-						<Route name='newEntry' path="/entry/:entryId" element={<NewEntryPage onSave={handleSaveEntry} categories={categories} />} />
+						<Route
+							name='newEntry' 
+							path="/entry" 
+							element={
+								<EntryForm 
+									entry={blankEntry}
+									onSave={handleSaveEntry}
+									categories={categories} />
+							}
+						/>
+						<Route
+							name='editEntry'
+							path='/entry/:id/edit'
+							element={
+								<EntryForm
+									entry={blankEntry}
+									onSave={handleSaveEntry}
+									categories={categories} />
+							}
+						/>
 						<Route name='dayView' path="day-view/:initialDate" element={<DayView onSave={handleSaveEntry} cats={categories} />} />
 					</Routes>
 				</main>
@@ -130,7 +152,7 @@ const App = () => {
 					<p>&copy; {new Date().getFullYear()} Shawn Wallace. All rights reserved.</p>
 				</footer>
 			</div>
-		</Router>
+		</BrowserRouter>
 	);
 };
 

@@ -16,7 +16,7 @@ const Navigation = () => {
 						<Link className="nav-link" to="/">Calendar</Link>
 					</li>
 					<li className="nav-item">
-						<Link className="nav-link" to="/entry/">New Entry</Link>
+						<Link className="nav-link" to="/entry">New Entry</Link>
 					</li>
 					<li className="nav-item">
 						<Link className="nav-link" to={`/day-view/${currentDate.toISOString()}`}>Day View</Link>

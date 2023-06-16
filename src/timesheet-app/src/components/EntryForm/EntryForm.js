@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import CreatableSelect from 'react-select/creatable';
 import { useParams } from "react-router-dom";
 import apiService from '../../apiService';
 
 
-const NewEntryPage = ({ initialDate, onSave, categories }) => {
+const EntryForm = ({ entry, onSubmit, categories }) => {
 	const params = useParams();
-	const entryId = params.entryId;
 
-	const [onDate, setOnDate] = useState(initialDate ? new Date(initialDate) : new Date())
-	const [description, setDescription] = useState('');
-	const [category, setCategory] = useState('');
-	const [duration, setDuration] = useState(0);
-	const [billable, setBillable] = useState(false);
-	const [notes, setNotes] = useState('');
+
+	const [id, setId] = useState(params.id || '');
+	const [onDate, setOnDate] = useState(entry.date ? new Date(entry.date) : new Date())
+	const [description, setDescription] = useState(entry.description || '');
+	const [category, setCategory] = useState(entry.category || '');
+	const [selectedCategory, setSelectedCategory] = useState({ value: category, label: category });
+	const [duration, setDuration] = useState(entry.duration || 0);
+	const [isBillable, setIsBillable] = useState(entry.isBillable || false);
+	const [notes, setNotes] = useState(entry.notes || '');
 
 	const formattedCategoryOptions = categories.map((item) => ({
 		value: item.name,
@@ -22,66 +24,60 @@ const NewEntryPage = ({ initialDate, onSave, categories }) => {
 	}));
 
 	useEffect(() => {
-		const fetchEntryDetails = async () => {
-			try {
-				const entry = await apiService.getEntryById(entryId);
+		if (id === '') return;
+		fetchEvent(id);
+	}, [id]);
 
-				console.log(entry.onDate);
+	const fetchEvent = async (eventId) => {
+		try {
+			const data = await apiService.getEntryById(eventId);
+			setOnDate(new Date(data.onDate));
+			setDescription(data.description);
 
-				setOnDate(entry.onDate);
+			setCategory(data.category);
+			// setSelectedCategory({ value: category, label: category });
 
-				setDescription(entry.description);
-				setCategory(entry.category);
-				setDuration(entry.duration);
-				setBillable(entry.isUtilization);
-				setNotes(entry.Notes);
-			}
-			catch (error) {
-				console.error('Error fetching entry details:', error);
-			}
-		};
+			console.log(selectedCategory);
 
-		fetchEntryDetails();
-	}, [entryId, onDate]);
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		// Create an entry object with the form data
-		const entry = {
-			onDate,
-			description,
-			category,
-			duration,
-			billable,
-			notes
-		};
-
-		onSave(entry); // Pass the entry to the onSave callback
-
-		resetForm();
+			setDuration(data.duration);
+			setIsBillable(data.isUtilization);
+			setNotes(data.notes);
+		} catch (error) {
+			console.error(`Error fetching event: ${eventId}`, error);
+		}
 	};
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+
+		if (id === '') {
+			//CREATE
+		}
+		else {
+			//UPDATE
+		}
+
+		///???
+	};
+
+	const handleDateChange = (date) => { 
+		setOnDate(date);
+	};
+
+	const handleCategoryChange = (newCategory) => {
+		setCategory(newCategory);
+		// setSelectedCategory({ value: newCategory, label: newCategory });
+		// console.log(selectedCategory);
+	};
+
 
 	const handleCancel = () => {
-		resetForm();
-	};
-
-	const resetForm = () => {
-		setDescription('');
-		setCategory('');
-		setDuration(0);
-		setNotes('');
-		setBillable(false);
-	};
-
-	const handleDateChange = (date) => {
-		setOnDate(date);
+		// resetForm();
 	};
 
 	return (
 		<div>
 			<form onSubmit={handleSubmit}>
-				{entryId}
 				<div className='form-group row'>
 					<label htmlFor='selectedDate' className='col-sm-4'>Date</label>
 					<div className='col-sm-7'>
@@ -112,15 +108,17 @@ const NewEntryPage = ({ initialDate, onSave, categories }) => {
 				<div className='form-group row'>
 					<label htmlFor='category' className='col-sm-2 col-form-label'>Category</label>
 					<div className='col-sm-10'>
+						{category}
 						<CreatableSelect
 							className='form-control'
 							id='category'
 							name='category'
-							value={category}
-							onChange={(e) => setCategory(e)}
 							options={formattedCategoryOptions}
+							defaultvalue={selectedCategory}
+							onChange={(e) => handleCategoryChange(e.value)}
 							isClearable
-							isSearcable />
+							isSearchable
+						/>
 					</div>
 				</div>
 				<div className='form-group row'>
@@ -139,17 +137,14 @@ const NewEntryPage = ({ initialDate, onSave, categories }) => {
 							required
 						/>
 					</div>
-				</div>
-				<div className='form-group row'>
-					<div className='col-sm-2'>&nbsp;</div>
-					<div className='col-sm-10'>
+					<div className='col-sm-2'>
 						<input
 							type="checkbox"
 							className='form-check-input'
 							id='billable'
 							name='billable'
-							checked={billable}
-							onChange={(e) => setBillable(e.target.checked)}
+							checked={isBillable}
+							onChange={(e) => setIsBillable(e.target.checked)}
 						/>
 						<label className='form-check-label' htmlFor='billable'>Billable</label>
 					</div>
@@ -178,4 +173,4 @@ const NewEntryPage = ({ initialDate, onSave, categories }) => {
 	);
 };
 
-export default NewEntryPage;
+export default EntryForm;
