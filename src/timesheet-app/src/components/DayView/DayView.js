@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import NewEntryPage from '../NewEntryPage/NewEntryPage';
 import apiService from '../../apiService';
 import { useParams, Link } from "react-router-dom";
 

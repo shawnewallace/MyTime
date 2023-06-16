@@ -29,13 +29,15 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 	}, [id]);
 
 	const fetchEvent = async (eventId) => {
+		console.log("fetching event");
 		try {
 			const data = await apiService.getEntryById(eventId);
+			console.log(data);
 			setOnDate(new Date(data.onDate));
 			setDescription(data.description);
 
 			setCategory(data.category);
-			// setSelectedCategory({ value: category, label: category });
+			setSelectedCategory({ value: data.category, label: data.category });
 
 			console.log(selectedCategory);
 
@@ -47,31 +49,48 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 		}
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
+
+		let entry = {
+			onDate: onDate,
+			description: description,
+			category: category,
+			duration: duration,
+			billable: isBillable,
+			notes: notes
+		};
+
+		console.log("ENTRY TO BE UPSERTED - ", entry);
 
 		if (id === '') {
 			//CREATE
+			console.log('CREATE EVENT');
+			await apiService.createEntry(entry);
 		}
 		else {
 			//UPDATE
+			console.log(`EDIT EVENT ${id}`);
+			entry.id = id;
+			await apiService.updateEntry(entry);
 		}
 
 		///???
 	};
 
-	const handleDateChange = (date) => { 
+	const handleDateChange = (date) => {
 		setOnDate(date);
 	};
 
 	const handleCategoryChange = (newCategory) => {
-		setCategory(newCategory);
-		// setSelectedCategory({ value: newCategory, label: newCategory });
-		// console.log(selectedCategory);
+		setCategory(newCategory.label);
+		alert(newCategory.label);
+		setSelectedCategory(newCategory);
 	};
 
 
-	const handleCancel = () => {
+	const handleCancel = (event) => {
+		event.preventDefault();
 		// resetForm();
 	};
 
@@ -108,14 +127,13 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 				<div className='form-group row'>
 					<label htmlFor='category' className='col-sm-2 col-form-label'>Category</label>
 					<div className='col-sm-10'>
-						{category}
 						<CreatableSelect
 							className='form-control'
 							id='category'
 							name='category'
 							options={formattedCategoryOptions}
-							defaultvalue={selectedCategory}
-							onChange={(e) => handleCategoryChange(e.value)}
+							value={selectedCategory}
+							onChange={(e) => handleCategoryChange(e)}
 							isClearable
 							isSearchable
 						/>

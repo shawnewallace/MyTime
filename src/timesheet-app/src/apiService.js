@@ -63,11 +63,13 @@ const apiService = {
 		let newEntry = {
 			OnDate: date,
 			Description: entry.description,
-			Category: entry.category.value,
+			Category: entry.category,
 			Duration: entry.duration,
 			IsUtilization: entry.billable,
 			Notes: entry.notes
 		};
+
+		console.log("creeaging event", newEntry);
 
 		var jsonEntry = JSON.stringify(newEntry);
 
@@ -91,7 +93,7 @@ const apiService = {
 		let entryPayload = {
 			OnDate: date,
 			Description: entry.description,
-			Category: entry.category.value,
+			Category: entry.category,
 			Duration: entry.duration,
 			IsUtilization: entry.billable,
 			Notes: entry.notes

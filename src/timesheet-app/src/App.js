@@ -4,7 +4,6 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navigation from './components/Navigation/Navigation';
-import NewEntryPage from './components/NewEntryPage/NewEntryPage';
 import EntryForm from './components/EntryForm/EntryForm';
 import DayView from './components/DayView/DayView'
 import apiService from './apiService';
