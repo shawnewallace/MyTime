@@ -44,10 +44,10 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
         
     - name: Build API
-      run: dotnet build ./src/MyTime.Api/MyTime.Api.csproj --configuration Release
+      run: dotnet build src/MyTime.Api/MyTime.Api.csproj --configuration Release
       
     - name: Publish API
-      run: dotnet publish ./src/MyTime.Api/MyTime.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      run: dotnet publish src/MyTime.Api/MyTime.Api.csproj -c Release -o "${{env.DOTNET_ROOT}}/myapp"
       
     - name: Install EF
       run: |
@@ -55,4 +55,4 @@ jobs:
         dotnet tool install dotnet-ef
         
     - name: Generate SQL Deployment Script
-      run:  dotnet ef migrations script --project src/MyTime.Api/MyTime.Api.csproj --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --idempotent --no-build
+      run:  dotnet ef migrations script --project src/MyTime.Api/MyTime.Api.csproj --output "${{env.DOTNET_ROOT}}/sql/sql-script.sql" --idempotent --no-build
