@@ -33,6 +33,7 @@ jobs:
       
   publish-dev:
     runs-on: windows-latest
+    needs: build-and-test
     
     steps:
     - name: Checkout
