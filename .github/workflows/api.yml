@@ -60,6 +60,5 @@ jobs:
     - name: Deploy DB Changes
       uses: Azure/sql-action@v2.2
       with:
-        server-name: tcp:mytimedbserver.database.windows.net
         connection-string: ${{ secrets.CONNECTION_STRING }}
         sql-file: "${{env.DOTNET_ROOT}}/sql/sql-script.sql"
