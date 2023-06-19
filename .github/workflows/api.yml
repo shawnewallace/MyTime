@@ -76,7 +76,7 @@ jobs:
 
   publish-web-dev:
     runs-on: ubuntu-latest
-    needs: build-and-test
+#     needs: build-and-test
 
     steps:
     - name: checkout
@@ -89,4 +89,4 @@ jobs:
 
     - name: Yarn install
       run: |
-        working-directory: "./${{ env.webAppSolutionRoot }}"
+        working-directory: "./src/timesheet-app"
