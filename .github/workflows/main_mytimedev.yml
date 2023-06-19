@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'mytimedev'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A7CF3230E9044CB0BB638EC39BE8C8AA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AB74774897A246E09B0C790B0ED901E6 }}
           package: .
