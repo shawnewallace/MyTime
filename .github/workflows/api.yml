@@ -56,3 +56,10 @@ jobs:
         
     - name: Generate SQL Deployment Script
       run:  dotnet ef migrations script --project src/MyTime.Api/MyTime.Api.csproj --output "${{env.DOTNET_ROOT}}/sql/sql-script.sql" --idempotent
+      
+    - name: Deploy DB Changes
+      uses: Azure/sql-action@v2.2
+      with:
+        server-name: tcp:mytimedbserver.database.windows.net
+        connection-string: ${{ secrets.CONNECTION_STRING }}
+        sql-file: "${{env.DOTNET_ROOT}}/sql/sql-script.sql"
