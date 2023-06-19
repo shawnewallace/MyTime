@@ -47,8 +47,18 @@ jobs:
     - name: Build API
       run: dotnet build src/MyTime.Api/MyTime.Api.csproj --configuration Release
       
-    - name: Publish API
+    - name: Stage API
       run: dotnet publish src/MyTime.Api/MyTime.Api.csproj -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+      
+    - name: Publish API to Dev
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'mytimedev'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A7CF3230E9044CB0BB638EC39BE8C8AA }}
+        package: "${{env.DOTNET_ROOT}}/myapp"
+      
       
     - name: Install EF
       run: |
