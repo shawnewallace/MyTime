@@ -55,4 +55,4 @@ jobs:
         dotnet tool install dotnet-ef
         
     - name: Generate SQL Deployment Script
-      run:  dotnet ef migrations script --project src/MyTime.Api/MyTime.Api.csproj --output "${{env.DOTNET_ROOT}}/sql/sql-script.sql" --idempotent --no-build
+      run:  dotnet ef migrations script --project src/MyTime.Api/MyTime.Api.csproj --output "${{env.DOTNET_ROOT}}/sql/sql-script.sql" --idempotent
