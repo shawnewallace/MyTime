@@ -30,3 +30,29 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      
+  publish-dev:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+      
+    - name: Set Up .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Build API
+      run: dotnet build src/MyTime.Api/MyTime.Api.csproj --configuration Release
+      
+    - name: Publish API
+      run: dotnet publish src/MyTime.Api/MyTime.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      
+    - name: Install EF
+      run: |
+        dotnet new tool-manifest
+        dotnet tool install dotnet-ef
+        
+    - name: Generate SQL Deployment Script
+      run:  dotnet ef migrations script --project src/MyTime.Api/MyTime.Api.csproj --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --idempotent --no-build
