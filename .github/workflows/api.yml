@@ -31,7 +31,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       
-  publish-dev:
+  publish-api-dev:
     runs-on: windows-latest
     needs: build-and-test
     
@@ -73,3 +73,20 @@ jobs:
       with:
         connection-string: ${{ secrets.CONNECTION_STRING }}
         path: "${{env.DOTNET_ROOT}}/sql/sql-script.sql"
+
+  publish-web-dev:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+      
+    - name: Install Node.js
+      uses: actions/setup-node@v2.5.2
+      with:
+        node-version: 16.x
+
+    - name: Yarn install
+      run: |
+        working-directory: "./${{ env.webAppSolutionRoot }}"
