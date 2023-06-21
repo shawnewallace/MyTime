@@ -89,4 +89,10 @@ jobs:
 
     - name: Yarn install
       run: |
-        working-directory: "./src/timesheet-app"
+        yarn add --dev eslint-formatter-fix-dry-run
+        yarn install
+      working-directory: "./src/timesheet-app"
+      
+    - name: Build
+      run: yarn run build:dev
+      working-dirctory: "./src/timesheet-app'
