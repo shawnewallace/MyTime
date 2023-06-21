@@ -87,13 +87,6 @@ jobs:
       with:
         node-version: 16.x
         
-    - name: Download Yarn
-      uses: actions/download-artifact@v2.0.10
-      id: download-yarn
-      with:
-        name: yarn
-        path: "./"
-        
     - name: Add React Scripts with Yarn
       run: yarn add react-scripts
       working-directory: "./src/timesheet-app"
