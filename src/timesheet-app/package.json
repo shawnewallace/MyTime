@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -23,9 +24,9 @@
     "start:dev": "env-cmd -f .env.dev react-scripts start",
     "start:docker": "env-cmd -f .env.docker react-scripts start",
     "start:prod": "env-cmd -f .env.prod react-scripts start",
-		"build:dev": "env-cmd -f .env.dev react-scripts build",
-		"build:docker": "env-cmd -f .env.docker react-scripts build",
-		"build:production": "env-cmd -f .env.prod react-scripts build",
+    "build:dev": "env-cmd -f .env.dev react-scripts build",
+    "build:docker": "env-cmd -f .env.docker react-scripts build",
+    "build:production": "env-cmd -f .env.prod react-scripts build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
