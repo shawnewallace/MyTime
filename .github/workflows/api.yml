@@ -99,4 +99,7 @@ jobs:
       
     - name: DEVELOPMENT Build
       run: yarn run build:dev
-      working-directory: "./src/timesheet-app'
+      working-directory: "./src/timesheet-app"
+      env:
+        CI: true
+        REACT_APP_ENV: development
