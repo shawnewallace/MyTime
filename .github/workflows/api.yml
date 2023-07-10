@@ -99,4 +99,4 @@ jobs:
       
     - name: DEVELOPMENT Build
       run: yarn run build:dev
-      working-dirctory: "./src/timesheet-app'
+      working-directory: "./src/timesheet-app'
