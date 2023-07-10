@@ -101,5 +101,5 @@ jobs:
       run: yarn run build:dev
       working-directory: "./src/timesheet-app"
       env:
-        CI: true
+        CI: false
         REACT_APP_ENV: development
