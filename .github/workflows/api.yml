@@ -76,7 +76,7 @@ jobs:
 
   publish-web-dev:
     runs-on: ubuntu-latest
-#     needs: build-and-test-api
+    needs: build-and-test-api
 
     steps:
     - name: checkout
