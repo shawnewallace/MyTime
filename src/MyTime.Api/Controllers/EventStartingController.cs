@@ -2,6 +2,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MyTime.Api.Models;
 using MyTime.App.Entries.CreateNewEntry;
+using MyTime.App.Exceptions;
+using MyTime.App.Infrastructure;
+using MyTime.App.Models;
 
 namespace MyTime.Api.Controllers;
 
@@ -9,7 +12,7 @@ public class EventStartingController : ApiControllerBase
 {
 	public EventStartingController(IMediator mediator) : base(mediator) { }
 
-	[HttpPost]
+	[HttpPost("/eventstarting")]
 	[Produces("application/json")]
 	[Consumes("application/json")]
 	[ProducesResponseType(StatusCodes.Status201Created)]
@@ -25,7 +28,16 @@ public class EventStartingController : ApiControllerBase
 			CorrelationId = eventDetails.eventId
 		};
 
-		var newEntry = await Mediator.Send(command);
-		return CreatedAtAction("", newEntry);
+
+		try
+		{
+			var newEntry = await Mediator.Send(command);
+
+			return CreatedAtAction(nameof(EntryController.GetEntry), "Entry", new { id = newEntry.Id }, newEntry);
+		}
+		catch (ValidationException ve)
+		{
+			return new BadRequestObjectResult(ve);
+		}
 	}
 }
