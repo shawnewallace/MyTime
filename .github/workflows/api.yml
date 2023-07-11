@@ -103,3 +103,12 @@ jobs:
       env:
         CI: false
         REACT_APP_ENV: development
+        
+    - name: Azure Blob Upload
+      uses: LanceMcCarthy/Action-AzureBlobUpload@v2.2.1
+      with:
+        connection_string: ${{ secrets.DEV_WEB_APP_CONNECTION_STRING }}
+        container_name: $web
+        source_folder: "./src/timesheet-app/build"
+        clean_destination_folder: true
+      
