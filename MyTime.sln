@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTime.Integration.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTime.Csl", "src\MyTime.Csl\MyTime.Csl.csproj", "{7C76BB31-AF38-4D7A-AFFE-EFE5AB4B1B90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTime_Functions", "src\MyTime.Functions\MyTime_Functions.csproj", "{EC540CB5-6296-47E5-9E3A-A0D49B067DCE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "MyTime_Functions": {
-      "commandName": "Project",
-      "commandLineArgs": "--port 7263",
-      "launchBrowser": false
-    }
-  }
-}
