@@ -40,7 +40,7 @@ namespace MyTime.App.EntryDays.GetEntryDayList
 				query = query.Where(e => !e.IsDeleted);
 			}
 
-			var result = await query.ToListAsync();
+			var result = await query.ToListAsync(cancellationToken);
 
 			var response = new EntryRangeModel(from, to, result);
 
