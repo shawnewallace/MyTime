@@ -19,13 +19,24 @@ public class EventStartingController : ApiControllerBase
 	[ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
 	public async Task<IActionResult> EventStarting([FromBody] AppointmentStartingNotificationModel eventDetails)
 	{
+		float duration = 0;
+
+		if(eventDetails.endTime.HasValue)
+		{
+			TimeSpan span = eventDetails.endTime.Value - eventDetails.startTime;
+			duration = (float)span.TotalHours;
+
+			duration = (float) Math.Round(duration * 4, MidpointRounding.ToEven) / 4;
+		}
+
 		var command = new CreateNewEntryCommand
 		{
 			OnDate = eventDetails.startTime.Date,
 			Description = eventDetails.subject,
 			Notes = "Created Automatically by EventStarting",
 			UserId = GetCurrentUserId(),
-			CorrelationId = eventDetails.eventId
+			CorrelationId = eventDetails.eventId,
+			Duration = duration
 		};
 
 

@@ -69,11 +69,11 @@ public class EntryController : ApiControllerBase
 		{
 			Id = entryId,
 			OnDate = model.OnDate,
-			Description = model.Description,
-			Category = model.Category,
+			Description = model.Description ?? "",
+			Category = model.Category ?? "",
 			Duration = model.Duration,
 			IsUtilization = model.IsUtilization,
-			Notes = model.Notes
+			Notes = model.Notes ?? ""
 		};
 
 		try

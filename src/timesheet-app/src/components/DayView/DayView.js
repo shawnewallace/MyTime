@@ -36,6 +36,21 @@ const DayView = ({ onSave, cats }) => {
 		fetchEntries(date);
 	};
 
+	const handleBillableChange = (ctl, id) => {
+		var entry = entries.filter(e => e.id === id)[0];
+		entry.isUtilization = !entry.isUtilization;
+
+		var updatedEntry = {
+			id: entry.id,
+			onDate: entry.onDate,
+			billable: entry.isUtilization
+		};
+
+		apiService.saveUtilization(updatedEntry);
+
+		ctl.checked = entry.isUtilization;
+	};
+
 	const visibleDate = moment(selectedDate).format('YYYY-MM-DD');
 
 	return (
@@ -74,12 +89,16 @@ const DayView = ({ onSave, cats }) => {
 								<tr key={entry.id}>
 									<td>
 										<Link className="link" to={`/entry/${entry.id}/edit`}>
-										{entry.description}
+											{entry.description}
 										</Link>
 									</td>
 									<td>{entry.category === "NULL" ? "" : entry.category}</td>
 									<td>{entry.duration.toFixed(2)}</td>
-									<td>{entry.isUtilization ? 'Yes' : 'No'}</td>
+									<td>
+										<input type="checkbox"
+											defaultChecked={entry.isUtilization}
+											onChange={(e) => { handleBillableChange(e, entry.id) }} />
+									</td>
 									<td>{entry.notes}</td>
 								</tr>
 							))}
