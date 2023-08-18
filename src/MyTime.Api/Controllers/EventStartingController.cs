@@ -21,12 +21,10 @@ public class EventStartingController : ApiControllerBase
 	{
 		float duration = 0;
 
-		if(eventDetails.endTime.HasValue)
+		if (eventDetails.endTime.HasValue)
 		{
 			TimeSpan span = eventDetails.endTime.Value - eventDetails.startTime;
 			duration = (float)span.TotalHours;
-
-			duration = (float) Math.Round(duration * 4, MidpointRounding.ToEven) / 4;
 		}
 
 		var command = new CreateNewEntryCommand
@@ -36,9 +34,8 @@ public class EventStartingController : ApiControllerBase
 			Notes = "Created Automatically by EventStarting",
 			UserId = GetCurrentUserId(),
 			CorrelationId = eventDetails.eventId,
-			Duration = duration
+			Duration = duration.RoundToQuarter(),
 		};
-
 
 		try
 		{
