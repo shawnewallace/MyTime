@@ -95,9 +95,10 @@ const DayView = ({ onSave, cats }) => {
 							<tr>
 								<th></th>
 								<th></th>
+								<th></th>
 								<th>{total.toFixed(2)}</th>
 								<th>{billable.toFixed(2)}</th>
-								<th></th>
+								<td></td>
 							</tr>
 							<tr>
 								<th>&nbsp;</th>
