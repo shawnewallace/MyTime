@@ -9,6 +9,7 @@ using MyTime.App.Entries.UpdateEntry;
 using MyTime.App.Infrastructure;
 using MyTime.App.Exceptions;
 using MyTime.App.Models;
+using MyTime.App.Entries.DeleteEntry;
 
 namespace MyTime.Api.Controllers;
 
@@ -47,7 +48,7 @@ public class EntryController : ApiControllerBase
 			Description = model.Description,
 			Category = model.Category,
 			Duration = model.Duration,
-			IsUtilization = model.IsUtilization,
+			IsUtilization = model.IsUtilization ?? false,
 			Notes = model.Notes,
 			UserId = GetCurrentUserId(),
 		};
@@ -61,20 +62,24 @@ public class EntryController : ApiControllerBase
 	[Consumes("application/json")]
 	[ProducesResponseType(StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<IActionResult> Update(string id, [FromBody] UpdateEntryModel model, CancellationToken cancellationToken)
+	public async Task<IActionResult> Update(
+		string id,
+		[FromBody] UpdateEntryModel model,
+		CancellationToken cancellationToken)
 	{
 		var entryId = new Guid(id);
 
 		var command = new UpdateEntryCommand()
 		{
 			Id = entryId,
-			OnDate = model.OnDate,
-			Description = model.Description ?? "",
-			Category = model.Category ?? "",
-			Duration = model.Duration,
-			IsUtilization = model.IsUtilization,
-			Notes = model.Notes ?? ""
+			OnDate = model.OnDate
 		};
+
+		if (model.Description is not null) command.Description = model.Description;
+		if (model.Category is not null) command.Category = model.Category;
+		if (model.Duration > 0) command.Duration = model.Duration;
+		if (model.IsUtilization is not null) command.IsUtilization = model.IsUtilization;
+		if (model.Notes is not null) command.Notes = model.Notes;
 
 		try
 		{
@@ -87,8 +92,6 @@ public class EntryController : ApiControllerBase
 			return NotFound(id);
 		}
 	}
-
-
 
 	[HttpPut("/entries/merge/{primary}/{secondary}")]
 	[Produces("application/json")]
@@ -106,6 +109,23 @@ public class EntryController : ApiControllerBase
 		catch (ValidationException ve)
 		{
 			return new UnprocessableEntityObjectResult(ve.Failures);
+		}
+	}
+
+	[HttpDelete("/entry/{id}")]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	public async Task<IActionResult> Delete(string id)
+	{
+		var entryId = new Guid(id);
+		try
+		{
+			await Mediator.Send(new DeleteEntryCommand(entryId, GetCurrentUserId()));
+			return NoContent();
+		}
+		catch (EntryNotFoundException)
+		{
+			return NotFound(id);
 		}
 	}
 }

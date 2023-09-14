@@ -88,7 +88,7 @@ const apiService = {
 			throw new Error('API request failed');
 		}
 	},
-	updateEntry: async(entry) => {
+	updateEntry: async (entry) => {
 		var date = entry.onDate;
 		let entryPayload = {
 			OnDate: date,
@@ -116,11 +116,50 @@ const apiService = {
 			throw new Error('API request failed');
 		}
 	},
-	saveUtilization: async(entry) => {
+	deleteEntry: async (id) => {
+		console.log("DELETING " + id);
+		try {
+			await fetch(`${BASE_URL}/entry/${id}`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
+	saveUtilization: async (entry) => {
 		var date = entry.onDate;
 		let entryPayload = {
 			OnDate: date,
 			IsUtilization: entry.billable
+		};
+
+		var jsonEntry = JSON.stringify(entryPayload);
+
+		try {
+			const response = await fetch(`${BASE_URL}/entry/${entry.id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: jsonEntry,
+			});
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
+	saveDuration: async (entry) => {
+		var date = entry.onDate;
+
+		let entryPayload = {
+			OnDate: date,
+			Duration: entry.duration
 		};
 
 		var jsonEntry = JSON.stringify(entryPayload);

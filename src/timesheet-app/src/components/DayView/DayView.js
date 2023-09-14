@@ -51,6 +51,29 @@ const DayView = ({ onSave, cats }) => {
 		ctl.checked = entry.isUtilization;
 	};
 
+	const handleDurationChange = (ctl, id) => {
+		var entry = entries.filter(e => e.id === id)[0];
+
+		entry.duration = parseFloat(ctl.target.value);
+
+		var updatedEntry = {
+			id: entry.id,
+			onDate: entry.onDate,
+			duration: entry.duration
+		};
+
+		apiService.saveDuration(updatedEntry);
+
+		ctl.value = entry.duration.toFixed(2);
+	};
+
+	const handleDelete = (id) => {
+		apiService.deleteEntry(id);
+
+		let newEntries = entries.filter(e => e.id !== id);
+		setEntries(newEntries);
+	}
+
 	const visibleDate = moment(selectedDate).format('YYYY-MM-DD');
 
 	return (
@@ -77,6 +100,7 @@ const DayView = ({ onSave, cats }) => {
 								<th></th>
 							</tr>
 							<tr>
+								<th>&nbsp;</th>
 								<th>Description</th>
 								<th>Category</th>
 								<th>Duration</th>
@@ -88,12 +112,34 @@ const DayView = ({ onSave, cats }) => {
 							{entries.map((entry, index) => (
 								<tr key={entry.id}>
 									<td>
-										<Link className="link" to={`/entry/${entry.id}/edit`}>
-											{entry.description}
-										</Link>
+										<div class="btn-group" role="group" aria-label="Basic example">
+											<button
+												type="button"
+												class="btn btn-outline-danger btn-sm"
+												onClick={() => handleDelete(entry.id)}><i class="bi bi-trash3"></i></button>
+											<Link className="link" class="btn btn-outline-primary btn-sm" to={`/entry/${entry.id}/edit`}>
+												<i class="bi bi-pencil"></i>
+											</Link>
+										</div>
+									</td>
+									<td>
+										{entry.description}
 									</td>
 									<td>{entry.category === "NULL" ? "" : entry.category}</td>
-									<td>{entry.duration.toFixed(2)}</td>
+									<td>
+										<input
+											type="number"
+											step="0.25"
+											className='form-control'
+											id='duration'
+											name='duration'
+											defaultValue={entry.duration.toFixed(2)}
+											onChange={(e) => handleDurationChange(e, entry.id)}
+											min="0.25"
+											max="24"
+										// required
+										/>
+									</td>
 									<td>
 										<input type="checkbox"
 											defaultChecked={entry.isUtilization}

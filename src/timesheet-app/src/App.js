@@ -8,6 +8,7 @@ import EntryForm from './components/EntryForm/EntryForm';
 import DayView from './components/DayView/DayView'
 import apiService from './apiService';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap-icons/font/bootstrap-icons.css";
 import './App.css';
 
 const localizer = momentLocalizer(moment);

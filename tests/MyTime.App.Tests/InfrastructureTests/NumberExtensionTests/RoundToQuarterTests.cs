@@ -16,6 +16,7 @@ public class RoundToQuarterTests
 	[InlineData(1.63f, 1.75f)]
 	[InlineData(1.87f, 1.75f)]
 	[InlineData(1.88f, 2.0f)]
+	[InlineData(0.0f, 0.0f)]
 	public void ShouldRoundCorrectly(float value, float expected)
 	{
 		float result = value.RoundToQuarter();

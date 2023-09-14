@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -19,7 +20,9 @@ namespace Mytime.App.Entries.GetEntryList
 		
 		public async Task<List<EntryModel>> Handle(GetEntryListQuery request, CancellationToken cancellationToken)
 		{
-			var result = await _context.Entries.ToListAsync(cancellationToken);
+			var result = await _context
+													.Entries
+													.ToListAsync(cancellationToken);
 
 			var response = new List<EntryModel>();
 
