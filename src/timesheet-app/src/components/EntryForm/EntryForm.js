@@ -84,7 +84,6 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 
 	const handleCategoryChange = (newCategory) => {
 		setCategory(newCategory.label);
-		alert(newCategory.label);
 		setSelectedCategory(newCategory);
 	};
 

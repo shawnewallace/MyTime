@@ -179,6 +179,56 @@ const apiService = {
 			throw new Error('API request failed');
 		}
 	},
+	saveDescription: async (entry) => {
+		var date = entry.onDate;
+
+		let entryPayload = {
+			OnDate: date,
+			Description: entry.description
+		};
+
+		var jsonEntry = JSON.stringify(entryPayload);
+
+		try {
+			const response = await fetch(`${BASE_URL}/entry/${entry.id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: jsonEntry,
+			});
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
+	saveCategory: async (entry) => {
+		var date = entry.onDate;
+
+		let entryPayload = {
+			OnDate: date,
+			Category: entry.category
+		};
+
+		var jsonEntry = JSON.stringify(entryPayload);
+
+		try {
+			const response = await fetch(`${BASE_URL}/entry/${entry.id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: jsonEntry,
+			});
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
 };
 
 export default apiService;

@@ -84,7 +84,7 @@ const App = () => {
 		return (
 			<div className='custom-date-header'>
 				<div>
-					<Link to={`/day-view/${date.toISOString()}`}>
+					<Link to={`/day-view/${date.toISOString()}`} cats={categories}>
 						{dayData.dayOfMonth || dayOfMonth}
 					</Link>
 				</div>
@@ -145,7 +145,11 @@ const App = () => {
 									categories={categories} />
 							}
 						/>
-						<Route name='dayView' path="day-view/:initialDate" element={<DayView onSave={handleSaveEntry} cats={categories} />} />
+						<Route
+							name='dayView' 
+							path="day-view/:initialDate" 
+							element={<DayView onSave={handleSaveEntry} 
+							cats={categories} />} />
 					</Routes>
 				</main>
 				<footer className="bg-light py-3 mt-auto text-center">
