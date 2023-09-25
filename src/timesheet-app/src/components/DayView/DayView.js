@@ -32,14 +32,13 @@ const DayView = ({ onSave, cats }) => {
 		setTotal(data.total);
 	}
 
-	// const handleSaveEntry = (entry) => {
-	// 	onSave(entry);
-	// 	fetchEntries(selectedDate);
-	// };
-
 	const handleDateChange = (date) => {
 		setSelectedDate(date);
 		fetchEntries(date);
+	};
+
+	const handleDateIncrement = (increment) => {
+		handleDateChange(moment(selectedDate).add(increment, 'days').toDate());
 	};
 
 	const handleBillableChange = (ctl, id) => {
@@ -117,7 +116,19 @@ const DayView = ({ onSave, cats }) => {
 	return (
 		<div className="container">
 			<div className='row'>
-				<h3>Entries for: <DatePicker selected={selectedDate} onChange={handleDateChange} /></h3>
+				<h3>Entries for:</h3>
+			</div>
+			<div className='row row-cols-2' style={{ display: "flex", maxWidth: "250px" }}>
+				<div className='col'>
+					<DatePicker selected={selectedDate} onChange={handleDateChange} />
+				</div>
+				<div className='col'>
+					<div className="btn-group" role="group" aria-label="Basic example">
+						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateIncrement(-1)}><i className='bi bi-arrow-left-square'></i></button>
+						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateIncrement(1)} ><i className='bi bi-arrow-right-square'></i></button>
+						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateChange(new Date(initialDate))} ><i className='bi bi-calendar-check'></i></button>
+					</div>
+				</div>
 			</div>
 			<div>
 				{entries.length > 0 ? (
