@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
-import CreatableSelect from 'react-select/creatable';
 import 'react-datepicker/dist/react-datepicker.css';
 import apiService from '../../apiService';
 import { useParams, Link } from "react-router-dom";
@@ -11,14 +10,8 @@ const DayView = ({ onSave, cats }) => {
 	let initialDate = params.initialDate;
 	const [entries, setEntries] = useState([]);
 	const [selectedDate, setSelectedDate] = useState(initialDate ? new Date(initialDate) : new Date())
-	const [categories] = useState(cats);
 	const [billable, setBillable] = useState(0);
 	const [total, setTotal] = useState(0);
-
-	const formattedCategoryOptions = categories.map((item) => ({
-		value: item.name,
-		label: item.name
-	}));
 
 	useEffect(() => {
 		setSelectedDate(selectedDate);
@@ -39,6 +32,29 @@ const DayView = ({ onSave, cats }) => {
 
 	const handleDateIncrement = (increment) => {
 		handleDateChange(moment(selectedDate).add(increment, 'days').toDate());
+	};
+
+	const handleNewEntry = () => {
+		var entry = {
+			onDate: selectedDate,
+			description: 'new entry',
+			duration: 0.25
+		};
+
+		apiService.createEntry(entry).then((data) => {
+			var newEntry = {
+				id: data.id,
+				onDate: data.onDate,
+				description: data.description,
+				duration: data.duration,
+				isUtilization: data.billable,
+				category: data.category,
+				notes: data.notes
+			};
+
+			let newEntries = [...entries, newEntry];
+			setEntries(newEntries);
+		});
 	};
 
 	const handleBillableChange = (ctl, id) => {
@@ -125,8 +141,9 @@ const DayView = ({ onSave, cats }) => {
 				<div className='col'>
 					<div className="btn-group" role="group" aria-label="Basic example">
 						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateIncrement(-1)}><i className='bi bi-arrow-left-square'></i></button>
-						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateIncrement(1)} ><i className='bi bi-arrow-right-square'></i></button>
-						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateChange(new Date(initialDate))} ><i className='bi bi-calendar-check'></i></button>
+						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateIncrement(1)}><i className='bi bi-arrow-right-square'></i></button>
+						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateChange(new Date())}><i className='bi bi-calendar-check'></i></button>
+						<button type='button' className='btn btn-light btn-sm' onClick={() => handleNewEntry()}><i className='bi bi-calendar-plus'></i></button>
 					</div>
 				</div>
 			</div>

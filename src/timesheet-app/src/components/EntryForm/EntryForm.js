@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import CreatableSelect from 'react-select/creatable';
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import apiService from '../../apiService';
 
 
@@ -27,6 +28,8 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 		if (id === '') return;
 		fetchEvent(id);
 	}, [id]);
+
+	const navigate = useNavigate();
 
 	const fetchEvent = async (eventId) => {
 		console.log("fetching event");
@@ -75,7 +78,7 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 			await apiService.updateEntry(entry);
 		}
 
-		///???
+		navigate(-1);
 	};
 
 	const handleDateChange = (date) => {
@@ -91,6 +94,7 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 	const handleCancel = (event) => {
 		event.preventDefault();
 		// resetForm();
+		navigate(-1);
 	};
 
 	return (
