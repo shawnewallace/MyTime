@@ -6,6 +6,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Navigation from './components/Navigation/Navigation';
 import EntryForm from './components/EntryForm/EntryForm';
 import DayView from './components/DayView/DayView'
+import RangeView from './components/Reporting/RangeView'
 import apiService from './apiService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -150,6 +151,11 @@ const App = () => {
 							path="day-view/:initialDate" 
 							element={<DayView onSave={handleSaveEntry} 
 							cats={categories} />} />
+
+						<Route
+							name='report'
+							path="report"
+							element={<RangeView />} />
 					</Routes>
 				</main>
 				<footer className="bg-light py-3 mt-auto text-center">

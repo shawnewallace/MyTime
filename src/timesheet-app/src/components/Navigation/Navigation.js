@@ -21,6 +21,9 @@ const Navigation = () => {
 					<li className="nav-item">
 						<Link className="nav-link" to={`/day-view/${currentDate.toISOString()}`}>Day View</Link>
 					</li>
+					<li className="nav-item">
+						<Link className="nav-link" to="/report">Reporting</Link>
+					</li>
 				</ul>
 			</div>
 		</nav>

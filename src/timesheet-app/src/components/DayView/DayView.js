@@ -30,6 +30,10 @@ const DayView = ({ onSave, cats }) => {
 		fetchEntries(date);
 	};
 
+	const handleRefreshEntry = () => {
+		fetchEntries(selectedDate);
+	};
+
 	const handleDateIncrement = (increment) => {
 		handleDateChange(moment(selectedDate).add(increment, 'days').toDate());
 	};
@@ -144,10 +148,11 @@ const DayView = ({ onSave, cats }) => {
 						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateIncrement(1)}><i className='bi bi-arrow-right-square'></i></button>
 						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateChange(new Date())}><i className='bi bi-calendar-check'></i></button>
 						<button type='button' className='btn btn-light btn-sm' onClick={() => handleNewEntry()}><i className='bi bi-calendar-plus'></i></button>
+						<button type='button' className='btn btn-light btn-sm' onClick={() => handleRefreshEntry()}><i className='bi bi-arrow-clockwise'></i></button>
 					</div>
 				</div>
 			</div>
-			<div>
+			<div className='row'>
 				{entries.length > 0 ? (
 					<table className="table table-striped">
 						<thead>
