@@ -29,7 +29,7 @@ namespace MyTime.App.Models
 
 		private void FillEntries(List<Entry> entries)
 		{
-			foreach (var entry in entries)
+			foreach (var entry in entries.OrderBy(m => m.OnDate).ThenBy(m => m.WhenCreated))
 			{
 				Entries.Add(new EntryModel(entry));
 			}
