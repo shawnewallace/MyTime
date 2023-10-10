@@ -27,7 +27,7 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 	useEffect(() => {
 		if (id === '') return;
 		fetchEvent(id);
-	}, [id]);
+	});
 
 	const navigate = useNavigate();
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -8,6 +8,7 @@ import EntryForm from './components/EntryForm/EntryForm';
 import DayView from './components/DayView/DayView'
 import RangeView from './components/Reporting/RangeView'
 import apiService from './apiService';
+import Callback from './components/Callback/Callback';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import './App.css';
@@ -106,63 +107,74 @@ const App = () => {
 		}
 	};
 
-	const blankEntry = { };
+	const blankEntry = {};
 
 	return (
-		<BrowserRouter>
+		<Router>
 			<div className="d-flex flex-column min-vh-100 app">
 				<header className="bg-light">
-					<Navigation />
+					<div>
+						<Navigation />
+					</div>
 				</header>
-				<main className="flex-grow-1">
-					<Routes>
-						<Route name="home" path="/" element={
-							<Calendar
-								localizer={localizer}
-								events={events}
-								startAccessor="start"
-								endAccessor="end"
-								views={views}
-								components={components}
-								onNavigate={handleNavigate}
-							/>} />
-						<Route
-							name='newEntry' 
-							path="/entry" 
-							element={
-								<EntryForm 
-									entry={blankEntry}
-									onSave={handleSaveEntry}
-									categories={categories} />
-							}
-						/>
-						<Route
-							name='editEntry'
-							path='/entry/:id/edit'
-							element={
-								<EntryForm
-									entry={blankEntry}
-									onSave={handleSaveEntry}
-									categories={categories} />
-							}
-						/>
-						<Route
-							name='dayView' 
-							path="day-view/:initialDate" 
-							element={<DayView onSave={handleSaveEntry} 
-							cats={categories} />} />
+				<main className="flex-grow-1 ms-3 me-3 mb-3">
+					<div className='card h-100'>
+						<div className='card-body'>
+							<Routes>
+								<Route name="home" path="/" element={
+									<Calendar
+										localizer={localizer}
+										events={events}
+										startAccessor="start"
+										endAccessor="end"
+										views={views}
+										components={components}
+										onNavigate={handleNavigate}
+									/>} />
+								<Route
+									name='newEntry'
+									path="/entry"
+									element={
+										<EntryForm
+											entry={blankEntry}
+											onSave={handleSaveEntry}
+											categories={categories} />
+									}
+								/>
+								<Route
+									name='editEntry'
+									path='/entry/:id/edit'
+									element={
+										<EntryForm
+											entry={blankEntry}
+											onSave={handleSaveEntry}
+											categories={categories} />
+									}
+								/>
+								<Route
+									name='dayView'
+									path="day-view/:initialDate"
+									element={<DayView onSave={handleSaveEntry}
+										cats={categories} />} />
 
-						<Route
-							name='report'
-							path="report"
-							element={<RangeView />} />
-					</Routes>
+								<Route
+									name='report'
+									path="report"
+									element={<RangeView />} />
+
+								<Route
+									name='callback'
+									path='callback'
+									element={<Callback />} />
+							</Routes>
+						</div>
+					</div>
 				</main>
 				<footer className="bg-light py-3 mt-auto text-center">
 					<p>&copy; {new Date().getFullYear()} Shawn Wallace. All rights reserved.</p>
 				</footer>
 			</div>
-		</BrowserRouter>
+		</Router>
 	);
 };
 
