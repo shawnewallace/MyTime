@@ -9,6 +9,7 @@ import DayView from './components/DayView/DayView'
 import RangeView from './components/Reporting/RangeView'
 import apiService from './apiService';
 import Callback from './components/Callback/Callback';
+import Profile from './components/Profile/Profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import './App.css';
@@ -166,6 +167,11 @@ const App = () => {
 									name='callback'
 									path='callback'
 									element={<Callback />} />
+
+								<Route 
+									name='profile'
+									path='profile'
+									element={<Profile />} />
 							</Routes>
 						</div>
 					</div>

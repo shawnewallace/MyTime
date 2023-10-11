@@ -108,7 +108,7 @@ const DayView = ({ onSave, cats }) => {
 		ctl.value = entry.description;
 	};
 
-	const handleCategoryChange = (ctl, id) => {
+	const handleCategoryChangeDD = (ctl, id) => {
 		var entry = entries.filter(e => e.id === id)[0];
 
 		entry.category = ctl.target.value;
@@ -201,15 +201,16 @@ const DayView = ({ onSave, cats }) => {
 										/>
 									</td>
 									<td>
-										<input
-											type="text"
-											className='form-control'
-											id='category'
-											name='category'
+										<select
+											className='form-select'
+											aria-label='category select'
 											defaultValue={entry.category}
-											onChange={(e) => handleCategoryChange(e, entry.id)}
-											required
-										/>
+											onChange={(e) => handleCategoryChangeDD(e, entry.id)}>
+											<option value="">-- Select a Category --</option>
+											{cats.map((option) => (
+												<option key={option.name} value={option.name}>{option.name}</option>
+											))}
+										</select>
 									</td>
 									<td>
 										<input

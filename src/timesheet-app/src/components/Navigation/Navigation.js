@@ -12,8 +12,8 @@ const Navigation = () => {
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
 			<Link className="navbar-brand ms-3" to="/">My Time</Link>
 
-			<button class="navbar-toggler" type="button" data0-bs-toggle="collapse" data-bw-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
+			<button className="navbar-toggler" type="button" data0-bs-toggle="collapse" data-bw-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span className="navbar-toggler-icon"></span>
 			</button>
 
 			<div className="collapse navbar-collapse" id="navbarNav">
@@ -29,6 +29,9 @@ const Navigation = () => {
 					</li>
 					<li className="nav-item">
 						<Link className="nav-link" to="/report">Reporting</Link>
+					</li>
+					<li className="nav-item">
+						<Link className="nav-link" to="/profile">Profile</Link>
 					</li>
 				</ul>
 
