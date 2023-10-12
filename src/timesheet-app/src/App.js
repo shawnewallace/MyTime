@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
@@ -10,6 +11,9 @@ import RangeView from './components/Reporting/RangeView'
 import apiService from './apiService';
 import Callback from './components/Callback/Callback';
 import Profile from './components/Profile/Profile';
+import Categories from './components/Categories/Categories';
+import { PageLoader } from './components/page-loader';
+import { AuthenticationGuard } from './components/authentication-guard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import './App.css';
@@ -23,6 +27,9 @@ const views = {
 };
 
 const App = () => {
+
+	const { isLoading } = useAuth0();
+
 
 	const [events, setEvents] = useState([]);
 	const [days, setDays] = useState([]);
@@ -110,6 +117,14 @@ const App = () => {
 
 	const blankEntry = {};
 
+	if (isLoading) {
+		return (
+			<div className="page-layout">
+				<PageLoader />
+			</div>
+		);
+	}
+
 	return (
 		<Router>
 			<div className="d-flex flex-column min-vh-100 app">
@@ -124,14 +139,15 @@ const App = () => {
 							<Routes>
 								<Route name="home" path="/" element={
 									<Calendar
-										localizer={localizer}
-										events={events}
-										startAccessor="start"
-										endAccessor="end"
-										views={views}
-										components={components}
-										onNavigate={handleNavigate}
-									/>} />
+										localizer={localizer} 
+										events={events} 
+										startAccessor="start" 
+										endAccessor="end" 
+										views={views} 
+										components={components} 
+										onNavigate={handleNavigate} 
+									/>}
+								/>
 								<Route
 									name='newEntry'
 									path="/entry"
@@ -168,10 +184,12 @@ const App = () => {
 									path='callback'
 									element={<Callback />} />
 
-								<Route 
+								<Route
 									name='profile'
 									path='profile'
 									element={<Profile />} />
+
+								<Route name='categories' path='categories' element={<Categories />} />
 							</Routes>
 						</div>
 					</div>
