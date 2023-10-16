@@ -39,6 +39,7 @@ const DayView = ({ onSave, cats }) => {
 
 	const handleRefreshEntry = () => {
 		fetchEntries(selectedDate);
+		fetchCategories(selectedDate);
 	};
 
 	const handleDateIncrement = (increment) => {
