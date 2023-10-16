@@ -21,6 +21,21 @@ const apiService = {
 			throw new Error("API request failed");
 		}
 	},
+	getCategoriesInRange: async (start, end) => {
+		try {
+			const response = await fetch(`${BASE_URL}/categories/between/${start.getFullYear()}-${start.getMonth() + 1}-${start.getDate()}/${end.getFullYear()}-${end.getMonth() + 1}-${end.getDate()}`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			});
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
 	updateCategory: async (entry) => {
 		let entryPayload = {
 			Name: entry.name

@@ -5,6 +5,7 @@ using MyTime.App.Categories;
 using MyTime.App.Categories.ToggleActive;
 using MyTime.App.Categories.UpdateCategory;
 using MyTime.App.Infrastructure;
+using MyTime.App.Models;
 using MyTime.Persistence.Entities;
 
 namespace MyTime.Api.Controllers;
@@ -31,6 +32,22 @@ public class CategoryController : ApiControllerBase
 	[Produces("application/json")]
 	[ProducesResponseType(StatusCodes.Status200OK)]
 	public async Task<List<Category>> GetAll() => await Mediator.Send(request: new GetAllCategoriesListQuery());
+
+	[HttpPost("/categories/between/{from}/{to}")]
+	[Produces("application/json")]
+	[ProducesResponseType(StatusCodes.Status200OK)]
+	public async Task<List<CategoryDayModel>> GetRange(DateTime from, DateTime to)
+	{
+		var query = new GetCategoryDaysQuery
+		{
+			From = from.Date,
+			To = to.Date
+		};
+
+		var result = await Mediator.Send(query);
+
+		return result;
+	}
 
 	[HttpPut("/category/{id}")]
 	[Produces("application/json")]
