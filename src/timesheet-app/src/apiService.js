@@ -11,6 +11,51 @@ const apiService = {
 			throw new Error("API request failed");
 		}
 	},
+	getAllCategories: async () => {
+		try {
+			const response = await fetch(`${BASE_URL}/categories`);
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('API Error retrieving Categores:', error);
+			throw new Error("API request failed");
+		}
+	},
+	updateCategory: async (entry) => {
+		let entryPayload = {
+			Name: entry.name
+		};
+
+		var jsonEntry = JSON.stringify(entryPayload);
+
+		try {
+			const response = await fetch(`${BASE_URL}/category/${entry.id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: jsonEntry,
+			});
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
+	toggleCategoryAcvite: async (id) => {
+		try {
+			await fetch(`${BASE_URL}/category/${id}/toggle-active`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
 	getEntries: async (start, end) => {
 		try {
 			const response = await fetch(`${BASE_URL}/entries/between/${start.getFullYear()}-${start.getMonth() + 1}-${start.getDate()}/${end.getFullYear()}-${end.getMonth() + 1}-${end.getDate()}`, {

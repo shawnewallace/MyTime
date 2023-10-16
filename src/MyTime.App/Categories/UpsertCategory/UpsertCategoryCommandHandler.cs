@@ -19,17 +19,19 @@ namespace MyTime.App.Categories.UpsertCategory
 			var category = await _context
 											.Categories
 											.Where(c => c.Name == request.Name)
-											.FirstOrDefaultAsync();
+											.FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
 			if (category is null)
 			{
-				category = new Category();
-				category.Name = request.Name;
+				category = new Category
+				{
+					Name = request.Name
+				};
 				await _context.Categories.AddAsync(category);
 			}
 
 			category.WhenUpdated = System.DateTime.UtcNow;
-			await _context.SaveChangesAsync();
+			await _context.SaveChangesAsync(cancellationToken);
 
 			return category;
 		}
