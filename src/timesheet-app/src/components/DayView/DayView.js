@@ -257,7 +257,7 @@ const DayView = ({ onSave, cats }) => {
 				{categorySummary.length > 0 ? (
 					<>
 						{categorySummary.map((entry, index) => (
-							<div className="row">
+							<div className="row" key={entry.name}>
 								<div className="col">{entry.name}</div>
 								<div className="col">{entry.total.toFixed(2)}</div>
 							</div>

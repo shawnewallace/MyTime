@@ -36,6 +36,30 @@ const apiService = {
 			throw new Error('API request failed');
 		}
 	},
+	createCategory: async (category) => {
+		let newCategory = {
+			name: category
+		};
+
+		console.log("creating category", newCategory);
+
+		var jsonEntry = JSON.stringify(newCategory);
+
+		try {
+			const response = await fetch(`${BASE_URL}/category`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: jsonEntry,
+			});
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
 	updateCategory: async (entry) => {
 		let entryPayload = {
 			Name: entry.name

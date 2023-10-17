@@ -19,6 +19,12 @@ const Categories = () => {
 		}
 	};
 
+	const handleNewCategory = () => {
+		apiService.createCategory("_New Category_").then((data) => {
+			fetchCategories();
+		});
+	};
+
 	const handleNameChange = (ctl, id) => {
 		var category = categories.filter(e => e.id === id)[0];
 
@@ -38,16 +44,25 @@ const Categories = () => {
 		var category = categories.filter(e => e.id === id)[0];
 		category.isDeleted = !category.isDeleted;
 
-		apiService.toggleCategoryAcvite(id);
+		apiService.toggleCategoryAcvite(id).then((data) => {
+			ctl.checked = category.isDeleted;
+			fetchCategories();
+		});
 
-		ctl.checked = category.isDeleted;
 	};
 
 	return (
 		<>
 			<div className="container">
 				<div className="row">
-					<h3>Categories</h3>
+					<div className="col">
+						<h3>Categories
+							<div className="btn-group" role="group" aria-label="Basic example">
+								<button type='button' className='btn btn-light btn-sm' onClick={() => handleNewCategory()}><i className='bi bi-file-plus'></i></button>
+								<button type='button' className='btn btn-light btn-sm' onClick={() => fetchCategories()}><i className='bi bi-arrow-clockwise'></i></button>
+							</div>
+						</h3>
+					</div>
 				</div>
 				<div className="row">
 					<div className="col"><b>Name</b></div>

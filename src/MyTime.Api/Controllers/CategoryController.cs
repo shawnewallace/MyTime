@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MyTime.Api.Models;
 using MyTime.App.Categories;
+using MyTime.App.Categories.CreateNewCategory;
 using MyTime.App.Categories.ToggleActive;
 using MyTime.App.Categories.UpdateCategory;
 using MyTime.App.Infrastructure;
@@ -47,6 +48,23 @@ public class CategoryController : ApiControllerBase
 		var result = await Mediator.Send(query);
 
 		return result;
+	}
+
+	[HttpPost]
+	[Produces("application/json")]
+	[Consumes("application/json")]
+	[ProducesResponseType(StatusCodes.Status201Created)]
+	[ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+	public async Task<IActionResult> Create([FromBody] NewCategoryModel model)
+	{
+		var command = new CreateNewCategoryCommand
+		{
+			Name = model.Name,
+			IsDeleted = false
+		};
+
+		var newCategory = await Mediator.Send(command);
+		return Created("", newCategory);
 	}
 
 	[HttpPut("/category/{id}")]
