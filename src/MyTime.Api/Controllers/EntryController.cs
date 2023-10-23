@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Mytime.App.Entries.GetEntryList;
 using MyTime.Api.Models;
+using MyTime.App.Entries;
 using MyTime.App.Entries.CreateNewEntry;
 using MyTime.App.Entries.GetEntry;
 using MyTime.App.Entries.MergeEntries;
 using MyTime.App.Entries.UpdateEntry;
 using MyTime.App.Infrastructure;
 using MyTime.App.Exceptions;
-using MyTime.App.Models;
 using MyTime.App.Entries.DeleteEntry;
 
 namespace MyTime.Api.Controllers;

@@ -6,7 +6,6 @@ using MyTime.App.Categories.CreateNewCategory;
 using MyTime.App.Categories.ToggleActive;
 using MyTime.App.Categories.UpdateCategory;
 using MyTime.App.Infrastructure;
-using MyTime.App.Models;
 using MyTime.Persistence.Entities;
 
 namespace MyTime.Api.Controllers;

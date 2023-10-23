@@ -1,6 +1,5 @@
 using System;
 using MediatR;
-using MyTime.App.Models;
 
 namespace MyTime.App.Entries.UpdateEntry
 {

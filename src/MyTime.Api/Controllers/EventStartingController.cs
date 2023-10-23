@@ -4,7 +4,6 @@ using MyTime.Api.Models;
 using MyTime.App.Entries.CreateNewEntry;
 using MyTime.App.Exceptions;
 using MyTime.App.Infrastructure;
-using MyTime.App.Models;
 
 namespace MyTime.Api.Controllers;
 

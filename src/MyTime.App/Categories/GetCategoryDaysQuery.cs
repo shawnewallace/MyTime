@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using MediatR;
-using MyTime.App.Models;
 
 namespace MyTime.App.Categories;
 

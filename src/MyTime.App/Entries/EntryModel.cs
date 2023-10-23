@@ -2,7 +2,7 @@ using System;
 using MyTime.Persistence.Entities;
 using MyTime.Persistence.Infrastructure;
 
-namespace MyTime.App.Models;
+namespace MyTime.App.Entries;
 
 public class EntryModel : IId<Guid>, ITracking
 {

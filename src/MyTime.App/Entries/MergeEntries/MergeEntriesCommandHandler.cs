@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using MyTime.App.Exceptions;
-using MyTime.App.Models;
 using MyTime.Persistence;
 using MyTime.Persistence.Entities;
 

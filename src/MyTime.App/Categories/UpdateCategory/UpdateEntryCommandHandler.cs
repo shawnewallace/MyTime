@@ -6,7 +6,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MyTime.App.Exceptions;
 using MyTime.App.Infrastructure;
-using MyTime.App.Models;
 using MyTime.Persistence;
 using MyTime.Persistence.Entities;
 

@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.Identity.Client;
-using MyTime.App.Infrastructure;
+﻿using MyTime.App.Infrastructure;
 
-namespace MyTime.App.Models
+namespace MyTime.App.EntryDays
 {
 
 	public class EntryDayModel : IEntryRollup
@@ -22,14 +20,5 @@ namespace MyTime.App.Models
 		public float Total { get; set; }
 		public float UtilizedTotal { get; set; }
 		public int NumEntries { get; internal set; }
-	}
-
-	public class CategoryDayModel
-	{
-		public string Name { get; set; }
-		public float Total { get; set; }
-		public int NumEntries { get; set; }
-		public DateTime FirstEntry { get; set; }
-		public DateTime LastEntry { get; set; }
 	}
 }

@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using MyTime.Api.Models;
 using MyTime.App.EntryDays.GetEntryDayList;
 using MyTime.App.Infrastructure;
-using MyTime.App.Models;
 using System.Linq;
+using MyTime.App.EntryDays;
 
 namespace MyTime.Api.Controllers;
 

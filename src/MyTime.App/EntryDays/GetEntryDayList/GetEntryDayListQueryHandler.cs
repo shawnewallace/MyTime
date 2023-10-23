@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using MyTime.App.Models;
 using MyTime.Persistence;
 
 namespace MyTime.App.EntryDays.GetEntryDayList

@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using MyTime.App.Models;
+using MyTime.App.Entries;
 using MyTime.Persistence;
 
 namespace Mytime.App.Entries.GetEntryList
