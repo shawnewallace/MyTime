@@ -17,7 +17,11 @@ public class GetCategoryDaysQueryHandler : IRequestHandler<GetCategoryDaysQuery,
 
 	public async Task<List<CategoryDayModel>> Handle(GetCategoryDaysQuery request, CancellationToken cancellationToken)
 	{
-		var query = _context.Entries.Select(m => new { m.Category, m.Duration, m.OnDate });
+		var query = _context
+			.Entries
+			.Where(m => !m.IsDeleted)
+			.Select(m => new { m.Category, m.Duration, m.OnDate });
+		
 		DateTime from = DateTime.MinValue;
 		DateTime to = DateTime.MaxValue;
 
@@ -36,20 +40,37 @@ public class GetCategoryDaysQueryHandler : IRequestHandler<GetCategoryDaysQuery,
 		var entries = await query
 			.ToListAsync(cancellationToken);
 
+		var categoryNames = entries.Select(m => m.Category).Distinct().ToList();
 		var result = new List<CategoryDayModel>();
 
-		foreach (var entry in entries.Select(m => m.Category).Distinct().ToList())
+		foreach (var categoryName in categoryNames)
 		{
-			result.Add(new CategoryDayModel { Name = entry });
+			var entriesForThisCategory = entries.Where(e => e.Category == categoryName).ToList();
+			result.Add(new CategoryDayModel
+			{
+				Name = categoryName,
+				Total = entriesForThisCategory.Sum(c => c.Duration),
+				NumEntries = entriesForThisCategory.Count(),
+				FirstEntry = entriesForThisCategory.Min(e => e.OnDate),
+				LastEntry = entriesForThisCategory.Max(e => e.OnDate)
+			});
 		}
 
-		foreach (var item in result)
-		{
-			item.Total = entries.Where(m => m.Category == item.Name).Sum(m => m.Duration);
-			item.NumEntries = entries.Count(m => m.Category == item.Name);
-			item.FirstEntry = entries.Min(m => m.OnDate);
-			item.LastEntry = entries.Max(m => m.OnDate);
-		}
+
+		// var result = new List<CategoryDayModel>();
+
+		// foreach (var entry in entries.Select(m => m.Category).Distinct().ToList())
+		// {
+		// 	result.Add(new CategoryDayModel { Name = entry });
+		// }
+
+		// foreach (var item in result)
+		// {
+		// 	item.Total = entries.Where(m => m.Category == item.Name).Sum(m => m.Duration);
+		// 	item.NumEntries = entries.Count(m => m.Category == item.Name);
+		// 	item.FirstEntry = entries.Min(m => m.OnDate);
+		// 	item.LastEntry = entries.Max(m => m.OnDate);
+		// }
 
 		return result.OrderBy(m => m.Name).ToList();
 	}
