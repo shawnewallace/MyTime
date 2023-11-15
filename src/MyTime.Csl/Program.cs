@@ -40,7 +40,7 @@ Random r = new Random();
 // }
 
 
-var jan1 = new DateTime(DateTime.Today.Year, 1, 1);
+var jan1 = new DateTime(2022, 1, 1);
 var startOfWeek = jan1.AddDays(1 - (int) jan1.DayOfWeek - 1);
 
 Console.WriteLine($"The First Day of the Year is a {jan1.DayOfWeek}");

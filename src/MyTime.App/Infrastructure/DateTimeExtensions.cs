@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace MyTime.App.Infrastructure;
 
@@ -21,4 +22,16 @@ public static partial class DateTimeExtensions
 	public static DateTime FirstDayOfMonth(this DateTime dt) => new DateTime(dt.Year, dt.Month, 1);
 	public static DateTime LastDayOfMonth(this DateTime dt) => dt.FirstDayOfMonth().AddMonths(1).AddDays(-1);
 	public static DateTime FirstDayOfNextMonth(this DateTime dt) => dt.FirstDayOfMonth().AddMonths(1);
+
+	public static int WeekNumber(this DateTime dt)
+	{
+		var cultureInfo = CultureInfo.CurrentCulture;
+
+		return cultureInfo
+			.Calendar
+			.GetWeekOfYear(
+				dt, 
+				cultureInfo.DateTimeFormat.CalendarWeekRule, 
+				cultureInfo.DateTimeFormat.FirstDayOfWeek);
+	}
 }
