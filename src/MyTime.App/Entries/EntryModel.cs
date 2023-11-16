@@ -18,12 +18,12 @@ public class EntryModel : IId<Guid>, ITracking
 	public string CorrelationId { get; set; }
 	public string Category { get; set; }
 	public string UserId { get; set; }
-		
+	public bool IsMeeting { get; set; }
+
 	public EntryModel() { }
 	public EntryModel(Entry entry)
 	{
 		Id = entry.Id;
-		// OnDate = entry.OnDate.ToUniversalTime();
 		OnDate = entry.OnDate;
 		Description = entry.Description;
 		Duration = entry.Duration;
@@ -35,5 +35,6 @@ public class EntryModel : IId<Guid>, ITracking
 		CorrelationId = entry.CorrelationId;
 		Category = entry.Category;
 		UserId = entry.UserId;
+		IsMeeting = entry.IsMeeting;
 	}
 }

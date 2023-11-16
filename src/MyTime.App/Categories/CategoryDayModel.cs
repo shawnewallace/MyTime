@@ -9,5 +9,6 @@ namespace MyTime.App.Categories
 		public int NumEntries { get; set; }
 		public DateTime FirstEntry { get; set; }
 		public DateTime LastEntry { get; set; }
+		public string Descriptions { get; set; }
 	}
 }

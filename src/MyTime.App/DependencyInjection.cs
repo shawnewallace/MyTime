@@ -17,7 +17,7 @@ public static class DependencyInjection
 		services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 		services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LogginPipelineBehavior<,>));
 
-		services.AddMediatR(configuration => 
+		services.AddMediatR(configuration =>
 			configuration.RegisterServicesFromAssembly(assembly)
 		);
 

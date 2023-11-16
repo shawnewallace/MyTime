@@ -27,7 +27,8 @@ public class CreateNewEntryCommandHandler : IRequestHandler<CreateNewEntryComman
 			Notes = request.Notes,
 			CorrelationId = request.CorrelationId,
 			Category = request.Category,
-			UserId = request.UserId
+			UserId = request.UserId,
+			IsMeeting = request.IsMeeting
 		};
 
 		await _context.Entries.AddAsync(newEntry, cancellationToken);

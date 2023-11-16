@@ -13,4 +13,5 @@ public class CreateNewEntryCommand : IRequest<EntryModel>
 	public string Notes { get; set; }
 	public string CorrelationId { get; set; } = String.Empty;
 	public string UserId { get; set; }
+	public bool IsMeeting { get; set; } = false;
 }

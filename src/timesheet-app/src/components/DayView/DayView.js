@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import apiService from '../../apiService';
 import { useParams, Link } from "react-router-dom";
+import CategorySummaryComponent from '../Categories/CategorySummaryComponent'
 
 const DayView = ({ onSave, cats }) => {
 	let params = useParams();
@@ -127,7 +128,7 @@ const DayView = ({ onSave, cats }) => {
 			category: entry.category
 		};
 
-		apiService.saveCategory(updatedEntry);
+		apiService.saveCategory(updatedEntry).then((data) => { fetchCategories(selectedDate) });
 
 		ctl.value = entry.category;
 	};
@@ -199,15 +200,23 @@ const DayView = ({ onSave, cats }) => {
 											</div>
 										</td>
 										<td>
-											<input
-												type="text"
-												className='form-control'
-												id='description'
-												name='description'
-												defaultValue={entry.description}
-												onChange={(e) => handleDescriptionChange(e, entry.id)}
-												required
-											/>
+											<div className='input-group'>
+												{entry.isMeeting && (
+
+													<span className="input-group-text" id="basic-addon1">
+														<i class="bi bi-calendar-range"></i>
+													</span>
+												)}
+												<input
+													type="text"
+													className='form-control'
+													id='description'
+													name='description'
+													defaultValue={entry.description}
+													onChange={(e) => handleDescriptionChange(e, entry.id)}
+													required
+												/>
+											</div>
 										</td>
 										<td>
 											<select
@@ -254,18 +263,7 @@ const DayView = ({ onSave, cats }) => {
 			<hr />
 
 			<div className="container">
-				{categorySummary.length > 0 ? (
-					<>
-						{categorySummary.map((entry, index) => (
-							<div className="row" key={entry.name}>
-								<div className="col">{entry.name}</div>
-								<div className="col">{entry.total.toFixed(2)}</div>
-							</div>
-						))}
-					</>
-				) : (
-					<></>
-				)}
+				<CategorySummaryComponent categorySummary={categorySummary} />
 			</div>
 		</>
 	);

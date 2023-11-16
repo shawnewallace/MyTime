@@ -1,9 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 using MyTime.Persistence.Infrastructure;
 
 namespace MyTime.Persistence.Entities;
 
+[Index(nameof(OnDate))]
 public class Entry : AppEntityBase, IEntry
 {
 	public DateTime OnDate { get; set; }
@@ -14,4 +16,5 @@ public class Entry : AppEntityBase, IEntry
 	public string Notes { get; set; }
 	public string CorrelationId { get; set; } = string.Empty;
 	[Required] public string UserId { get; set; } = string.Empty;
+	public bool IsMeeting { get; set; }
 }

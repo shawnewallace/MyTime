@@ -34,6 +34,7 @@ public class EventStartingController : ApiControllerBase
 			UserId = GetCurrentUserId(),
 			CorrelationId = eventDetails.eventId,
 			Duration = duration.RoundToQuarter(),
+			IsMeeting = true
 		};
 
 		try

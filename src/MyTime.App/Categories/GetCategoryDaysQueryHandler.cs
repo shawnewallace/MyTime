@@ -20,7 +20,7 @@ public class GetCategoryDaysQueryHandler : IRequestHandler<GetCategoryDaysQuery,
 		var query = _context
 			.Entries
 			.Where(m => !m.IsDeleted)
-			.Select(m => new { m.Category, m.Duration, m.OnDate });
+			.Select(m => new { m.Category, m.Duration, m.OnDate, m.Description });
 		
 		DateTime from = DateTime.MinValue;
 		DateTime to = DateTime.MaxValue;
@@ -52,26 +52,10 @@ public class GetCategoryDaysQueryHandler : IRequestHandler<GetCategoryDaysQuery,
 				Total = entriesForThisCategory.Sum(c => c.Duration),
 				NumEntries = entriesForThisCategory.Count(),
 				FirstEntry = entriesForThisCategory.Min(e => e.OnDate),
-				LastEntry = entriesForThisCategory.Max(e => e.OnDate)
+				LastEntry = entriesForThisCategory.Max(e => e.OnDate),
+				Descriptions = string.Join(", ", entriesForThisCategory.Select(e => e.Description).ToArray())
 			});
 		}
-
-
-		// var result = new List<CategoryDayModel>();
-
-		// foreach (var entry in entries.Select(m => m.Category).Distinct().ToList())
-		// {
-		// 	result.Add(new CategoryDayModel { Name = entry });
-		// }
-
-		// foreach (var item in result)
-		// {
-		// 	item.Total = entries.Where(m => m.Category == item.Name).Sum(m => m.Duration);
-		// 	item.NumEntries = entries.Count(m => m.Category == item.Name);
-		// 	item.FirstEntry = entries.Min(m => m.OnDate);
-		// 	item.LastEntry = entries.Max(m => m.OnDate);
-		// }
-
 		return result.OrderBy(m => m.Name).ToList();
 	}
 }
