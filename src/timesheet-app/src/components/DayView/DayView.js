@@ -172,7 +172,6 @@ const DayView = ({ onSave, cats }) => {
 									<th></th>
 									<th>{total.toFixed(2)}</th>
 									<th>{billable.toFixed(2)}</th>
-									<td></td>
 								</tr>
 								<tr>
 									<th>&nbsp;</th>
@@ -180,7 +179,6 @@ const DayView = ({ onSave, cats }) => {
 									<th>Category</th>
 									<th>Duration</th>
 									<th>Billable</th>
-									<th>Notes</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -202,7 +200,6 @@ const DayView = ({ onSave, cats }) => {
 										<td>
 											<div className='input-group'>
 												{entry.isMeeting && (
-
 													<span className="input-group-text" id="basic-addon1">
 														<i class="bi bi-calendar-range"></i>
 													</span>
@@ -249,7 +246,6 @@ const DayView = ({ onSave, cats }) => {
 												defaultChecked={entry.isUtilization}
 												onChange={(e) => { handleBillableChange(e, entry.id) }} />
 										</td>
-										<td>{entry.notes}</td>
 									</tr>
 								))}
 							</tbody>
