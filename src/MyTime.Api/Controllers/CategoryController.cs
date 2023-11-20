@@ -6,20 +6,9 @@ using MyTime.App.Categories.CreateNewCategory;
 using MyTime.App.Categories.ToggleActive;
 using MyTime.App.Categories.UpdateCategory;
 using MyTime.App.Infrastructure;
-using MyTime.App.WeekSummary;
 using MyTime.Persistence.Entities;
 
 namespace MyTime.Api.Controllers;
-
-public class ReportController : ApiControllerBase
-{
-	public ReportController(IMediator mediator) : base(mediator) { }
-
-	[HttpGet("/report/week-summary")]
-	[Produces("application/json")]
-	[ProducesResponseType(StatusCodes.Status200OK)]
-	public async Task<List<WeekSummaryModel>> WeekSummary() => await Mediator.Send(request: new GetWeekSummaryQuery());
-}
 
 public class CategoryController : ApiControllerBase
 {

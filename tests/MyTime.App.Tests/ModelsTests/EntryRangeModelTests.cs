@@ -102,7 +102,7 @@ public class EntryRangeModelTests
 		_modelUnderTest.NumEntries.ShouldBe(_entries.Count);
 
 	[Fact]
-	public void RangeStartShouldBeInitialized() =>	
+	public void RangeStartShouldBeInitialized() =>
 		_modelUnderTest.RangeStart.ShouldBe(_rangeStart);
 
 	[Fact]
@@ -110,14 +110,15 @@ public class EntryRangeModelTests
 		_modelUnderTest.RangeEnd.ShouldBe(_rangeEnd);
 
 	[Fact]
-	public void TotalShouldBeCalculatedCorrectly() => 
+	public void TotalShouldBeCalculatedCorrectly() =>
 		_modelUnderTest.Total.ShouldBe(_entries.Sum(e => e.Duration));
 
 	[Fact]
-	public void UtilizedTotalShouldBeCalculatedCorrectly() => 
+	public void UtilizedTotalShouldBeCalculatedCorrectly() =>
 		_modelUnderTest.UtilizedTotal.ShouldBe(_entries.Where(e => e.IsUtilization).Sum(e => e.Duration));
 
-	[Fact]public void NumberOfCategorySummariesShouldBeThree() => 
+	[Fact]
+	public void NumberOfCategorySummariesShouldBeThree() =>
 		_modelUnderTest.NumCategories.ShouldBe(3);
 
 	[Theory]

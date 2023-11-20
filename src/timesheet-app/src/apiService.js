@@ -313,6 +313,22 @@ const apiService = {
 			throw new Error('API request failed');
 		}
 	},
+	getWeekSummaryReport: async () => {
+		try {
+			const response = await fetch(`${BASE_URL}/report/week-summary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			const data = await response.json();
+			return data;
+
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
 };
 
 export default apiService;

@@ -8,6 +8,7 @@ import Navigation from './components/Navigation/Navigation';
 import EntryForm from './components/EntryForm/EntryForm';
 import DayView from './components/DayView/DayView'
 import RangeView from './components/Reporting/RangeView'
+import SummaryByWeek from './components/Reporting/SummaryByWeek'
 import apiService from './apiService';
 import Callback from './components/Callback/Callback';
 import Profile from './components/Profile/Profile';
@@ -174,10 +175,14 @@ const App = () => {
 									element={<DayView onSave={handleSaveEntry}
 										cats={categories} />} />
 
+								{/* <Route
+									name='report'
+									path="report"
+									element={<RangeView />} /> */}
 								<Route
 									name='report'
 									path="report"
-									element={<RangeView />} />
+									element={<SummaryByWeek />} />
 
 								<Route
 									name='callback'

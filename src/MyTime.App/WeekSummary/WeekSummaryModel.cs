@@ -11,5 +11,34 @@ public sealed record WeekSummaryModel(
 	float TotalHours,
 	float UtilizedHours,
 	float MeetingHours,
-	float BusinessDevelopmentHours);
+	float BusinessDevelopmentHours)
+{
+	public float UtilizedPercentage
+	{
+		get
+		{
+			if (TotalHours == 0f) return 0f;
+			return UtilizedHours / TotalHours;
+		}
+	}
+
+	public float MeetingHoursPercentage
+	{
+		get
+		{
+			if (TotalHours == 0f) return 0f;
+			return MeetingHours / TotalHours;
+		}
+	}
+
+	public float BusinessDevelopmentHoursPercentage
+	{
+		get
+		{
+			if (TotalHours == 0f) return 0f;
+			return BusinessDevelopmentHours / TotalHours;
+		}
+	}
+}
+
 
