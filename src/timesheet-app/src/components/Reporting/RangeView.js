@@ -62,7 +62,7 @@ const RangeView = () => {
 						<div className="row">
 							<div className="col">&nbsp;</div>
 							<div className="col">&nbsp;</div>
-							<div className="col float-right">
+							<div className="col text-end">
 								Total: {total.toFixed(2)} hours <br />
 								Billable: {billable.toFixed(2)} hours
 							</div>
@@ -76,7 +76,7 @@ const RangeView = () => {
 								</div>
 								<div className="col">{entry.description}</div>
 								<div className="col">{entry.category}</div>
-								<div className="col float-right">{entry.duration.toFixed(2)}</div>
+								<div className="col text-end">{entry.duration.toFixed(2)}</div>
 								<div className="col">{entry.isUtilization ? "YES" : "NO"}</div>
 							</div>
 						))}

@@ -23,22 +23,28 @@ const SummaryByWeek = () => {
 			<div className="row">
 				{summary.length > 0 ? (
 					<>
-						<div className="row">
-							<div className="col">&nbsp;</div>
-							<div className="col">Total</div>
-							<div className="col">Utilized Total</div>
-							<div className="col">Meeting</div>
-							<div className="col">Business Development</div>
-						</div>
-						{summary.map((value, index) => (
-							<div className="row" key={index}>
-								<div className="col">{moment(value.firstDayOfWeek).format("YYYY-MM-DD")}</div>
-								<div className="col float-right">{value.totalHours.toFixed(2)}</div>
-								<div className="col float-right">{value.utilizedHours.toFixed(2)}</div>
-								<div className="col float-right">{value.meetingHours.toFixed(2)}</div>
-								<div className="col float-right">{value.businessDevelopmentHours.toFixed(2)}</div>
-							</div>
-						))}
+						<table className="table table-striped table-bordered table-sm">
+							<thead className="thead-dark">
+								<tr>
+									<th className="text-center" scope="col">Week Of</th>
+									<th className="text-center" scope="col">Total</th>
+									<th className="text-center" scope="col">Utilized</th>
+									<th className="text-center" scope="col">Meetings</th>
+									<th className="text-center" scope="col">Business Development</th>
+								</tr>
+							</thead>
+							<tbody>
+								{summary.map((value, index) => (
+									<tr>
+										<th className="text-center" scope="row">{moment(value.firstDayOfWeek).format("YYYY-MM-DD")}</th>
+										<td className="text-end">{value.totalHours.toFixed(2)}</td>
+										<td className="text-end">{value.utilizedHours.toFixed(2)} ({value.utilizedPercentage.toFixed(2)}%)</td>
+										<td className="text-end">{value.meetingHours.toFixed(2)} ({value.meetingHoursPercentage.toFixed(2)}%)</td>
+										<td className="text-end">{value.businessDevelopmentHours.toFixed(2)} ({value.businessDevelopmentHoursPercentage.toFixed(2)}%)</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
 					</>) : (
 					<div className="row"><p>No entries.</p></div>
 				)}

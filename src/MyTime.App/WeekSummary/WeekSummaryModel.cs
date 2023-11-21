@@ -18,7 +18,7 @@ public sealed record WeekSummaryModel(
 		get
 		{
 			if (TotalHours == 0f) return 0f;
-			return UtilizedHours / TotalHours;
+			return (UtilizedHours / TotalHours) * 100f;
 		}
 	}
 
@@ -27,7 +27,7 @@ public sealed record WeekSummaryModel(
 		get
 		{
 			if (TotalHours == 0f) return 0f;
-			return MeetingHours / TotalHours;
+			return (MeetingHours / TotalHours) * 100f;
 		}
 	}
 
@@ -36,7 +36,7 @@ public sealed record WeekSummaryModel(
 		get
 		{
 			if (TotalHours == 0f) return 0f;
-			return BusinessDevelopmentHours / TotalHours;
+			return (BusinessDevelopmentHours / TotalHours) * 100f;
 		}
 	}
 }
