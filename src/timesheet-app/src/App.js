@@ -14,9 +14,10 @@ import Callback from './components/Callback/Callback';
 import Profile from './components/Profile/Profile';
 import Categories from './components/Categories/Categories';
 import { PageLoader } from './components/page-loader';
-import { AuthenticationGuard } from './components/authentication-guard';
+// import { AuthenticationGuard } from './components/authentication-guard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './App.css';
 
 const localizer = momentLocalizer(moment);
@@ -175,13 +176,14 @@ const App = () => {
 									element={<DayView onSave={handleSaveEntry}
 										cats={categories} />} />
 
-								{/* <Route
-									name='report'
-									path="report"
-									element={<RangeView />} /> */}
 								<Route
-									name='report'
-									path="report"
+									name='rangeReport'
+									path="rangeReport"
+									element={<RangeView />} />
+									
+								<Route
+									name='reportSummary'
+									path="reportSummary"
 									element={<SummaryByWeek />} />
 
 								<Route

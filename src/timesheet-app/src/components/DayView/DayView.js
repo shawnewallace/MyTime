@@ -6,6 +6,7 @@ import apiService from '../../apiService';
 import { useParams, Link } from "react-router-dom";
 import CategorySummaryComponent from '../Categories/CategorySummaryComponent'
 
+
 const DayView = ({ onSave, cats }) => {
 	let params = useParams();
 	let initialDate = params.initialDate;
@@ -201,7 +202,7 @@ const DayView = ({ onSave, cats }) => {
 											<div className='input-group'>
 												{entry.isMeeting && (
 													<span className="input-group-text" id="basic-addon1">
-														<i class="bi bi-calendar-range"></i>
+														<i className="bi bi-calendar-range" data-bs-toggle="tooltip" data-bs-title='Meeting'></i>
 													</span>
 												)}
 												<input

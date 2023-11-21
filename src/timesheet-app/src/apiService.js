@@ -314,12 +314,16 @@ const apiService = {
 		}
 	},
 	getWeekSummaryReport: async () => {
+		let payload = {};
+		var jsonEntry = JSON.stringify(payload); 
+
 		try {
 			const response = await fetch(`${BASE_URL}/report/week-summary`, {
-				method: 'GET',
+				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
+				body: jsonEntry,
 			});
 			const data = await response.json();
 			return data;

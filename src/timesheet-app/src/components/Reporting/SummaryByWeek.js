@@ -26,6 +26,7 @@ const SummaryByWeek = () => {
 						<table className="table table-striped table-bordered table-sm">
 							<thead className="thead-dark">
 								<tr>
+									<th className="text-center" scope="col">&nbsp;</th>
 									<th className="text-center" scope="col">Week Of</th>
 									<th className="text-center" scope="col">Total</th>
 									<th className="text-center" scope="col">Utilized</th>
@@ -35,12 +36,33 @@ const SummaryByWeek = () => {
 							</thead>
 							<tbody>
 								{summary.map((value, index) => (
-									<tr>
-										<th className="text-center" scope="row">{moment(value.firstDayOfWeek).format("YYYY-MM-DD")}</th>
-										<td className="text-end">{value.totalHours.toFixed(2)}</td>
-										<td className="text-end">{value.utilizedHours.toFixed(2)} ({value.utilizedPercentage.toFixed(2)}%)</td>
-										<td className="text-end">{value.meetingHours.toFixed(2)} ({value.meetingHoursPercentage.toFixed(2)}%)</td>
-										<td className="text-end">{value.businessDevelopmentHours.toFixed(2)} ({value.businessDevelopmentHoursPercentage.toFixed(2)}%)</td>
+									<tr key={index}>
+										<th className="text-center" scope="row">{value.weekNumber}</th>
+										<th className="text-center">{moment(value.firstDayOfWeek).format("YYYY-MM-DD")}</th>
+										<td className="text-end">
+											{value.totalHours > 0 && value.totalHours.toFixed(2)}
+										</td>
+										<td className="text-end">
+											{value.utilizedHours > 0 ? (
+												<>
+													{value.utilizedHours.toFixed(2)}&nbsp;
+													({value.utilizedPercentage.toFixed(2)}%)
+												</>) : (<></>)}
+										</td>
+										<td className="text-end">
+											{value.meetingHours > 0 ? (
+												<>
+													{value.meetingHours.toFixed(2)}&nbsp;
+													({value.meetingHoursPercentage.toFixed(2)}%)
+												</>) : (<></>)}
+										</td>
+										<td className="text-end">
+											{value.businessDevelopmentHours > 0 ? (
+												<>
+													{value.businessDevelopmentHours.toFixed(2)}&nbsp;
+													({value.businessDevelopmentHoursPercentage.toFixed(2)}%)
+												</>) : (<></>)}
+										</td>
 									</tr>
 								))}
 							</tbody>

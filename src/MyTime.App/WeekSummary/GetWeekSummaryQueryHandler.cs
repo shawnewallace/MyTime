@@ -18,8 +18,11 @@ public class GetWeekSummaryQueryHandler(MyTimeSqlDbContext context) : IRequestHa
 
 	public async Task<List<WeekSummaryModel>> Handle(GetWeekSummaryQuery request, CancellationToken cancellationToken)
 	{
-		var query = _context.Entries.Where(e => !e.IsDeleted);
-		if (request.Year.HasValue) query = query.Where(e => e.OnDate.Year == request.Year.Value);
+		var query = _context.Entries
+			.Where(e => !e.IsDeleted)
+			.Where(e => 
+				e.OnDate >= request.From.FirstDayOfWeek() 
+				&& e.OnDate <= request.To.LastDayOfWeek());
 
 		var rawEntries = await query.Select(e => new
 		{

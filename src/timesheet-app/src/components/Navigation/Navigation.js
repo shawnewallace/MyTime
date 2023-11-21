@@ -27,8 +27,19 @@ const Navigation = () => {
 					<li className="nav-item">
 						<Link className="nav-link" to={`/day-view/${currentDate.toISOString()}`}>Day View</Link>
 					</li>
-					<li className="nav-item">
-						<Link className="nav-link" to="/report">Reporting</Link>
+					<li className="nav-item dropdown">
+						<a className="nav-link dropdown-toggle"
+							href="/#"
+							id="navbarDropdown"
+							role="button"
+							data-bs-toggle="dropdown"
+							aria-expanded="true">
+							Reports
+						</a>
+						<ul className="dropdown-menu" aria-labelledby='navbarDropdown'>
+							<li><a className="dropdown-item" href="/rangeReport">Range Report</a></li>
+							<li><a className="dropdown-item" href="/reportSummary">Summary by Week</a></li>
+						</ul>
 					</li>
 					<li className="nav-item">
 						<Link className="nav-link" to="/profile">Profile</Link>
