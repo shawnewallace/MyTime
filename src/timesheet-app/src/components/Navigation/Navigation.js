@@ -37,8 +37,8 @@ const Navigation = () => {
 							Reports
 						</a>
 						<ul className="dropdown-menu" aria-labelledby='navbarDropdown'>
-							<li><a className="dropdown-item" href="/rangeReport">Range Report</a></li>
-							<li><a className="dropdown-item" href="/reportSummary">Summary by Week</a></li>
+							<li><a className="dropdown-item" href="/rangereport">Range Report</a></li>
+							<li><a className="dropdown-item" href="/reportsummary">Summary by Week</a></li>
 						</ul>
 					</li>
 					<li className="nav-item">
