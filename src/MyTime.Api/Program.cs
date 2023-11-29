@@ -1,3 +1,4 @@
+using Carter;
 using Microsoft.EntityFrameworkCore;
 using MyTime.App;
 using MyTime.Persistence;
@@ -18,6 +19,7 @@ builder.Services.AddCors(options =>
 			.AllowAnyHeader();
 	});
 });
+builder.Services.AddCarter();
 
 builder.Services
 	.AddApp()
@@ -50,6 +52,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseSerilogRequestLogging();
+
+app.MapCarter();
 
 app.UseHttpsRedirection();
 

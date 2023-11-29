@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyTime.Api.Controllers;
+namespace MyTime.Api.Infrastructure;
 
 [ApiController]
 [Route("[controller]")]

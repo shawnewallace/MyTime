@@ -1,4 +1,4 @@
-namespace MyTime.Api.Models;
+namespace MyTime.Api.Categories;
 
 public class UpdateCategoryModel
 {

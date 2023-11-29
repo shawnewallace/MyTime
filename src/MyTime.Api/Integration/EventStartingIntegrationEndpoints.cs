@@ -1,5 +1,7 @@
+using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MyTime.Api.Infrastructure;
 using MyTime.Api.Models;
 using MyTime.App.Entries.CreateNewEntry;
 using MyTime.App.Exceptions;
@@ -7,16 +9,14 @@ using MyTime.App.Infrastructure;
 
 namespace MyTime.Api.Controllers;
 
-public class EventStartingController : ApiControllerBase
+public class EventStartingIntegrationEndpoints : EndpointBase, ICarterModule
 {
-	public EventStartingController(IMediator mediator) : base(mediator) { }
+	public void AddRoutes(IEndpointRouteBuilder app)
+	{
+		app.MapPost("eventstarting", EventStarting).WithName("eventstarting");
+	}
 
-	[HttpPost("/eventstarting")]
-	[Produces("application/json")]
-	[Consumes("application/json")]
-	[ProducesResponseType(StatusCodes.Status201Created)]
-	[ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-	public async Task<IActionResult> EventStarting([FromBody] AppointmentStartingNotificationModel eventDetails)
+	public static async Task<IResult> EventStarting([FromBody] AppointmentStartingNotificationModel eventDetails, IMediator mediator)
 	{
 		float duration = 0;
 
@@ -39,13 +39,13 @@ public class EventStartingController : ApiControllerBase
 
 		try
 		{
-			var newEntry = await Mediator.Send(command);
+			var newEntry = await mediator.Send(command);
 
-			return CreatedAtAction(nameof(EntryController.GetEntry), "Entry", new { id = newEntry.Id }, newEntry);
+			return Results.CreatedAtRoute("get-entry", new { id = newEntry.Id });
 		}
 		catch (ValidationException ve)
 		{
-			return new BadRequestObjectResult(ve);
+			return Results.BadRequest(ve);
 		}
 	}
 }

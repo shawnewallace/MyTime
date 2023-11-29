@@ -133,7 +133,7 @@ const apiService = {
 		}
 	},
 	getEntryById: async (id) => {
-		const response = await fetch(`${BASE_URL}/entry/${id}`, {
+		const response = await fetch(`${BASE_URL}/entries/${id}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const apiService = {
 		var jsonEntry = JSON.stringify(newEntry);
 
 		try {
-			const response = await fetch(`${BASE_URL}/entry`, {
+			const response = await fetch(`${BASE_URL}/entries`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ const apiService = {
 		var jsonEntry = JSON.stringify(entryPayload);
 
 		try {
-			const response = await fetch(`${BASE_URL}/entry/${entry.id}`, {
+			const response = await fetch(`${BASE_URL}/entries/${entry.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -203,7 +203,7 @@ const apiService = {
 	deleteEntry: async (id) => {
 		console.log("DELETING " + id);
 		try {
-			await fetch(`${BASE_URL}/entry/${id}`, {
+			await fetch(`${BASE_URL}/entries/${id}`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
@@ -224,7 +224,7 @@ const apiService = {
 		var jsonEntry = JSON.stringify(entryPayload);
 
 		try {
-			const response = await fetch(`${BASE_URL}/entry/${entry.id}`, {
+			const response = await fetch(`${BASE_URL}/entries/${entry.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -249,7 +249,7 @@ const apiService = {
 		var jsonEntry = JSON.stringify(entryPayload);
 
 		try {
-			const response = await fetch(`${BASE_URL}/entry/${entry.id}`, {
+			const response = await fetch(`${BASE_URL}/entries/${entry.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -274,7 +274,7 @@ const apiService = {
 		var jsonEntry = JSON.stringify(entryPayload);
 
 		try {
-			const response = await fetch(`${BASE_URL}/entry/${entry.id}`, {
+			const response = await fetch(`${BASE_URL}/entries/${entry.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -299,7 +299,7 @@ const apiService = {
 		var jsonEntry = JSON.stringify(entryPayload);
 
 		try {
-			const response = await fetch(`${BASE_URL}/entry/${entry.id}`, {
+			const response = await fetch(`${BASE_URL}/entries/${entry.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
