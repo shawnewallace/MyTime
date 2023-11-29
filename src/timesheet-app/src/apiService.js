@@ -46,7 +46,7 @@ const apiService = {
 		var jsonEntry = JSON.stringify(newCategory);
 
 		try {
-			const response = await fetch(`${BASE_URL}/category`, {
+			const response = await fetch(`${BASE_URL}/categories`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const apiService = {
 		var jsonEntry = JSON.stringify(entryPayload);
 
 		try {
-			const response = await fetch(`${BASE_URL}/category/${entry.id}`, {
+			const response = await fetch(`${BASE_URL}/categories/${entry.id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const apiService = {
 	},
 	toggleCategoryAcvite: async (id) => {
 		try {
-			await fetch(`${BASE_URL}/category/${id}/toggle-active`, {
+			await fetch(`${BASE_URL}/categories/${id}/toggle-active`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

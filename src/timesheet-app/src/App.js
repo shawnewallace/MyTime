@@ -177,13 +177,13 @@ const App = () => {
 										cats={categories} />} />
 
 								<Route
-									name='rangeReport'
-									path="rangeReport"
+									name='rangereport'
+									path="rangereport"
 									element={<RangeView />} />
 									
 								<Route
-									name='reportSummary'
-									path="reportSummary"
+									name='reportsummary'
+									path="reportsummary"
 									element={<SummaryByWeek />} />
 
 								<Route
