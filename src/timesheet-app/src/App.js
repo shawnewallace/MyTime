@@ -13,6 +13,7 @@ import apiService from './apiService';
 import Callback from './components/Callback/Callback';
 import Profile from './components/Profile/Profile';
 import Categories from './components/Categories/Categories';
+import Home from "./components/Home/Home";
 import { PageLoader } from './components/page-loader';
 // import { AuthenticationGuard } from './components/authentication-guard';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -139,7 +140,8 @@ const App = () => {
 					<div className='card h-100'>
 						<div className='card-body'>
 							<Routes>
-								<Route name="home" path="/" element={
+								<Route name="home" path="/" element={<Home />} />
+								<Route name="month" path="/month" element={
 									<Calendar
 										localizer={localizer} 
 										events={events} 

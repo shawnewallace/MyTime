@@ -19,7 +19,7 @@ const Navigation = () => {
 			<div className="collapse navbar-collapse" id="navbarNav">
 				<ul className='navbar-nav me-auto'>
 					<li className="nav-item">
-						<Link className="nav-link" to="/">Calendar</Link>
+						<Link className="nav-link" to="/month">Calendar</Link>
 					</li>
 					<li className="nav-item">
 						<Link className="nav-link" to="/entry">New Entry</Link>
