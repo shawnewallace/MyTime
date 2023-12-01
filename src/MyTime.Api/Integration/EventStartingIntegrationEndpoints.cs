@@ -45,7 +45,11 @@ public class EventStartingIntegrationEndpoints : EndpointBase, ICarterModule
 		}
 		catch (ValidationException ve)
 		{
-			return Results.BadRequest(ve);
+			return Results.BadRequest(ve.Message);
+		}
+		catch (DuplicateCorrelationIdException dce)
+		{
+			return Results.BadRequest(dce.Message);
 		}
 	}
 }

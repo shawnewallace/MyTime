@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using MyTime.App.Infrastructure;
 using MyTime.Persistence;
 using MyTime.Persistence.Entities;
 
@@ -18,6 +19,13 @@ public class CreateNewEntryCommandHandler : IRequestHandler<CreateNewEntryComman
 	}
 	public async Task<EntryModel> Handle(CreateNewEntryCommand request, CancellationToken cancellationToken)
 	{
+		// correlation id should be unique
+		if (_context.Entries.Any(e => e.CorrelationId == request.CorrelationId))
+		{
+			throw new DuplicateCorrelationIdException(request.CorrelationId);
+		}
+
+
 		var newEntry = new Entry
 		{
 			OnDate = request.OnDate,

@@ -32,8 +32,8 @@ x = devContext.Entries.Count();
 y = prodContext.Entries.Count();
 Console.WriteLine($"BEFORE => DEV Entries: {x}     PROD Entries: {y}");
 
-RemoveAllCategories(devContext);
-RemoveAllEntries(devContext);
+await RemoveAllCategories(devContext);
+await RemoveAllEntries(devContext);
 
 var prodCategories = prodContext.Categories.ToList();
 devContext.Categories.AddRange(prodCategories);
@@ -55,5 +55,5 @@ Console.WriteLine($"AFTER => DEV Entries: {x}     PROD Entries: {y}");
 
 
 
-void RemoveAllCategories(MyTimeSqlDbContext ctx) => ctx.Categories.ExecuteDeleteAsync();
-void RemoveAllEntries(MyTimeSqlDbContext ctx) => ctx.Entries.ExecuteDeleteAsync();
+async Task RemoveAllCategories(MyTimeSqlDbContext ctx) => await ctx.Categories.ExecuteDeleteAsync();
+async Task RemoveAllEntries(MyTimeSqlDbContext ctx) => await ctx.Entries.ExecuteDeleteAsync();
