@@ -1,4 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
@@ -11,7 +10,6 @@ import RangeView from './components/Reporting/RangeView'
 import SummaryByWeek from './components/Reporting/SummaryByWeek'
 import apiService from './apiService';
 import Callback from './components/Callback/Callback';
-import Profile from './components/Profile/Profile';
 import Categories from './components/Categories/Categories';
 import Home from "./components/Home/Home";
 import { PageLoader } from './components/page-loader';
@@ -30,10 +28,6 @@ const views = {
 };
 
 const App = () => {
-
-	const { isLoading } = useAuth0();
-
-
 	const [events, setEvents] = useState([]);
 	const [days, setDays] = useState([]);
 	const [categories, setCategories] = useState([]);
@@ -120,13 +114,13 @@ const App = () => {
 
 	const blankEntry = {};
 
-	if (isLoading) {
-		return (
-			<div className="page-layout">
-				<PageLoader />
-			</div>
-		);
-	}
+	// if (isLoading) {
+	// 	return (
+	// 		<div className="page-layout">
+	// 			<PageLoader />
+	// 		</div>
+	// 	);
+	// }
 
 	return (
 		<Router>
@@ -192,11 +186,6 @@ const App = () => {
 									name='callback'
 									path='callback'
 									element={<Callback />} />
-
-								<Route
-									name='profile'
-									path='profile'
-									element={<Profile />} />
 
 								<Route name='categories' path='categories' element={<Categories />} />
 							</Routes>

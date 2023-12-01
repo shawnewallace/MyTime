@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from '../Buttons/LoginButton';
 import LogoutButton from '../Buttons/LogoutButton';
 
 const Navigation = () => {
 	let currentDate = new Date();
-	const { isAuthenticated } = useAuth0();
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -46,15 +44,12 @@ const Navigation = () => {
 						</ul>
 					</li>
 					<li className="nav-item">
-						<Link className="nav-link" to="/profile">Profile</Link>
-					</li>
-					<li className="nav-item">
 						<Link className="nav-link" to="/categories">Manage Categories</Link>
 					</li>
 				</ul>
 
 				<div className="navbar-nav me-3">
-					{isAuthenticated ? (<LogoutButton />) : (<LoginButton />)}
+					{/* {isAuthenticated ? (<LogoutButton />) : (<LoginButton />)} */}
 				</div>
 			</div>
 
