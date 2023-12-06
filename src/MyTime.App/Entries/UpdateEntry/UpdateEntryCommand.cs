@@ -13,5 +13,6 @@ namespace MyTime.App.Entries.UpdateEntry
 		public string Category { get; set; }
 		public string Notes { get; set; }
 		public string CorrelationId { get; set; }
+		public Guid? CategoryId { get; set; }
 	}
 }

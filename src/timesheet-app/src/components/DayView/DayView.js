@@ -121,12 +121,12 @@ const DayView = ({ onSave, cats }) => {
 	const handleCategoryChangeDD = (ctl, id) => {
 		var entry = entries.filter(e => e.id === id)[0];
 
-		entry.category = ctl.target.value;
+		entry.categoryId = ctl.target.value;
 
 		var updatedEntry = {
 			id: entry.id,
 			onDate: entry.onDate,
-			category: entry.category
+			categoryId: entry.categoryId
 		};
 
 		apiService.saveCategory(updatedEntry).then((data) => { fetchCategories(selectedDate) });
@@ -220,17 +220,8 @@ const DayView = ({ onSave, cats }) => {
 											<select
 												className='form-select'
 												aria-label='category select'
-												defaultValue={entry.category}
-												onChange={(e) => handleCategoryChangeDD(e, entry.id)}>
-												<option value="">-- Select a Category --</option>
-												{cats.map((option) => (
-													<option key={option.name} value={option.name}>{option.name}</option>
-												))}
-											</select>
-											<select
-												className='form-select'
-												aria-label='category select'
 												defaultValue={entry.categoryId}
+												onChange={(e) => handleCategoryChangeDD(e, entry.id)}
 											>
 												<option value="">-- Select a Category --</option>
 												{cats.map((option) => (

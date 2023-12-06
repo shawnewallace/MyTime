@@ -27,6 +27,7 @@ namespace MyTime.App.Entries.UpdateEntry
 			if (request.Duration.HasValue) entry.Duration = request.Duration.Value;
 			if (request.IsUtilization.HasValue) entry.IsUtilization = request.IsUtilization.Value;
 			if (!string.IsNullOrWhiteSpace(request.Category)) entry.Category = request.Category;
+			if (request.CategoryId.HasValue) entry.CategoryId = request.CategoryId.Value;
 			if (!string.IsNullOrWhiteSpace(request.Notes)) entry.Notes = request.Notes;
 			if (!string.IsNullOrWhiteSpace(request.CorrelationId)) entry.CorrelationId = request.CorrelationId;
 			

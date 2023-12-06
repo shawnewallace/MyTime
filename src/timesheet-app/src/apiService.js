@@ -293,7 +293,7 @@ const apiService = {
 
 		let entryPayload = {
 			OnDate: date,
-			Category: entry.category
+			CategoryId: entry.categoryId
 		};
 
 		var jsonEntry = JSON.stringify(entryPayload);
