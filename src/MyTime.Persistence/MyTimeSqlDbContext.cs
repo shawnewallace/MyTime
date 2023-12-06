@@ -14,6 +14,10 @@ namespace MyTime.Persistence
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Entry>().HasIndex(e => e.OnDate);
+			modelBuilder.Entity<Entry>()
+				.HasOne(e => e.CategoryN)
+				.WithMany()
+				.HasForeignKey(e => e.CategoryId);
 
 
 			modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
