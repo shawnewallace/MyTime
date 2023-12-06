@@ -20,7 +20,7 @@ public class CreateNewEntryCommandHandler : IRequestHandler<CreateNewEntryComman
 	public async Task<EntryModel> Handle(CreateNewEntryCommand request, CancellationToken cancellationToken)
 	{
 		// correlation id should be unique
-		if (_context.Entries.Any(e => e.CorrelationId == request.CorrelationId))
+		if (!string.IsNullOrEmpty(request.CorrelationId) & _context.Entries.Any(e => e.CorrelationId == request.CorrelationId))
 		{
 			throw new DuplicateCorrelationIdException(request.CorrelationId);
 		}
