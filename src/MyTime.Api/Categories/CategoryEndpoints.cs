@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -28,10 +29,10 @@ public class CategoryEndpoints : EndpointBase, ICarterModule
 	public static async Task<IResult> Lookup(IMediator mediator)
 	{
 		var result = await mediator.Send(new GetActiveCategoriesListQuery());
-		List<CategoryNameModel> response = new();
+		List<CategoryLookupModel> response = new();
 
 		foreach (var thing in result.OrderBy(x => x.IsDeleted).ThenBy(x => x.FullName))
-			response.Add(new CategoryNameModel(thing.FullName));
+			response.Add(new CategoryLookupModel(thing.Id, thing.Name, thing.FullName));
 
 		return Results.Ok(response);
 	}

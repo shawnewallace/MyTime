@@ -227,6 +227,16 @@ const DayView = ({ onSave, cats }) => {
 													<option key={option.name} value={option.name}>{option.name}</option>
 												))}
 											</select>
+											<select
+												className='form-select'
+												aria-label='category select'
+												defaultValue={entry.categoryId}
+											>
+												<option value="">-- Select a Category --</option>
+												{cats.map((option) => (
+													<option key={option.id} value={option.id}>{option.fullName}</option>
+												))}
+											</select>
 										</td>
 										<td>
 											<input

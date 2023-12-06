@@ -17,6 +17,7 @@ public class EntryModel : IId<Guid>, ITracking
 	public bool IsDeleted { get; set; }
 	public string CorrelationId { get; set; }
 	public string Category { get; set; }
+	public Guid? CategoryId { get; set; }
 	public string UserId { get; set; }
 	public bool IsMeeting { get; set; }
 
@@ -34,6 +35,7 @@ public class EntryModel : IId<Guid>, ITracking
 		IsDeleted = entry.IsDeleted;
 		CorrelationId = entry.CorrelationId;
 		Category = entry.Category;
+		CategoryId = entry.CategoryId;
 		UserId = entry.UserId;
 		IsMeeting = entry.IsMeeting;
 	}
