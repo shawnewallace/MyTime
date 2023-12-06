@@ -4,4 +4,4 @@ using MyTime.Persistence.Entities;
 
 namespace MyTime.App.Categories;
 
-public class GetActiveCategoriesListQuery : IRequest<List<Category>> { }
+public class GetActiveCategoriesListQuery : IRequest<List<CategoryModel>> { }

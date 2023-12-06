@@ -30,13 +30,19 @@ public class CategoryEndpoints : EndpointBase, ICarterModule
 		var result = await mediator.Send(new GetActiveCategoriesListQuery());
 		List<CategoryNameModel> response = new();
 
-		foreach (var thing in result)
-			response.Add(new CategoryNameModel(thing.Name));
+		foreach (var thing in result.OrderBy(x => x.IsDeleted).ThenBy(x => x.FullName))
+			response.Add(new CategoryNameModel(thing.FullName));
 
 		return Results.Ok(response);
 	}
 
-	public static async Task<IResult> GetAll(IMediator mediator) => Results.Ok(await mediator.Send(request: new GetAllCategoriesListQuery()));
+	public static async Task<IResult> GetAll(IMediator mediator)
+	{
+		var raw = await mediator.Send(new GetAllCategoriesListQuery());
+		var result = raw.OrderBy(x => x.IsDeleted).ThenBy(x => x.FullName).ToList();
+
+		return Results.Ok(result);
+	}
 
 	public async Task<IResult> GetRange(DateTime from, DateTime to, IMediator mediator)
 	{

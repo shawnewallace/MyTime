@@ -9,17 +9,26 @@ using MyTime.Persistence.Entities;
 
 namespace MyTime.App.Categories;
 
-public class GetAllCategoriesListQueryHandler : IRequestHandler<GetAllCategoriesListQuery, List<Category>>
+public class GetAllCategoriesListQueryHandler : IRequestHandler<GetAllCategoriesListQuery, List<CategoryModel>>
 {
 
 	private readonly MyTimeSqlDbContext _context;
 
 	public GetAllCategoriesListQueryHandler(MyTimeSqlDbContext context) => _context = context;
 
-	public async Task<List<Category>> Handle(GetAllCategoriesListQuery request, CancellationToken cancellationToken) =>
-		await _context
+	public async Task<List<CategoryModel>> Handle(GetAllCategoriesListQuery request, CancellationToken cancellationToken)
+	{
+		var categories = await _context
 			.Categories
-			.OrderBy(c => c.IsDeleted)
-			.ThenBy(c => c.Name)
+			.Include(c => c.Parent)
 			.ToListAsync(cancellationToken: cancellationToken);
+
+		return categories.ConvertAll(c => new CategoryModel(
+			c.Id,
+			c.Name,
+			c.IsDeleted,
+			c.ParentId,
+			c.Parent?.Name ?? ""
+		));
+	}
 }
