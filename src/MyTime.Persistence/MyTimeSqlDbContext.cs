@@ -10,5 +10,19 @@ namespace MyTime.Persistence
 		public DbSet<Category> Categories { get; set; }
 
 		public MyTimeSqlDbContext(DbContextOptions<MyTimeSqlDbContext> options) : base(options) { }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Entry>().HasIndex(e => e.OnDate);
+
+
+			modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
+
+			modelBuilder.Entity<Category>()
+				.HasOne(c => c.Parent)
+				.WithMany(c => c!.Children)
+				.HasForeignKey(c => c.ParentId)
+				.OnDelete(DeleteBehavior.Restrict);
+		}
 	}
 }
