@@ -17,11 +17,13 @@ public class GetCategoryDaysQueryHandler : IRequestHandler<GetCategoryDaysQuery,
 
 	public async Task<List<CategoryDayModel>> Handle(GetCategoryDaysQuery request, CancellationToken cancellationToken)
 	{
+		var categories = await GetAllCategories(cancellationToken);
+
 		var query = _context
 			.Entries
 			.Where(m => !m.IsDeleted)
-			.Select(m => new { m.Category, m.Duration, m.OnDate, m.Description });
-		
+			.Select(m => new { m.CategoryId, m.Duration, m.OnDate, m.Description });
+
 		DateTime from = DateTime.MinValue;
 		DateTime to = DateTime.MaxValue;
 
@@ -37,15 +39,15 @@ public class GetCategoryDaysQueryHandler : IRequestHandler<GetCategoryDaysQuery,
 			query = query.Where(e => e.OnDate <= to);
 		}
 
-		var entries = await query
-			.ToListAsync(cancellationToken);
+		var entries = await query.ToListAsync(cancellationToken);
 
-		var categoryNames = entries.Select(m => m.Category).Distinct().ToList();
+		var categoryIds = entries.Select(m => m.CategoryId).Distinct().ToList();
 		var result = new List<CategoryDayModel>();
 
-		foreach (var categoryName in categoryNames)
+		foreach (var categoryId in categoryIds)
 		{
-			var entriesForThisCategory = entries.Where(e => e.Category == categoryName).ToList();
+			var categoryName = categories.FirstOrDefault(c => c.Id == categoryId)?.FullName ?? "Unknown";
+			var entriesForThisCategory = entries.Where(e => e.CategoryId == categoryId).ToList();
 			result.Add(new CategoryDayModel
 			{
 				Name = categoryName,
@@ -57,5 +59,17 @@ public class GetCategoryDaysQueryHandler : IRequestHandler<GetCategoryDaysQuery,
 			});
 		}
 		return result.OrderBy(m => m.Name).ToList();
+	}
+
+	private async Task<List<CategoryModel>> GetAllCategories(CancellationToken cancellationToken)
+	{
+		var categories = await _context.Categories.Include(c => c.Parent).ToListAsync(cancellationToken);
+		return categories.ConvertAll(c => new CategoryModel(
+			c.Id,
+			c.Name,
+			c.IsDeleted,
+			c.ParentId,
+			c.Parent?.Name ?? ""
+		));
 	}
 }

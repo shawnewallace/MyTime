@@ -71,7 +71,7 @@ public class EntryEndpoints : EndpointBase, ICarterModule
 
 		if (model.Description is not null) command.Description = model.Description;
 		// if (model.Category is not null) command.Category = model.Category;
-		if (model.CategoryId is not null) command.CategoryId = new Guid(model.CategoryId);
+		if (!string.IsNullOrEmpty(model.CategoryId)) command.CategoryId = new Guid(model.CategoryId);
 		if (model.Duration > 0) command.Duration = model.Duration;
 		if (model.IsUtilization is not null) command.IsUtilization = model.IsUtilization;
 		if (model.Notes is not null) command.Notes = model.Notes;

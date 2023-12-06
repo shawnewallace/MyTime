@@ -19,7 +19,7 @@ const DayView = ({ onSave, cats }) => {
 	useEffect(() => {
 		setSelectedDate(selectedDate);
 		fetchEntries(selectedDate);
-		fetchCategories(selectedDate);
+		fetchCategorySummary(selectedDate);
 	}, [selectedDate]);
 
 	async function fetchEntries(day) {
@@ -29,7 +29,7 @@ const DayView = ({ onSave, cats }) => {
 		setTotal(data.total);
 	};
 
-	async function fetchCategories(day) {
+	async function fetchCategorySummary(day) {
 		const data = await apiService.getCategoriesInRange(day, day)
 		setCategorySummary(data);
 	};
@@ -41,7 +41,7 @@ const DayView = ({ onSave, cats }) => {
 
 	const handleRefreshEntry = () => {
 		fetchEntries(selectedDate);
-		fetchCategories(selectedDate);
+		fetchCategorySummary(selectedDate);
 	};
 
 	const handleDateIncrement = (increment) => {
@@ -103,6 +103,15 @@ const DayView = ({ onSave, cats }) => {
 	};
 
 	const handleDescriptionChange = (ctl, id) => {
+		var newDescription = ctl.target.value;
+		var oldDescription = entries.filter(e => e.id === id)[0].description;
+
+		if (newDescription === oldDescription) {
+			console.log("Description unchanged");
+			return;
+		}
+
+		console.log("Description changed: " + ctl.target.value);
 		var entry = entries.filter(e => e.id === id)[0];
 
 		entry.description = ctl.target.value;
@@ -118,7 +127,7 @@ const DayView = ({ onSave, cats }) => {
 		ctl.value = entry.description;
 	};
 
-	const handleCategoryChangeDD = (ctl, id) => {
+	const handleCategoryChange = (ctl, id) => {
 		var entry = entries.filter(e => e.id === id)[0];
 
 		entry.categoryId = ctl.target.value;
@@ -129,7 +138,7 @@ const DayView = ({ onSave, cats }) => {
 			categoryId: entry.categoryId
 		};
 
-		apiService.saveCategory(updatedEntry).then((data) => { fetchCategories(selectedDate) });
+		apiService.saveCategory(updatedEntry).then((data) => { fetchCategorySummary(selectedDate) });
 
 		ctl.value = entry.category;
 	};
@@ -211,7 +220,8 @@ const DayView = ({ onSave, cats }) => {
 													id='description'
 													name='description'
 													defaultValue={entry.description}
-													onChange={(e) => handleDescriptionChange(e, entry.id)}
+													// onChange={(e) => handleDescriptionChange(e, entry.id)}
+													onBlur={(e) => handleDescriptionChange(e, entry.id)}
 													required
 												/>
 											</div>
@@ -221,7 +231,7 @@ const DayView = ({ onSave, cats }) => {
 												className='form-select'
 												aria-label='category select'
 												defaultValue={entry.categoryId}
-												onChange={(e) => handleCategoryChangeDD(e, entry.id)}
+												onChange={(e) => handleCategoryChange(e, entry.id)}
 											>
 												<option value="">-- Select a Category --</option>
 												{cats.map((option) => (

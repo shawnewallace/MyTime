@@ -71,15 +71,22 @@ const Categories = () => {
 				{categories.map((category, index) => (
 					<div key={category.id} className="row">
 						<div className="col">
-							<input
-								type="text"
-								className='form-control form-control-sm'
-								id='name'
-								name='name'
-								defaultValue={category.name}
-								onChange={(e) => handleNameChange(e, category.id)}
-								required
-							/>
+							<div className="input-group">
+								{category.parentId && (
+									<span className="input-group-text" id="basic-addon1">
+										<i className="bi bi-diagram-2" data-bs-toggle="tooltip" data-bs-title='Child'></i>
+									</span>
+								)}
+								<input
+									type="text"
+									className='form-control form-control-sm'
+									id='name'
+									name='name'
+									defaultValue={category.name}
+									onChange={(e) => handleNameChange(e, category.id)}
+									required
+								/>
+							</div>
 						</div>
 						<div className="col">
 							<input type="checkbox"

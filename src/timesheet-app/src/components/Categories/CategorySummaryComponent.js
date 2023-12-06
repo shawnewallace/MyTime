@@ -7,12 +7,27 @@ const CategorySummaryComponent = ({ categorySummary }) => {
 
 	return (
 		<>
-			{categorySummary.map((entry, index) => (
-				<div className="row" key={entry.name}>
-					<div className="col">{entry.name} ({entry.descriptions})</div>
-					<div className="col">{entry.total.toFixed(2)}</div>
-				</div>
-			))}
+			<table className='table table-sm table-striped'>
+				<caption>Summary by Category</caption>
+				<thead>
+					<tr>
+						<th>Category</th>
+						<th>Description</th>
+						<th>Hours</th>
+					</tr>
+				</thead>
+				<tbody>
+					{categorySummary.map((entry, index) => (
+						<>
+							<tr key={index}>
+								<td>{entry.name}</td>
+								<td>{entry.descriptions}</td>
+								<td className='text-end'>{entry.total.toFixed(2)}</td>
+							</tr>
+						</>
+					))}
+				</tbody>
+			</table>
 		</>
 	);
 }
