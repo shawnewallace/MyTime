@@ -17,6 +17,9 @@ public class EntryRangeModelTests
 
 	public EntryRangeModelTests()
 	{
+		var cat1 = new Category { Id = Guid.NewGuid(), Name = "Cat 1" };
+		var cat2 = new Category { Id = Guid.NewGuid(), Name = "Cat 2" };
+		
 		_rangeStart = new DateTime(2023, 10, 01);
 		_rangeEnd = new DateTime(2023, 10, 31);
 		_entries = new List<Entry>
@@ -30,7 +33,8 @@ public class EntryRangeModelTests
 				Description = null,
 				Duration = 4f,
 				IsUtilization = true,
-				Category = "Cat 1",
+				CategoryId = cat1.Id,
+				CategoryN = cat1,
 				Notes = null,
 				CorrelationId = null,
 				UserId = null
@@ -44,7 +48,8 @@ public class EntryRangeModelTests
 				Description = null,
 				Duration = 6.25f,
 				IsUtilization = false,
-				Category = "Cat 2",
+				CategoryId = cat2.Id,
+				CategoryN = cat2,
 				Notes = null,
 				CorrelationId = null,
 				UserId = null
@@ -58,7 +63,8 @@ public class EntryRangeModelTests
 				Description = null,
 				Duration = 9.7f,
 				IsUtilization = false,
-				Category = "Cat 2",
+				CategoryId = cat2.Id,
+				CategoryN = cat2,
 				Notes = null,
 				CorrelationId = null,
 				UserId = null
@@ -72,7 +78,8 @@ public class EntryRangeModelTests
 				Description = null,
 				Duration = 1.25f,
 				IsUtilization = false,
-				Category = "Cat 1",
+				CategoryId = cat1.Id,
+				CategoryN = cat1,
 				Notes = null,
 				CorrelationId = null,
 				UserId = null
@@ -87,7 +94,8 @@ public class EntryRangeModelTests
 				Description = null,
 				Duration = .25f,
 				IsUtilization = true,
-				Category = null,
+				CategoryId = null,
+				CategoryN = null,
 				Notes = null,
 				CorrelationId = null,
 				UserId = null
@@ -122,16 +130,16 @@ public class EntryRangeModelTests
 		_modelUnderTest.NumCategories.ShouldBe(3);
 
 	[Theory]
-	[InlineData(null, .25f, 1, "10/06/2023", "10/06/2023")]
+	[InlineData("", .25f, 1, "10/06/2023", "10/06/2023")]
 	[InlineData("Cat 1", 5.25f, 2, "10/04/2023", "10/20/2023")]
 	[InlineData("Cat 2", 15.95f, 2, "10/10/2023", "10/16/2023")]
-	public void CategoryValuesShouldBeCorrect(string category,
+	public void CategoryValuesShouldBeCorrect(string categoryName,
 		float totalDuration,
 		int numEntries,
 		string firstEntry,
 		string lastEntry)
 	{
-		var cat = _modelUnderTest.Categories.First(c => c.Name == category);
+		var cat = _modelUnderTest.Categories.FirstOrDefault(c => c.Name == categoryName);
 
 		cat.Total.ShouldBe(totalDuration);
 		cat.NumEntries.ShouldBe(numEntries);

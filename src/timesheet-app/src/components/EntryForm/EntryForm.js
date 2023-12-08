@@ -9,25 +9,19 @@ import apiService from '../../apiService';
 const EntryForm = ({ entry, onSubmit, categories }) => {
 	const params = useParams();
 
-
 	const [id, setId] = useState(params.id || '');
 	const [onDate, setOnDate] = useState(entry.date ? new Date(entry.date) : new Date())
 	const [description, setDescription] = useState(entry.description || '');
-	const [category, setCategory] = useState(entry.category || '');
-	const [selectedCategory, setSelectedCategory] = useState({ value: category, label: category });
+	const [category, setCategory] = useState(entry.categoryId || '');
+	const [selectedCategory, setSelectedCategory] = useState(entry.categoryId || '');
 	const [duration, setDuration] = useState(entry.duration || 0);
 	const [isBillable, setIsBillable] = useState(entry.isBillable || false);
 	const [notes, setNotes] = useState(entry.notes || '');
 
-	const formattedCategoryOptions = categories.map((item) => ({
-		value: item.name,
-		label: item.name
-	}));
-
 	useEffect(() => {
 		if (id === '') return;
 		fetchEvent(id);
-	});
+	}, [id]);
 
 	const navigate = useNavigate();
 
@@ -39,8 +33,8 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 			setOnDate(new Date(data.onDate));
 			setDescription(data.description);
 
-			setCategory(data.category);
-			setSelectedCategory({ value: data.category, label: data.category });
+			setCategory(data.categoryId);
+			setSelectedCategory(data.categoryId);
 
 			console.log(selectedCategory);
 
@@ -86,8 +80,10 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 	};
 
 	const handleCategoryChange = (newCategory) => {
-		setCategory(newCategory.label);
-		setSelectedCategory(newCategory);
+		var newCategoryId = newCategory.target.value;
+
+		setCategory(newCategoryId);
+		setSelectedCategory(newCategoryId);
 	};
 
 
@@ -129,17 +125,20 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 				</div>
 				<div className='form-group row'>
 					<label htmlFor='category' className='col-sm-2 col-form-label'>Category</label>
+					{category}
 					<div className='col-sm-10'>
-						<CreatableSelect
-							className='form-control'
+						<select
 							id='category'
-							name='category'
-							options={formattedCategoryOptions}
-							value={selectedCategory}
+							className='form-select'
+							aria-label='category select'
+							defaultValue={selectedCategory}
 							onChange={(e) => handleCategoryChange(e)}
-							isClearable
-							isSearchable
-						/>
+						>
+							<option value="">-- Select a Category --</option>
+							{categories.map((option) => (
+								<option key={option.id} value={option.id}>{option.fullName}</option>
+							))}
+						</select>
 					</div>
 				</div>
 				<div className='form-group row'>

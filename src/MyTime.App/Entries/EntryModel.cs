@@ -34,7 +34,7 @@ public class EntryModel : IId<Guid>, ITracking
 		WhenUpdated = entry.WhenUpdated;
 		IsDeleted = entry.IsDeleted;
 		CorrelationId = entry.CorrelationId;
-		Category = entry.Category;
+		Category = entry.CategoryN is not null ? entry.CategoryN.Name : "";
 		CategoryId = entry.CategoryId;
 		UserId = entry.UserId;
 		IsMeeting = entry.IsMeeting;

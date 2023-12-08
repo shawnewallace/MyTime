@@ -49,7 +49,7 @@ const App = () => {
 			const data = await apiService.getEntries(start, end);
 
 			var entries = data.entries.map(value => ({
-				title: value.description + ' | ' + value.duration + ' | ' + String(value.isUtilization),
+				title: value.category + ' (' + value.duration + ')',
 				start: value.onDate,
 				end: new Date(value.onDate),
 			}));

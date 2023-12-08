@@ -20,7 +20,10 @@ namespace MyTime.App.EntryDays.GetEntryDayList
 
 		public async Task<EntryRangeModel> Handle(GetEntryDayListQuery request, CancellationToken cancellationToken)
 		{
-			var query = _context.Entries.Select(e => e);
+			var query = _context.Entries
+										.Include(e => e.CategoryN)
+										 .Select(e => e);
+
 			DateTime from = DateTime.MinValue;
 			DateTime to = DateTime.MaxValue;
 

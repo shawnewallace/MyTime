@@ -10,7 +10,7 @@ const CategorySummaryComponent = ({ categorySummary }) => {
 			<table className='table table-sm table-striped'>
 				<caption>Summary by Category</caption>
 				<thead>
-					<tr>
+					<tr key={"CS-231"}>
 						<th>Category</th>
 						<th>Description</th>
 						<th>Hours</th>
@@ -19,7 +19,7 @@ const CategorySummaryComponent = ({ categorySummary }) => {
 				<tbody>
 					{categorySummary.map((entry, index) => (
 						<>
-							<tr key={index}>
+							<tr key={"CS" + index}>
 								<td>{entry.name}</td>
 								<td>{entry.descriptions}</td>
 								<td className='text-end'>{entry.total.toFixed(2)}</td>

@@ -47,11 +47,11 @@ namespace MyTime.App.EntryDays
 
 		private void FillCategories(List<Entry> entries)
 		{
-			var categoryNames = entries.Select(m => m.Category).Distinct().ToList();
+			var categoryNames = entries.Select(m => m.CategoryN?.Name ?? "").Distinct().ToList();
 
 			foreach (var categoryName in categoryNames)
 			{
-				var entriesForThisCategory = entries.Where(e => e.Category == categoryName).ToList();
+				var entriesForThisCategory = entries.Where(e => (e.CategoryN?.Name ?? "") == categoryName).ToList();
 				Categories.Add(new CategoryDayModel
 				{
 					Name = categoryName,
