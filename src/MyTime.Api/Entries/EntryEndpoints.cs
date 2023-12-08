@@ -44,7 +44,7 @@ public class EntryEndpoints : EndpointBase, ICarterModule
 		{
 			OnDate = model.OnDate,
 			Description = model.Description,
-			Category = model.Category,
+			CategoryId = string.IsNullOrEmpty(model.CategoryId) ? null : new Guid(model.CategoryId),
 			Duration = model.Duration,
 			IsUtilization = model.IsUtilization ?? false,
 			Notes = model.Notes,

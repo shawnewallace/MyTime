@@ -7,7 +7,7 @@ import { useParams, Link } from "react-router-dom";
 import CategorySummaryComponent from '../Categories/CategorySummaryComponent'
 
 
-const DayView = ({ onSave, cats }) => {
+const DayView = ({ onSave }) => {
 	let params = useParams();
 	let initialDate = params.initialDate;
 	const [entries, setEntries] = useState([]);
@@ -15,12 +15,23 @@ const DayView = ({ onSave, cats }) => {
 	const [billable, setBillable] = useState(0);
 	const [total, setTotal] = useState(0);
 	const [categorySummary, setCategorySummary] = useState([]);
+	const [categories, setCategories] = useState([]);
 
 	useEffect(() => {
 		setSelectedDate(selectedDate);
+		fetchCategories();
 		fetchEntries(selectedDate);
 		fetchCategorySummary(selectedDate);
 	}, [selectedDate]);
+
+	async function fetchCategories() {
+		try {
+			const data = await apiService.getCategories();
+			setCategories(data);
+		} catch (error) {
+			console.error('Error fetching categories:', error);
+		}
+	};
 
 	async function fetchEntries(day) {
 		const data = await apiService.getEntriesForDay(day);
@@ -40,6 +51,7 @@ const DayView = ({ onSave, cats }) => {
 	};
 
 	const handleRefreshEntry = () => {
+		fetchCategories();
 		fetchEntries(selectedDate);
 		fetchCategorySummary(selectedDate);
 	};
@@ -234,7 +246,7 @@ const DayView = ({ onSave, cats }) => {
 												onChange={(e) => handleCategoryChange(e, entry.id)}
 											>
 												<option value="">-- Select a Category --</option>
-												{cats.map((option) => (
+												{categories.map((option) => (
 													<option key={option.id} value={option.id}>{option.fullName}</option>
 												))}
 											</select>

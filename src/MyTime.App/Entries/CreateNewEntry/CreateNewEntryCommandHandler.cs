@@ -34,32 +34,15 @@ public class CreateNewEntryCommandHandler : IRequestHandler<CreateNewEntryComman
 			IsUtilization = request.IsUtilization,
 			Notes = request.Notes,
 			CorrelationId = request.CorrelationId,
-			Category = request.Category,
+			CategoryId = request.CategoryId,
 			UserId = request.UserId,
 			IsMeeting = request.IsMeeting
 		};
 
 		await _context.Entries.AddAsync(newEntry, cancellationToken);
 
-		if (ShouldCreateCategory(request.Category))
-		{
-			var newCategory = new Category
-			{
-				Name = request.Category
-			};
-			await _context.Categories.AddAsync(newCategory, cancellationToken);
-		}
-
 		await _context.SaveChangesAsync(cancellationToken);
 
 		return new EntryModel(newEntry);
-	}
-
-	private bool ShouldCreateCategory(string category)
-	{
-		if (string.IsNullOrWhiteSpace(category)) return false;
-		if (_context.Categories.Any(c => c.Name.ToLower() == category.ToLower())) return false;
-
-		return true;
 	}
 }

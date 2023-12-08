@@ -1,29 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import CreatableSelect from 'react-select/creatable';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import apiService from '../../apiService';
 
 
-const EntryForm = ({ entry, onSubmit, categories }) => {
+const EntryForm = ({ entry, onSubmit }) => {
 	const params = useParams();
 
 	const [id, setId] = useState(params.id || '');
 	const [onDate, setOnDate] = useState(entry.date ? new Date(entry.date) : new Date())
 	const [description, setDescription] = useState(entry.description || '');
-	const [category, setCategory] = useState(entry.categoryId || '');
-	const [selectedCategory, setSelectedCategory] = useState(entry.categoryId || '');
+	const [categoryId, setCategoryId] = useState(entry.categoryId || '');
 	const [duration, setDuration] = useState(entry.duration || 0);
 	const [isBillable, setIsBillable] = useState(entry.isBillable || false);
 	const [notes, setNotes] = useState(entry.notes || '');
+	const [categories, setCategories] = useState([]);
 
 	useEffect(() => {
+		fetchCategories();
 		if (id === '') return;
 		fetchEvent(id);
 	}, [id]);
 
 	const navigate = useNavigate();
+
+	async function fetchCategories() {
+		try {
+			const data = await apiService.getCategories();
+			setCategories(data);
+		} catch (error) {
+			console.error('Error fetching categories:', error);
+		}
+	};
 
 	const fetchEvent = async (eventId) => {
 		console.log("fetching event");
@@ -32,12 +41,7 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 			console.log(data);
 			setOnDate(new Date(data.onDate));
 			setDescription(data.description);
-
-			setCategory(data.categoryId);
-			setSelectedCategory(data.categoryId);
-
-			console.log(selectedCategory);
-
+			setCategoryId(data.categoryId);
 			setDuration(data.duration);
 			setIsBillable(data.isUtilization);
 			setNotes(data.notes);
@@ -52,7 +56,7 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 		let entry = {
 			onDate: onDate,
 			description: description,
-			category: category,
+			categoryId: categoryId,
 			duration: duration,
 			billable: isBillable,
 			notes: notes
@@ -82,8 +86,7 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 	const handleCategoryChange = (newCategory) => {
 		var newCategoryId = newCategory.target.value;
 
-		setCategory(newCategoryId);
-		setSelectedCategory(newCategoryId);
+		setCategoryId(newCategoryId);
 	};
 
 
@@ -125,13 +128,13 @@ const EntryForm = ({ entry, onSubmit, categories }) => {
 				</div>
 				<div className='form-group row'>
 					<label htmlFor='category' className='col-sm-2 col-form-label'>Category</label>
-					{category}
+					{categoryId}
 					<div className='col-sm-10'>
 						<select
 							id='category'
 							className='form-select'
 							aria-label='category select'
-							defaultValue={selectedCategory}
+							value={categoryId}
 							onChange={(e) => handleCategoryChange(e)}
 						>
 							<option value="">-- Select a Category --</option>

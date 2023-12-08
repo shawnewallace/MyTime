@@ -17,9 +17,6 @@ public class CreateNewEntryCommandValidator : AbstractValidator<CreateNewEntryCo
 			.GreaterThanOrEqualTo(0.0F)
 			.LessThan(24.0F);
 
-		RuleFor(x => x.Category)
-			.MaximumLength(50);
-
 		RuleFor(x => x.UserId)
 			.NotEmpty()
 			.MaximumLength(50);

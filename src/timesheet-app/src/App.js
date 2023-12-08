@@ -169,8 +169,7 @@ const App = () => {
 								<Route
 									name='dayView'
 									path="day-view/:initialDate"
-									element={<DayView onSave={handleSaveEntry}
-										cats={categories} />} />
+									element={<DayView onSave={handleSaveEntry} />} />
 
 								<Route
 									name='rangereport'

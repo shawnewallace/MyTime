@@ -147,7 +147,7 @@ const apiService = {
 		let newEntry = {
 			OnDate: date,
 			Description: entry.description,
-			Category: entry.category,
+			CategoryId: entry.categoryId,
 			Duration: entry.duration,
 			IsUtilization: entry.billable,
 			Notes: entry.notes
@@ -177,7 +177,7 @@ const apiService = {
 		let entryPayload = {
 			OnDate: date,
 			Description: entry.description,
-			Category: entry.category,
+			CategoryId: entry.categoryId,
 			Duration: entry.duration,
 			IsUtilization: entry.billable,
 			Notes: entry.notes
