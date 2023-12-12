@@ -197,8 +197,8 @@ const DayView = ({ onSave }) => {
 								</tr>
 								<tr>
 									<th>&nbsp;</th>
-									<th>Description</th>
 									<th>Category</th>
+									<th>Description</th>
 									<th>Duration</th>
 									<th>Billable</th>
 								</tr>
@@ -220,6 +220,19 @@ const DayView = ({ onSave }) => {
 											</div>
 										</td>
 										<td>
+											<select
+												className='form-select'
+												aria-label='category select'
+												defaultValue={entry.categoryId}
+												onChange={(e) => handleCategoryChange(e, entry.id)}
+											>
+												<option value="">-- Select a Category --</option>
+												{categories.map((option) => (
+													<option key={option.id} value={option.id}>{option.fullName}</option>
+												))}
+											</select>
+										</td>
+										<td>
 											<div className='input-group'>
 												{entry.isMeeting && (
 													<span className="input-group-text" id="basic-addon1">
@@ -232,24 +245,10 @@ const DayView = ({ onSave }) => {
 													id='description'
 													name='description'
 													defaultValue={entry.description}
-													// onChange={(e) => handleDescriptionChange(e, entry.id)}
 													onBlur={(e) => handleDescriptionChange(e, entry.id)}
 													required
 												/>
 											</div>
-										</td>
-										<td>
-											<select
-												className='form-select'
-												aria-label='category select'
-												defaultValue={entry.categoryId}
-												onChange={(e) => handleCategoryChange(e, entry.id)}
-											>
-												<option value="">-- Select a Category --</option>
-												{categories.map((option) => (
-													<option key={option.id} value={option.id}>{option.fullName}</option>
-												))}
-											</select>
 										</td>
 										<td>
 											<input

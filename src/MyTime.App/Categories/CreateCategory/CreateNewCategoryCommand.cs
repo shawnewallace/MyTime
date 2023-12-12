@@ -6,6 +6,6 @@ namespace MyTime.App.Categories.CreateNewCategory;
 
 public class CreateNewCategoryCommand : IRequest<Category>
 {
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 	public bool IsDeleted { get; set; }
 }

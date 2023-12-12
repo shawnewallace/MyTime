@@ -1,5 +1,5 @@
 using System;
-using MyTime.App.Infrastructure;
+using Microsoft.Identity.Client;
 
 namespace MyTime.App.WeekSummary;
 

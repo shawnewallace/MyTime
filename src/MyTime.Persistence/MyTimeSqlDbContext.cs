@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using MyTime.Persistence.Entities;
+using MyTime.Persistence.Models;
 
 namespace MyTime.Persistence
 {
@@ -8,6 +9,7 @@ namespace MyTime.Persistence
 	{
 		public DbSet<Entry> Entries { get; set; }
 		public DbSet<Category> Categories { get; set; }
+		public DbSet<CategoryReportModel> CategoryReportModels { get; set; } = null!;
 
 		public MyTimeSqlDbContext(DbContextOptions<MyTimeSqlDbContext> options) : base(options) { }
 
@@ -27,6 +29,8 @@ namespace MyTime.Persistence
 				.WithMany(c => c!.Children)
 				.HasForeignKey(c => c.ParentId)
 				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<CategoryReportModel>().HasNoKey().ToView(null);
 		}
 	}
 }
