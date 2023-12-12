@@ -25,6 +25,9 @@ public class ReportEndpoints : EndpointBase, ICarterModule
 	{
 		var start = DateTime.Parse(from);
 		var end = DateTime.Parse(to);
-		return Results.Ok(await mediator.Send(request: new GetCategoryReportByWeekQuery(start, end)));
+
+		var result = await mediator.Send(request: new GetCategoryReportByWeekQuery(start, end));
+
+		return Results.Ok(result);
 	}
 }

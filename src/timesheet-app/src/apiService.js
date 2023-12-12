@@ -315,10 +315,30 @@ const apiService = {
 	},
 	getWeekSummaryReport: async () => {
 		let payload = {};
-		var jsonEntry = JSON.stringify(payload); 
+		var jsonEntry = JSON.stringify(payload);
 
 		try {
 			const response = await fetch(`${BASE_URL}/report/week-summary`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: jsonEntry,
+			});
+			const data = await response.json();
+			return data;
+
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
+	getCategorySummaryReport: async (start, end) => {
+		let payload = {};
+		var jsonEntry = JSON.stringify(payload);
+
+		try {
+			const response = await fetch(`${BASE_URL}/report/category-summary-by-week/${start}/${end}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

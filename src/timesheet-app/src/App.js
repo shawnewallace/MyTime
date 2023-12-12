@@ -18,6 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './App.css';
+import CategorySummaryByWeek from './components/Reporting/CategorySummaryByWeek';
 
 const localizer = momentLocalizer(moment);
 
@@ -180,6 +181,11 @@ const App = () => {
 									name='reportsummary'
 									path="reportsummary"
 									element={<SummaryByWeek />} />
+
+								<Route
+									name='categoryreport'
+									path="categoryreport"
+									element={<CategorySummaryByWeek />} />
 
 								<Route
 									name='callback'

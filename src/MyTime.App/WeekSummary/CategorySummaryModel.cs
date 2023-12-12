@@ -13,4 +13,6 @@ public sealed record CategorySummaryModel(
 {
 	public DateTime FirstDayOfWeek => new WeekOfYear(Year, Week).FirstDayOfWeek();
 	public DateTime LastDayOfWeek => new WeekOfYear(Year, Week).LastDayOfWeek();
+
+	public string FullName => ParentCategory is null ? Category! : $"{ParentCategory}:{Category}";
 }
