@@ -12,8 +12,6 @@ import apiService from './apiService';
 import Callback from './components/Callback/Callback';
 import Categories from './components/Categories/Categories';
 import Home from "./components/Home/Home";
-import { PageLoader } from './components/page-loader';
-// import { AuthenticationGuard } from './components/authentication-guard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -23,6 +21,7 @@ import Login from './components/Authentication/Login';
 import Signup from './components/Authentication/Signup';
 import Profile from './components/Authentication/Profile';
 import { AuthContextProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const localizer = momentLocalizer(moment);
 
@@ -119,14 +118,6 @@ const App = () => {
 
 	const blankEntry = {};
 
-	// if (isLoading) {
-	// 	return (
-	// 		<div className="page-layout">
-	// 			<PageLoader />
-	// 		</div>
-	// 	);
-	// }
-
 	return (
 		<AuthContextProvider>
 			<Router>
@@ -142,65 +133,76 @@ const App = () => {
 								<Routes>
 									<Route name="home" path="/" element={<Home />} />
 									<Route name="month" path="/month" element={
-										<Calendar
-											localizer={localizer}
-											events={events}
-											startAccessor="start"
-											endAccessor="end"
-											views={views}
-											components={components}
-											onNavigate={handleNavigate}
-										/>}
+										<ProtectedRoute>
+											<Calendar
+												localizer={localizer}
+												events={events}
+												startAccessor="start"
+												endAccessor="end"
+												views={views}
+												components={components}
+												onNavigate={handleNavigate}
+											/>
+										</ProtectedRoute>}
 									/>
 									<Route
 										name='newEntry'
 										path="/entry"
 										element={
-											<EntryForm
+											<ProtectedRoute><EntryForm
 												entry={blankEntry}
 												onSave={handleSaveEntry}
 												categories={categories} />
+											</ProtectedRoute>
 										}
 									/>
 									<Route
 										name='editEntry'
 										path='/entry/:id/edit'
 										element={
-											<EntryForm
-												entry={blankEntry}
-												onSave={handleSaveEntry}
-												categories={categories} />
+											<ProtectedRoute>
+												<EntryForm
+													entry={blankEntry}
+													onSave={handleSaveEntry}
+													categories={categories} />
+											</ProtectedRoute>
 										}
 									/>
 									<Route
 										name='dayView'
 										path="day-view/:initialDate"
-										element={<DayView onSave={handleSaveEntry} />} />
+										element={
+											<ProtectedRoute>
+												<DayView onSave={handleSaveEntry} />
+											</ProtectedRoute>
+										} />
 
 									<Route
 										name='rangereport'
 										path="rangereport"
-										element={<RangeView />} />
+										element={
+											<ProtectedRoute><RangeView /></ProtectedRoute>
+										} />
 
 									<Route
 										name='reportsummary'
 										path="reportsummary"
-										element={<SummaryByWeek />} />
+										element={<ProtectedRoute><SummaryByWeek /></ProtectedRoute>} />
 
 									<Route
 										name='categoryreport'
 										path="categoryreport"
-										element={<CategorySummaryByWeek />} />
+										element={<ProtectedRoute><CategorySummaryByWeek /></ProtectedRoute>} />
 
 									<Route
 										name='callback'
 										path='callback'
-										element={<Callback />} />
+										element={<ProtectedRoute><Callback /></ProtectedRoute>} />
 
-									<Route name='categories' path='categories' element={<Categories />} />
+									<Route name='categories' path='categories' element={<ProtectedRoute><Categories /></ProtectedRoute>} />
 									<Route name='login' path="/login" element={<Login></Login>}></Route>
 									<Route name='signup' path="/signup" element={<Signup></Signup>}></Route>
-									<Route name='profile' path="/profile" element={<Profile></Profile>}></Route>
+									<Route name='profile' path="/profile" element={<ProtectedRoute><Profile></Profile></ProtectedRoute>}></Route>
 								</Routes>
 							</div>
 						</div>

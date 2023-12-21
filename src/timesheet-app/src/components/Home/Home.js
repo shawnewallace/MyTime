@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Home = () => (
 	<>
@@ -9,7 +10,7 @@ const Home = () => (
 				</div>
 				<div className='card-body'>
 					<h4 className='card-title'>This is MyTime</h4>
-					<div className='card-text'>Login and enter your time...</div>
+					<div className='card-text'><Link to="/login">Login</Link> and enter your time...</div>
 				</div>
 			</div>
 		</div>

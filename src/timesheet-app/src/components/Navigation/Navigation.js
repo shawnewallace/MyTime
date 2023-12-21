@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 // import LoginButton from '../Buttons/LoginButton';
-// import LogoutButton from '../Buttons/LogoutButton';
+import LogoutButton from '../Buttons/LogoutButton';
 
 const Navigation = () => {
+
 	let currentDate = new Date();
 
 	return (
@@ -52,7 +54,7 @@ const Navigation = () => {
 				</ul>
 
 				<div className="navbar-nav me-3">
-					{/* {isAuthenticated ? (<LogoutButton />) : (<LoginButton />)} */}
+					<LogoutButton />
 				</div>
 			</div>
 
