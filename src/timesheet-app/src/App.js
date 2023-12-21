@@ -19,6 +19,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './App.css';
 import CategorySummaryByWeek from './components/Reporting/CategorySummaryByWeek';
+import Login from './components/Authentication/Login';
+import Signup from './components/Authentication/Signup';
+import Profile from './components/Authentication/Profile';
+import { AuthContextProvider } from './context/AuthContext';
 
 const localizer = momentLocalizer(moment);
 
@@ -124,84 +128,89 @@ const App = () => {
 	// }
 
 	return (
-		<Router>
-			<div className="d-flex flex-column min-vh-100 app">
-				<header className="bg-light">
-					<div>
-						<Navigation />
-					</div>
-				</header>
-				<main className="flex-grow-1 ms-3 me-3 mb-3">
-					<div className='card h-100'>
-						<div className='card-body'>
-							<Routes>
-								<Route name="home" path="/" element={<Home />} />
-								<Route name="month" path="/month" element={
-									<Calendar
-										localizer={localizer} 
-										events={events} 
-										startAccessor="start" 
-										endAccessor="end" 
-										views={views} 
-										components={components} 
-										onNavigate={handleNavigate} 
-									/>}
-								/>
-								<Route
-									name='newEntry'
-									path="/entry"
-									element={
-										<EntryForm
-											entry={blankEntry}
-											onSave={handleSaveEntry}
-											categories={categories} />
-									}
-								/>
-								<Route
-									name='editEntry'
-									path='/entry/:id/edit'
-									element={
-										<EntryForm
-											entry={blankEntry}
-											onSave={handleSaveEntry}
-											categories={categories} />
-									}
-								/>
-								<Route
-									name='dayView'
-									path="day-view/:initialDate"
-									element={<DayView onSave={handleSaveEntry} />} />
-
-								<Route
-									name='rangereport'
-									path="rangereport"
-									element={<RangeView />} />
-									
-								<Route
-									name='reportsummary'
-									path="reportsummary"
-									element={<SummaryByWeek />} />
-
-								<Route
-									name='categoryreport'
-									path="categoryreport"
-									element={<CategorySummaryByWeek />} />
-
-								<Route
-									name='callback'
-									path='callback'
-									element={<Callback />} />
-
-								<Route name='categories' path='categories' element={<Categories />} />
-							</Routes>
+		<AuthContextProvider>
+			<Router>
+				<div className="d-flex flex-column min-vh-100 app">
+					<header className="bg-light">
+						<div>
+							<Navigation />
 						</div>
-					</div>
-				</main>
-				<footer className="bg-light py-3 mt-auto text-center">
-					<p>&copy; {new Date().getFullYear()} Shawn Wallace. All rights reserved.</p>
-				</footer>
-			</div>
-		</Router>
+					</header>
+					<main className="flex-grow-1 ms-3 me-3 mb-3">
+						<div className='card h-100'>
+							<div className='card-body'>
+								<Routes>
+									<Route name="home" path="/" element={<Home />} />
+									<Route name="month" path="/month" element={
+										<Calendar
+											localizer={localizer}
+											events={events}
+											startAccessor="start"
+											endAccessor="end"
+											views={views}
+											components={components}
+											onNavigate={handleNavigate}
+										/>}
+									/>
+									<Route
+										name='newEntry'
+										path="/entry"
+										element={
+											<EntryForm
+												entry={blankEntry}
+												onSave={handleSaveEntry}
+												categories={categories} />
+										}
+									/>
+									<Route
+										name='editEntry'
+										path='/entry/:id/edit'
+										element={
+											<EntryForm
+												entry={blankEntry}
+												onSave={handleSaveEntry}
+												categories={categories} />
+										}
+									/>
+									<Route
+										name='dayView'
+										path="day-view/:initialDate"
+										element={<DayView onSave={handleSaveEntry} />} />
+
+									<Route
+										name='rangereport'
+										path="rangereport"
+										element={<RangeView />} />
+
+									<Route
+										name='reportsummary'
+										path="reportsummary"
+										element={<SummaryByWeek />} />
+
+									<Route
+										name='categoryreport'
+										path="categoryreport"
+										element={<CategorySummaryByWeek />} />
+
+									<Route
+										name='callback'
+										path='callback'
+										element={<Callback />} />
+
+									<Route name='categories' path='categories' element={<Categories />} />
+									<Route name='login' path="/login" element={<Login></Login>}></Route>
+									<Route name='signup' path="/signup" element={<Signup></Signup>}></Route>
+									<Route name='profile' path="/profile" element={<Profile></Profile>}></Route>
+								</Routes>
+							</div>
+						</div>
+					</main>
+					<footer className="bg-light py-3 mt-auto text-center">
+						<p>&copy; {new Date().getFullYear()} Shawn Wallace. All rights reserved.</p>
+					</footer>
+				</div>
+			</Router>
+		</AuthContextProvider>
 	);
 };
 

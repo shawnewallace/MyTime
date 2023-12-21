@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LoginButton from '../Buttons/LoginButton';
-import LogoutButton from '../Buttons/LogoutButton';
+// import LoginButton from '../Buttons/LoginButton';
+// import LogoutButton from '../Buttons/LogoutButton';
 
 const Navigation = () => {
 	let currentDate = new Date();
