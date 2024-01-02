@@ -10,6 +10,7 @@ namespace MyTime.Persistence
 		public DbSet<Entry> Entries { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<CategoryReportModel> CategoryReportModels { get; set; } = null!;
+		public DbSet<WeekSummaryModel> WeekSummaryModels { get; set; } = null!;
 
 		public MyTimeSqlDbContext(DbContextOptions<MyTimeSqlDbContext> options) : base(options) { }
 
@@ -31,6 +32,7 @@ namespace MyTime.Persistence
 				.OnDelete(DeleteBehavior.Restrict);
 
 			modelBuilder.Entity<CategoryReportModel>().HasNoKey().ToView(null);
+			modelBuilder.Entity<WeekSummaryModel>().HasNoKey().ToView(null);
 		}
 	}
 }

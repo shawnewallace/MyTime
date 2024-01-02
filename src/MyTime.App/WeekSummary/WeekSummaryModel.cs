@@ -1,19 +1,21 @@
 using System;
 using Microsoft.Identity.Client;
+using MyTime.App.Infrastructure;
 
 namespace MyTime.App.WeekSummary;
 
 public sealed record WeekSummaryModel(
 	int Year,
 	int WeekNumber,
-	DateTime FirstDayOfWeek,
-	DateTime LastDayOfWeek,
-	float TotalHours,
-	float UtilizedHours,
-	float MeetingHours,
-	float BusinessDevelopmentHours)
+	double TotalHours,
+	double UtilizedHours,
+	double MeetingHours,
+	double BusinessDevelopmentHours)
 {
-	public float UtilizedPercentage
+	public DateTime FirstDayOfWeek => new WeekOfYear(Year, WeekNumber).FirstDayOfWeek();
+	public DateTime LastDayOfWeek => new WeekOfYear(Year, WeekNumber).LastDayOfWeek();
+
+	public double UtilizedPercentage
 	{
 		get
 		{
@@ -22,7 +24,7 @@ public sealed record WeekSummaryModel(
 		}
 	}
 
-	public float MeetingHoursPercentage
+	public double MeetingHoursPercentage
 	{
 		get
 		{
@@ -31,7 +33,7 @@ public sealed record WeekSummaryModel(
 		}
 	}
 
-	public float BusinessDevelopmentHoursPercentage
+	public double BusinessDevelopmentHoursPercentage
 	{
 		get
 		{
