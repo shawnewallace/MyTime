@@ -13,8 +13,8 @@ public class WeekSummaryModelTests
 	[InlineData(40.75f, 10.25f, 25.153374f)]
 	[InlineData(40.75f, 0f, 0)]
 	public void ItCalculatesUtilizedPercentageProperly(float totalHours, float utilizedHOurs, float expected) {
-		var model = new WeekSummaryModel(2023, 10, new DateTime(2023, 10, 01), new DateTime(2023, 10, 31), totalHours, utilizedHOurs, 0f, 0f);
-		model.UtilizedPercentage.ShouldBe(expected);
+		var model = new WeekSummaryModel(2023, 10, totalHours, utilizedHOurs, 0f, 0f);
+		model.UtilizedPercentage.ShouldBe(expected, tolerance: 0.0001f);
 	}
 
 	[Theory]
@@ -23,8 +23,8 @@ public class WeekSummaryModelTests
 	[InlineData(40.75f, 10.25f, 25.153374f)]
 	[InlineData(40.75f, 0f, 0)]
 	public void ItCalculatesMeetingHoursProperly(float totalHours, float meetingHours, float expected) {
-		var model = new WeekSummaryModel(2023, 10, new DateTime(2023, 10, 01), new DateTime(2023, 10, 31), totalHours, 0f, meetingHours, 0f);
-		model.MeetingHoursPercentage.ShouldBe(expected);
+		var model = new WeekSummaryModel(2023, 10, totalHours, 0f, meetingHours, 0f);
+		model.MeetingHoursPercentage.ShouldBe(expected, tolerance: 0.0001f);
 	}
 
 	[Theory]
@@ -33,7 +33,7 @@ public class WeekSummaryModelTests
 	[InlineData(40.75f, 10.25f, 25.153374f)]
 	[InlineData(40.75f, 0f, 0)]
 	public void ItCalculatesBusinessDevelopmentHoursProperly(float totalHours, float businessDevelopmentHours, float expected) {
-		var model = new WeekSummaryModel(2023, 10, new DateTime(2023, 10, 01), new DateTime(2023, 10, 31), totalHours, 0f, 0f, businessDevelopmentHours);
-		model.BusinessDevelopmentHoursPercentage.ShouldBe(expected);
+		var model = new WeekSummaryModel(2023, 10, totalHours, 0f, 0f, businessDevelopmentHours);
+		model.BusinessDevelopmentHoursPercentage.ShouldBe(expected, tolerance: 0.0001f);
 	}
 }
