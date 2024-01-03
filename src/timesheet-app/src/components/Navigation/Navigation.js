@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserAuth } from '../../context/AuthContext';
+
 
 // import LoginButton from '../Buttons/LoginButton';
 import LogoutButton from '../Buttons/LogoutButton';
 
 const Navigation = () => {
-
+	const { user } = UserAuth();
 	let currentDate = new Date();
+
+	if (!user) {
+		return "";
+	};
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
