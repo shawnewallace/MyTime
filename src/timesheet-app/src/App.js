@@ -53,8 +53,8 @@ const App = () => {
 			const data = await apiService.getEntries(start, end);
 
 			var entries = data.entries.map(value => ({
-				title: value.category + ' (' + value.duration + ')',
-				start: value.onDate,
+				title: value.category,
+				start: new Date(value.onDate),
 				end: new Date(value.onDate),
 			}));
 			setEvents(entries);

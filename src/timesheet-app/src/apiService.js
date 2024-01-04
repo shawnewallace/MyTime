@@ -338,7 +338,7 @@ const apiService = {
 		var jsonEntry = JSON.stringify(payload);
 
 		try {
-			const response = await fetch(`${BASE_URL}/report/category-summary-by-week/${start}/${end}`, {
+			const response = await fetch(`${BASE_URL}/report/category-summary-by-week/${start.format("YYYY-MM-DD")}/${end.format("YYYY-MM-DD") }`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

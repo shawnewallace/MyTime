@@ -4,16 +4,23 @@ import apiService from "../../apiService";
 
 const CategorySummaryByWeek = () => {
 	const [summary, setSummary] = useState([]);
-	const [start, setStart] = useState(moment().startOf('month').format("YYYY-MM-DD"));
-	const [end, setEnd] = useState(moment().endOf('month').format("YYYY-MM-DD"));
+	const [start, setStart] = useState(moment().startOf('month'));
+	const [end, setEnd] = useState(moment().endOf('month'));
 
 	useEffect(() => {
 		fetchSummary();
-	},[]);
+	}, [start]);
 
 	async function fetchSummary() {
-		const data = await apiService.getCategorySummaryReport(start, end);
+		const data = await apiService.getCategorySummaryReport(start, moment(start).endOf('month'));
 		setSummary(data);
+	};
+
+	const handleDateIncrement = (increment) => {
+		var newStart = moment(start).add(increment,'months');
+		var newEnd = moment(newStart).endOf('month');
+		setStart(newStart);
+		setEnd(newEnd);
 	};
 
 	return (
@@ -22,7 +29,18 @@ const CategorySummaryByWeek = () => {
 				<h3>Category Report</h3>
 			</div>
 			<div className="row">
-				From {start} to {end}
+				<div className="col">
+					<div className="flex-bind">
+						From
+						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateIncrement(-1)}>
+							<i className='bi bi-arrow-left-square'></i>
+						</button>
+						{start.format("YYYY-MM-DD")}
+						<button type='button' className='btn btn-light btn-sm' onClick={() => handleDateIncrement(1)}>
+							<i className='bi bi-arrow-right-square'></i>
+						</button> to {end.format("YYYY-MM-DD")}
+					</div>
+				</div>
 			</div>
 			<div className="row">
 				{summary.length > 0 ? (
@@ -38,7 +56,7 @@ const CategorySummaryByWeek = () => {
 							<tbody>
 								{summary.map((value, index) => (
 									<>
-										{index > 0 && value.week !== summary[index -1].week && (
+										{index > 0 && value.week !== summary[index - 1].week && (
 											<tr>
 												<td className="table-primary text-start" colSpan="3">({value.week}) {moment(value.firstDayOfWeek).format("YYYY-MM-DD")}</td>
 											</tr>)
