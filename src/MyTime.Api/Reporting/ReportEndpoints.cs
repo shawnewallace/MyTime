@@ -14,6 +14,7 @@ public class ReportEndpoints : EndpointBase, ICarterModule
 		var group = app.MapGroup("report").WithName("report-endpoints");
 		group.MapPost("week-summary", WeekSummary).WithName("week-summary");
 		group.MapPost("category-summary-by-week/{from}/{to}", CategorySummaryByWeek).WithName("category-summary-by-week");
+		group.MapPost("category-summary-by-day/{from}/{to}", CategorySummaryByDay).WithName("category-summary-by-day");
 	}
 
 	public static async Task<IResult> WeekSummary(
@@ -27,6 +28,16 @@ public class ReportEndpoints : EndpointBase, ICarterModule
 		var end = DateTime.Parse(to);
 
 		var result = await mediator.Send(request: new GetCategoryReportByWeekQuery(start, end));
+
+		return Results.Ok(result);
+	}
+
+	public static async Task<IResult> CategorySummaryByDay(string from, string to, IMediator mediator)
+	{
+		var start = DateTime.Parse(from);
+		var end = DateTime.Parse(to);
+
+		var result = await mediator.Send(request: new GetDaySummaryQuery(start, end));
 
 		return Results.Ok(result);
 	}

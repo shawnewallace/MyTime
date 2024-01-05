@@ -10,10 +10,16 @@ public static class DependencyInjection
 		var assembly = typeof(DependencyInjection).Assembly;
 
 		services.AddDbContext<MyTimeSqlDbContext>(
-					options => options.UseSqlServer(
-							connectionString,
-							optionsBuilder => optionsBuilder.MigrationsAssembly("MyTime.Api"))
-			);
+					options =>
+					{
+						options.UseSqlServer(
+													connectionString,
+													optionsBuilder =>
+													{
+														optionsBuilder.MigrationsAssembly("MyTime.Api");
+													});
+						options.EnableDetailedErrors();
+					});
 
 		return services;
 	}
