@@ -353,6 +353,26 @@ const apiService = {
 			throw new Error('API request failed');
 		}
 	},
+	getDaySummaryReport: async (start, end) => {
+		let payload = {};
+		var jsonEntry = JSON.stringify(payload);
+
+		try {
+			const response = await fetch(`${BASE_URL}/report/category-summary-by-day/${start.format("YYYY-MM-DD")}/${end.format("YYYY-MM-DD")}`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: jsonEntry,
+			});
+			const data = await response.json();
+			return data;
+
+		} catch (error) {
+			console.error('API Error:', error);
+			throw new Error('API request failed');
+		}
+	},
 };
 
 export default apiService;

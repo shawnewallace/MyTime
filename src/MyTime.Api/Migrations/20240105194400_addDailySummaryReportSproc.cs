@@ -18,6 +18,7 @@ namespace MyTime.Api.Migrations
 							e.OnDate,
 							p.Name as parentCategory,
 							c.Name as category,
+							string_agg(e.Description, char(13)) as description,
 							sum(e.Duration) as duratation
 						from Entries e
 							left join categories c on e.CategoryId = c.Id

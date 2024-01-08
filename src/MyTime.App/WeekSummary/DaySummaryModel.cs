@@ -6,6 +6,10 @@ public sealed record DaySummaryModel(
 	DateTime OnDate, 
 	string ParentCategory, 
 	string Category, 
-	double Duration);
+	string Description,
+	double Duration)
+	{
+	public string FullName => string.IsNullOrEmpty(ParentCategory) ? Category : $"{ParentCategory}:{Category}";
+};
 
 

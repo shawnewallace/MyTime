@@ -8,6 +8,7 @@ import EntryForm from './components/EntryForm/EntryForm';
 import DayView from './components/DayView/DayView'
 import RangeView from './components/Reporting/RangeView'
 import SummaryByWeek from './components/Reporting/SummaryByWeek'
+import CategorySummaryByDay from './components/Reporting/CategorySummaryByDay'
 import apiService from './apiService';
 import Callback from './components/Callback/Callback';
 import Categories from './components/Categories/Categories';
@@ -193,6 +194,11 @@ const App = () => {
 										name='categoryreport'
 										path="categoryreport"
 										element={<ProtectedRoute><CategorySummaryByWeek /></ProtectedRoute>} />
+
+									<Route
+										name='dayreport'
+										path="dayreport"
+										element={<ProtectedRoute><CategorySummaryByDay /></ProtectedRoute>} />
 
 									<Route
 										name='callback'

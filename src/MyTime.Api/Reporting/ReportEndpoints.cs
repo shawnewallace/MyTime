@@ -39,6 +39,6 @@ public class ReportEndpoints : EndpointBase, ICarterModule
 
 		var result = await mediator.Send(request: new GetDaySummaryQuery(start, end));
 
-		return Results.Ok(result);
+		return Results.Ok(result.OrderBy(x => x.OnDate).ThenBy(x => x.FullName));
 	}
 }

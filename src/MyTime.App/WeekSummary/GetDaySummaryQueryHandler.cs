@@ -22,6 +22,7 @@ public class GetDaySummaryQueryHandler(MyTimeSqlDbContext context) : IRequestHan
 				r.OnDate,
 				r.ParentCategory ?? string.Empty,
 				r.Category ?? string.Empty,
+				r.Description ?? string.Empty,
 				r.Duratation));
 	}
 }
