@@ -25,6 +25,12 @@ const Categories = () => {
 		});
 	};
 
+	const handleNewChildCategory = (id) => {
+		apiService.createCategory("_New CHILD Category_", id).then((data) => {
+			fetchCategories();
+		});
+	};
+
 	const handleNameChange = (ctl, id) => {
 		var category = categories.filter(e => e.id === id)[0];
 
@@ -93,6 +99,13 @@ const Categories = () => {
 								defaultChecked={!category.isDeleted}
 								onChange={(e) => { handleIsActiveChange(e, category.id) }}
 							/>
+						</div>
+						<div className="col">
+							{!category.parentId && (
+								<button type='button' className='btn btn-light btn-sm' onClick={() => handleNewChildCategory(category.id)}>
+									<i className='bi bi-file-plus'></i>
+								</button>
+							)}
 						</div>
 					</div>
 				))}

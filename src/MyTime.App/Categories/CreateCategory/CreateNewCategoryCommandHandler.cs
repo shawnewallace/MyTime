@@ -24,6 +24,12 @@ public class CreateNewCategoryCommandHandler : IRequestHandler<CreateNewCategory
 			IsDeleted = request.IsDeleted
 		};
 
+		if (request.ParentId is not null)
+		{
+			var parentId = new Guid(request.ParentId);
+			newCategory.ParentId = parentId;
+		}
+
 		await _context.Categories.AddAsync(newCategory, cancellationToken);
 
 		await _context.SaveChangesAsync(cancellationToken);

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using MyTime.Persistence.Entities;
 
 namespace MyTime.Persistence
@@ -16,5 +17,6 @@ namespace MyTime.Persistence
 		{
 			context.Database.EnsureCreated();
 		}
+
 	}
 }

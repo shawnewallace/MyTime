@@ -36,9 +36,10 @@ const apiService = {
 			throw new Error('API request failed');
 		}
 	},
-	createCategory: async (category) => {
+	createCategory: async (category, id) => {
 		let newCategory = {
-			name: category
+			name: category,
+			parentId: id
 		};
 
 		console.log("creating category", newCategory);

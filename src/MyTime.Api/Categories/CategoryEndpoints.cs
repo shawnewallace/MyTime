@@ -63,7 +63,8 @@ public class CategoryEndpoints : EndpointBase, ICarterModule
 		var command = new CreateNewCategoryCommand
 		{
 			Name = model.Name,
-			IsDeleted = false
+			IsDeleted = false,
+			ParentId = model.ParentId
 		};
 
 		var newCategory = await mediator.Send(command);
