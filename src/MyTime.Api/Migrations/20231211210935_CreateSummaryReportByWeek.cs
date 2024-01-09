@@ -21,7 +21,7 @@ namespace MyTime.Api.Migrations
 							sum(duration) as TotalHours,
 							sum(iif(e.IsUtilization = 1, e.duration, 0.0)) as UtilizedHours,
 							sum(IIF(e.isMeeting = 1, e.duration, 0.0)) as MeetingHours,
-							sum(iif(parent.Name = 'BD', e.Duration, 0.0)) as BusinessDevelopmentHours
+							sum(iif(parent.Name = 'Business Development', e.Duration, 0.0)) as BusinessDevelopmentHours
 					from Entries e
 							left join Categories c on e.CategoryId = c.Id
 							left join Categories parent on c.ParentId = parent.Id

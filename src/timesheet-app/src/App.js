@@ -35,7 +35,6 @@ const views = {
 const App = () => {
 	const [events, setEvents] = useState([]);
 	const [days, setDays] = useState([]);
-	const [categories, setCategories] = useState([]);
 
 	const handleSaveEntry = async (entry) => {
 		await apiService.createEntry(entry);
@@ -46,7 +45,6 @@ const App = () => {
 		var start = new Date(date.getFullYear(), date.getMonth(), 1);
 		var end = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 		fetchEvents(start, end);
-		fetchCategories();
 	}, []);
 
 	const fetchEvents = async (start, end) => {
@@ -64,15 +62,6 @@ const App = () => {
 			setDays(rawDays);
 		} catch (error) {
 			console.error('Error fetching events:', error);
-		}
-	};
-
-	const fetchCategories = async () => {
-		try {
-			const data = await apiService.getCategories();
-			setCategories(data);
-		} catch (error) {
-			console.error('Error fetching categories:', error);
 		}
 	};
 
@@ -96,7 +85,7 @@ const App = () => {
 		return (
 			<div className='custom-date-header'>
 				<div>
-					<Link to={`/day-view/${date.toISOString()}`} cats={categories}>
+					<Link to={`/day-view/${date.toISOString()}`}>
 						{dayData.dayOfMonth || dayOfMonth}
 					</Link>
 				</div>
@@ -152,8 +141,7 @@ const App = () => {
 										element={
 											<ProtectedRoute><EntryForm
 												entry={blankEntry}
-												onSave={handleSaveEntry}
-												categories={categories} />
+												onSave={handleSaveEntry} />
 											</ProtectedRoute>
 										}
 									/>
@@ -164,8 +152,7 @@ const App = () => {
 											<ProtectedRoute>
 												<EntryForm
 													entry={blankEntry}
-													onSave={handleSaveEntry}
-													categories={categories} />
+													onSave={handleSaveEntry} />
 											</ProtectedRoute>
 										}
 									/>
