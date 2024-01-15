@@ -42,3 +42,4 @@ public class ReportEndpoints : EndpointBase, ICarterModule
 		return Results.Ok(result.OrderBy(x => x.OnDate).ThenBy(x => x.FullName));
 	}
 }
+

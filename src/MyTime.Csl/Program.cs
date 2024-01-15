@@ -23,17 +23,16 @@ var prodContext = new MyTimeSqlDbContext(prodOptionsBuilder.Options);
 Console.WriteLine("DEV Connection string: " + devConnectionString);
 Console.WriteLine("PROD Connection string: " + prodConnectionString);
 
-
-var x = devContext.Categories.Count();
-var y = prodContext.Categories.Count();
-Console.WriteLine($"BEFORE => DEV Categories: {x}     PROD Categories: {y}");
-
-x = devContext.Entries.Count();
-y = prodContext.Entries.Count();
+var x = devContext.Entries.Count();
+var y = prodContext.Entries.Count();
 Console.WriteLine($"BEFORE => DEV Entries: {x}     PROD Entries: {y}");
 
-await RemoveAllCategories(devContext);
+x = devContext.Categories.Count();
+y = prodContext.Categories.Count();
+Console.WriteLine($"BEFORE => DEV Categories: {x}     PROD Categories: {y}");
+
 await RemoveAllEntries(devContext);
+await RemoveAllCategories(devContext);
 
 var prodCategories = prodContext.Categories.ToList();
 devContext.Categories.AddRange(prodCategories);
@@ -50,10 +49,6 @@ Console.WriteLine($"AFTER => DEV Categories: {x}     PROD Categories: {y}");
 x = devContext.Entries.Count();
 y = prodContext.Entries.Count();
 Console.WriteLine($"AFTER => DEV Entries: {x}     PROD Entries: {y}");
-
-
-
-
 
 async Task RemoveAllCategories(MyTimeSqlDbContext ctx) => await ctx.Categories.ExecuteDeleteAsync();
 async Task RemoveAllEntries(MyTimeSqlDbContext ctx) => await ctx.Entries.ExecuteDeleteAsync();

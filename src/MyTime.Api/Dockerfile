@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 COPY ./src/MyTime.Api/*.csproj src/MyTime.Api/
 COPY ["./src/MyTime.App/*.csproj", "src/MyTime.App/"]
@@ -17,7 +17,7 @@ FROM build AS publish
 RUN dotnet publish "./MyTime.Api.csproj" -c Release -o "./out/" --no-restore
 
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 as runtime 
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 as runtime 
 RUN useradd -M -s /bin/true -u 1000 dotnet
 
 WORKDIR /app

@@ -23,6 +23,26 @@ const CategorySummaryByWeek = () => {
 		setEnd(newEnd);
 	};
 
+	const getTotals = (data, key) => {
+		let total = 0;
+		data.forEach(item => {
+			if (item.onDate === key) {
+				total += item.duration;
+			}
+		});
+
+		return total;
+	};
+
+	const getGrandTotal = (data) => {
+		let total = 0;
+		data.forEach(item => {
+			total += item.duration;
+		});
+
+		return total;
+	};
+
 	return (
 		<div className="container>">
 			<div className="row">
@@ -55,16 +75,21 @@ const CategorySummaryByWeek = () => {
 								</tr>
 							</thead>
 							<tbody>
+								<tr>
+									<td className="table-primary text-start text-end fw-bold" colSpan="4">{getGrandTotal(summary).toFixed(2)}</td>
+								</tr>
 								{summary.map((value, index) => (
 									<>
 										{index > 0 && value.onDate !== summary[index - 1].onDate && (
 											<tr>
-												<td className="table-primary text-start" colSpan="4">{moment(value.onDate).format("YYYY-MM-DD")}</td>
+												<td className="table-primary text-start" colSpan="3">{moment(value.onDate).format("YYYY-MM-DD")}</td>
+												<td className="table-primary text-end fw-bold">{getTotals(summary, value.onDate).toFixed(2)}</td>
 											</tr>)
 										}
 										{index === 0 && (
 											<tr>
-												<td className="table-primary text-start" colSpan="4">{moment(value.onDate).format("YYYY-MM-DD")}</td>
+												<td className="table-primary text-start" colSpan="3">{moment(value.onDate).format("YYYY-MM-DD")}</td>
+												<td className="table-primary text-end fw-bold">{getTotals(summary, value.onDate).toFixed(2)}</td>
 											</tr>
 										)}
 										<tr key={index}>

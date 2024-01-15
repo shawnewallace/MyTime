@@ -2,6 +2,7 @@ using Carter;
 using Microsoft.EntityFrameworkCore;
 using MyTime.App;
 using MyTime.Persistence;
+using MyTime.Persistence.Infrastructure;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
