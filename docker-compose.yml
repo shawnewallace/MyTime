@@ -34,6 +34,7 @@ services:
     image: mytime-api
     depends_on:
       - "sqlserver"
+      - "mytime-seq"
     build:
       context: .
       dockerfile: ./src/MyTime.Api/Dockerfile
@@ -43,6 +44,15 @@ services:
     ports:
       - "5000:5000"
       - "5001:5001"
+
+  mytime-seq:
+    image: datalust/seq:latest
+    container_name: runtrackr.seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80
 
 
 volumes:
