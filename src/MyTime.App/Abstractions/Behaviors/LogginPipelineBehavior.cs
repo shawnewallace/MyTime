@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace MyTime.App.Infrastructure;
+namespace MyTime.App.Abstractions.Behaviors;
 
 public class LogginPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
 	where TRequest : IRequest<TResponse>

@@ -1,5 +1,6 @@
 using Carter;
 using Microsoft.EntityFrameworkCore;
+using MyTime.Api.Infrastructure;
 using MyTime.App;
 using MyTime.Persistence;
 using MyTime.Persistence.Infrastructure;
@@ -31,7 +32,7 @@ builder.Services
 
 var app = builder.Build();
 
-using(var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
 	try
 	{
@@ -53,11 +54,14 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
-app.UseSerilogRequestLogging();
 
 app.MapCarter();
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<RequestLogContextMiddleware>();
+
+app.UseSerilogRequestLogging();
 
 app.UseCors("development");
 

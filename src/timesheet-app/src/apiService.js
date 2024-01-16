@@ -1,6 +1,14 @@
+import { UserAuth } from "./context/AuthContext";
+
 const BASE_URL = process.env.REACT_APP_API_URL;
+// const { user } = UserAuth();
 
 const apiService = {
+	// getAccessToken: async () => {
+	// 	const token = user.accessToken;
+	// 	console.log("token: " + token);
+	// 	return token;
+	// },
 	getCategories: async () => {
 		try {
 			const response = await fetch(`${BASE_URL}/categories/lookup`);
