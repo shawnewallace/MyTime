@@ -3,20 +3,19 @@ using System.Linq;
 using Microsoft.Extensions.Logging;
 using MyTime.Persistence.Entities;
 
-namespace MyTime.Persistence
+namespace MyTime.Persistence;
+
+public class MyTimeSqlDbContextInitializer
 {
-	public class MyTimeSqlDbContextInitializer
-	{
-		public static void Initialize(MyTimeSqlDbContext context)
-		{
-			var initializer = new MyTimeSqlDbContextInitializer();
-			initializer.Seed(context);
-		}
+  public static void Initialize(MyTimeSqlDbContext context)
+  {
+    var initializer = new MyTimeSqlDbContextInitializer();
+    initializer.Seed(context);
+  }
 
-		private void Seed(MyTimeSqlDbContext context)
-		{
-			context.Database.EnsureCreated();
-		}
+  private void Seed(MyTimeSqlDbContext context)
+  {
+    context.Database.EnsureCreated();
+  }
 
-	}
 }

@@ -4,5 +4,5 @@ namespace MyTime.App.Infrastructure;
 
 public class EntryNotFoundException : Exception
 {
-	public EntryNotFoundException(Guid id) : base("Entry " + id + " not found.") { }
+  public EntryNotFoundException(Guid id) : base("Entry " + id + " not found.") { }
 }

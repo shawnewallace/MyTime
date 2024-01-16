@@ -4,13 +4,13 @@ using MyTime.App.Entries.CreateNewEntry;
 using MyTime.Persistence;
 
 IConfiguration config = new ConfigurationBuilder()
-	.AddJsonFile("appsettings.json")
-	.AddJsonFile("appsettings.Development.json", optional: true)
-	.AddEnvironmentVariables()
-	.Build();
+  .AddJsonFile("appsettings.json")
+  .AddJsonFile("appsettings.Development.json", optional: true)
+  .AddEnvironmentVariables()
+  .Build();
 
-var devConnectionString = config.GetConnectionString("MyTimeSqlDbContextConnectionStringDEV");
-var prodConnectionString = config.GetConnectionString("MyTimeSqlDbContextConnectionStringPROD");
+string? devConnectionString = config.GetConnectionString("MyTimeSqlDbContextConnectionStringDEV");
+string? prodConnectionString = config.GetConnectionString("MyTimeSqlDbContextConnectionStringPROD");
 
 var devOptionsBuilder = new DbContextOptionsBuilder<MyTimeSqlDbContext>();
 devOptionsBuilder.UseSqlServer(devConnectionString);
@@ -23,8 +23,8 @@ var prodContext = new MyTimeSqlDbContext(prodOptionsBuilder.Options);
 Console.WriteLine("DEV Connection string: " + devConnectionString);
 Console.WriteLine("PROD Connection string: " + prodConnectionString);
 
-var x = devContext.Entries.Count();
-var y = prodContext.Entries.Count();
+int x = devContext.Entries.Count();
+int y = prodContext.Entries.Count();
 Console.WriteLine($"BEFORE => DEV Entries: {x}     PROD Entries: {y}");
 
 x = devContext.Categories.Count();

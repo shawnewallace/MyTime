@@ -14,22 +14,22 @@ namespace MyTime.App.WeekSummary;
 
 public class GetWeekSummaryQueryHandler(MyTimeSqlDbContext context) : IRequestHandler<GetWeekSummaryQuery, List<WeekSummaryModel>>
 {
-	private readonly MyTimeSqlDbContext _context = context;
+  private readonly MyTimeSqlDbContext _context = context;
 
-	public async Task<List<WeekSummaryModel>> Handle(GetWeekSummaryQuery request, CancellationToken cancellationToken)
-	{
-		var raw = await _context.WeekSummaryModels
-			.FromSqlInterpolated($"EXECUTE dbo.GetSummaryReportByWeek {request.From.Date}, {request.To.Date}")
-			.ToListAsync(cancellationToken);
+  public async Task<List<WeekSummaryModel>> Handle(GetWeekSummaryQuery request, CancellationToken cancellationToken)
+  {
+    List<Persistence.Models.WeekSummaryModel> raw = await _context.WeekSummaryModels
+      .FromSqlInterpolated($"EXECUTE dbo.GetSummaryReportByWeek {request.From.Date}, {request.To.Date}")
+      .ToListAsync(cancellationToken);
 
-		return raw.ConvertAll(r =>
-			new WeekSummaryModel(
-				r.Year,
-				r.Week,
-				r.TotalHours,
-				r.UtilizedHours,
-				r.MeetingHours,
-				r.BusinessDevelopmentHours));
-	}
+    return raw.ConvertAll(r =>
+      new WeekSummaryModel(
+        r.Year,
+        r.Week,
+        r.TotalHours,
+        r.UtilizedHours,
+        r.MeetingHours,
+        r.BusinessDevelopmentHours));
+  }
 }
 

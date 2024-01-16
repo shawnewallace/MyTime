@@ -11,21 +11,19 @@ namespace MyTime.App.Entries.DeleteEntry;
 
 public class DeleteEntryCommandHandler : IRequestHandler<DeleteEntryCommand>
 {
-	private readonly MyTimeSqlDbContext _context;
+  private readonly MyTimeSqlDbContext _context;
 
-	public DeleteEntryCommandHandler(MyTimeSqlDbContext context)
-	{
-		_context = context;
-	}
-	public async Task Handle(DeleteEntryCommand request, CancellationToken cancellationToken)
-	{
-		var entry = _context.Entries.FirstOrDefault(x => x.Id == request.Id && x.UserId == request.UserId);
+  public DeleteEntryCommandHandler(MyTimeSqlDbContext context)
+  {
+    _context = context;
+  }
+  public async Task Handle(DeleteEntryCommand request, CancellationToken cancellationToken)
+  {
+    Entry? entry = _context.Entries.FirstOrDefault(x => x.Id == request.Id && x.UserId == request.UserId) ?? throw new EntryNotFoundException(request.Id);
 
-		if (entry is null) throw new EntryNotFoundException(request.Id);
+    entry.IsDeleted = true;
+    entry.WhenUpdated = DateTime.UtcNow;
 
-		entry.IsDeleted = true;
-		entry.WhenUpdated = DateTime.UtcNow;
-
-		await _context.SaveChangesAsync(cancellationToken);
-	}
+    await _context.SaveChangesAsync(cancellationToken);
+  }
 }

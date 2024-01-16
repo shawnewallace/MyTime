@@ -1,10 +1,9 @@
 using System;
 using MediatR;
 
-namespace MyTime.App.Categories.ToggleActive
+namespace MyTime.App.Categories.ToggleActive;
+
+public class ToggleActiveCommand : IRequest
 {
-	public class ToggleActiveCommand : IRequest
-	{
-		public Guid Id { get; set; }
-	}
+  public Guid Id { get; set; }
 }

@@ -1,9 +1,8 @@
-namespace MyTime.App.Infrastructure
+namespace MyTime.App.Infrastructure;
+
+public interface IEntryRollup
 {
-	public interface IEntryRollup
-	{
-		float Total { get; }
-		float UtilizedTotal { get; }
-		int NumEntries { get; }
-	}
+  float Total { get; }
+  float UtilizedTotal { get; }
+  int NumEntries { get; }
 }

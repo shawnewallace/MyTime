@@ -1,20 +1,19 @@
 using FluentValidation;
 
-namespace MyTime.App.Entries.UpdateEntry
+namespace MyTime.App.Entries.UpdateEntry;
+
+public class UpdateEntryCommandValidator : AbstractValidator<UpdateEntryCommand>
 {
-	public class UpdateEntryCommandValidator : AbstractValidator<UpdateEntryCommand>
-	{
-		public UpdateEntryCommandValidator()
-		{
-			RuleFor(x => x.Description)
-				.MaximumLength(255);
+  public UpdateEntryCommandValidator()
+  {
+    RuleFor(x => x.Description)
+      .MaximumLength(255);
 
-			RuleFor(x => x.Duration)
-				.GreaterThanOrEqualTo(0.0F)
-				.LessThan(24.0F);
+    RuleFor(x => x.Duration)
+      .GreaterThanOrEqualTo(0.0F)
+      .LessThan(24.0F);
 
-			RuleFor(x => x.Category)
-				.MaximumLength(50);
-		}
-	}
+    RuleFor(x => x.Category)
+      .MaximumLength(50);
+  }
 }

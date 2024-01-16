@@ -12,23 +12,23 @@ namespace MyTime.App.Categories;
 
 public class GetActiveCategoriesListQueryHandler : IRequestHandler<GetActiveCategoriesListQuery, List<CategoryModel>>
 {
-	private readonly MyTimeSqlDbContext _context;
+  private readonly MyTimeSqlDbContext _context;
 
-	public GetActiveCategoriesListQueryHandler(MyTimeSqlDbContext context) => _context = context;
+  public GetActiveCategoriesListQueryHandler(MyTimeSqlDbContext context) => _context = context;
 
-	public async Task<List<CategoryModel>> Handle(GetActiveCategoriesListQuery request, CancellationToken cancellationToken)
-	{
-		var categories = await _context.Categories
-			.Include(c => c.Parent)
-			.Where(c => !c.IsDeleted)
-			.ToListAsync(cancellationToken: cancellationToken);
+  public async Task<List<CategoryModel>> Handle(GetActiveCategoriesListQuery request, CancellationToken cancellationToken)
+  {
+    List<Category> categories = await _context.Categories
+      .Include(c => c.Parent)
+      .Where(c => !c.IsDeleted)
+      .ToListAsync(cancellationToken: cancellationToken);
 
-		return categories.ConvertAll(c => new CategoryModel(
-			c.Id,
-			c.Name,
-			c.IsDeleted,
-			c.ParentId,
-			c.Parent?.Name ?? ""
-		));
-	}
+    return categories.ConvertAll(c => new CategoryModel(
+      c.Id,
+      c.Name,
+      c.IsDeleted,
+      c.ParentId,
+      c.Parent?.Name ?? ""
+    ));
+  }
 }

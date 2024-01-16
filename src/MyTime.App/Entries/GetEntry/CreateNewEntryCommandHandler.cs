@@ -4,20 +4,22 @@ using MediatR;
 using MyTime.Persistence;
 using MyTime.Persistence.Entities;
 
-namespace MyTime.App.Entries.GetEntry
+namespace MyTime.App.Entries.GetEntry;
+
+public class CreateNewEntryCommandHandler : IRequestHandler<GetEntryQuery, EntryModel>
 {
-	public class CreateNewEntryCommandHandler : IRequestHandler<GetEntryQuery, EntryModel>
-	{
-		private readonly MyTimeSqlDbContext _context;
+  private readonly MyTimeSqlDbContext _context;
 
-		public CreateNewEntryCommandHandler(MyTimeSqlDbContext context) => _context = context;
-		public async Task<EntryModel> Handle(GetEntryQuery query, CancellationToken cancellationToken)
-		{
-			var result = await _context.Entries.FindAsync(query.Id, cancellationToken);
+  public CreateNewEntryCommandHandler(MyTimeSqlDbContext context) => _context = context;
+  public async Task<EntryModel> Handle(GetEntryQuery query, CancellationToken cancellationToken)
+  {
+    Entry? result = await _context.Entries.FindAsync(query.Id, cancellationToken);
 
-			if (result is null) return null;
+    if (result is null)
+    {
+      return null;
+    }
 
-			return new EntryModel(result);
-		}
-	}
+    return new EntryModel(result);
+  }
 }

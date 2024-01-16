@@ -2,15 +2,15 @@
 
 #nullable disable
 
-namespace MyTime.Api.Migrations
+namespace MyTime.Api.Migrations;
+
+/// <inheritdoc />
+public partial class CreateCategoryReportByWeek : Migration
 {
-	/// <inheritdoc />
-	public partial class CreateCategoryReportByWeek : Migration
-	{
-		/// <inheritdoc />
-		protected override void Up(MigrationBuilder migrationBuilder)
-		{
-			var sp = @"CREATE PROCEDURE GetCategoryReportByWeek
+  /// <inheritdoc />
+  protected override void Up(MigrationBuilder migrationBuilder)
+  {
+    string sp = @"CREATE PROCEDURE GetCategoryReportByWeek
 						@StartDate DATETIME,
 						@EndDate DATETIME
 					AS
@@ -31,13 +31,12 @@ namespace MyTime.Api.Migrations
 				group by DATEPART(YEAR, e.OnDate), DATEPART(WEEK, e.OnDate), parent.Name, c.Name
 				order by DATEPART(YEAR, e.OnDate) desc, DATEPART(WEEK, e.OnDate) desc, parent.Name, c.Name
 					END";
-			migrationBuilder.Sql(sp);
-		}
+    migrationBuilder.Sql(sp);
+  }
 
-		/// <inheritdoc />
-		protected override void Down(MigrationBuilder migrationBuilder)
-		{
-			migrationBuilder.Sql("DROP PROCEDURE IF EXISTS GetCategoryReportByWeek");
-		}
-	}
+  /// <inheritdoc />
+  protected override void Down(MigrationBuilder migrationBuilder)
+  {
+    migrationBuilder.Sql("DROP PROCEDURE IF EXISTS GetCategoryReportByWeek");
+  }
 }

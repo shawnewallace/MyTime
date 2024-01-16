@@ -1,20 +1,19 @@
 using System;
 using MyTime.Persistence;
 
-namespace MyTime.Integration.Tests.Infrastructure
+namespace MyTime.Integration.Tests.Infrastructure;
+
+public class QueryTestFixture : IDisposable
 {
-	public class QueryTestFixture : IDisposable
-	{
-		public MyTimeSqlDbContext Context { get; set; }
+  public MyTimeSqlDbContext Context { get; set; }
 
-		public QueryTestFixture()
-		{
-			Context = MyTimeSqlDbContextFactory.Create();
-		}
+  public QueryTestFixture()
+  {
+    Context = MyTimeSqlDbContextFactory.Create();
+  }
 
-		public void Dispose()
-		{
-			MyTimeSqlDbContextFactory.Destroy(Context);
-		}
-	}
+  public void Dispose()
+  {
+    MyTimeSqlDbContextFactory.Destroy(Context);
+  }
 }

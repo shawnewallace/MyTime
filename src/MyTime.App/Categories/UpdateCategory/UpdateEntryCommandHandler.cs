@@ -9,33 +9,31 @@ using MyTime.App.Infrastructure;
 using MyTime.Persistence;
 using MyTime.Persistence.Entities;
 
-namespace MyTime.App.Categories.UpdateCategory
+namespace MyTime.App.Categories.UpdateCategory;
+
+public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Category>
 {
-	public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Category>
-	{
-		private readonly MyTimeSqlDbContext _context;
+  private readonly MyTimeSqlDbContext _context;
 
-		public UpdateCategoryCommandHandler(MyTimeSqlDbContext context)
-		{
-			_context = context;
-		}
-		public async Task<Category> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
-		{
-			var category = await _context.Categories.FindAsync(request.Id, cancellationToken);
-			if (category is null) throw new CategoryNotFoundException(request.Id);
+  public UpdateCategoryCommandHandler(MyTimeSqlDbContext context)
+  {
+    _context = context;
+  }
+  public async Task<Category> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+  {
+    Category? category = await _context.Categories.FindAsync(request.Id, cancellationToken) ?? throw new CategoryNotFoundException(request.Id);
 
-			var oldCategoryName = category.Name;
+    string oldCategoryName = category.Name;
 
-			category.Name = request.Name;
-			category.WhenUpdated = DateTime.UtcNow;
+    category.Name = request.Name;
+    category.WhenUpdated = DateTime.UtcNow;
 
-			await _context.SaveChangesAsync(cancellationToken);
+    await _context.SaveChangesAsync(cancellationToken);
 
-			_context.Entries
-				.Where(e => e.Category == oldCategoryName)
-				.ExecuteUpdate(e => e.SetProperty(s => s.Category, category.Name));
+    _context.Entries
+      .Where(e => e.Category == oldCategoryName)
+      .ExecuteUpdate(e => e.SetProperty(s => s.Category, category.Name));
 
-			return category;
-		}
-	}
+    return category;
+  }
 }

@@ -1,7 +1,6 @@
-namespace MyTime.Persistence.Infrastructure
+namespace MyTime.Persistence.Infrastructure;
+
+public interface IId<TKey>
 {
-	public interface IId<TKey>
-	{
-		TKey Id { get; set; }
-	}
+  TKey Id { get; set; }
 }

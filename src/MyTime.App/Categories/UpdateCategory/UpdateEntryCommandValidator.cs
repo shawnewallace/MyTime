@@ -1,12 +1,11 @@
 using FluentValidation;
 
-namespace MyTime.App.Categories.UpdateCategory
+namespace MyTime.App.Categories.UpdateCategory;
+
+public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
 {
-	public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
-	{
-		public UpdateCategoryCommandValidator()
-		{
-			RuleFor(x => x.Name).MaximumLength(50);
-		}
-	}
+  public UpdateCategoryCommandValidator()
+  {
+    RuleFor(x => x.Name).MaximumLength(50);
+  }
 }

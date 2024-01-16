@@ -1,7 +1,6 @@
-namespace MyTime.Persistence.Infrastructure
-{
+namespace MyTime.Persistence.Infrastructure;
 
-	public interface IEntity<TKey> : IId<TKey>, ITracking
-	{
-	}
+
+public interface IEntity<TKey> : IId<TKey>, ITracking
+{
 }

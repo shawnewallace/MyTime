@@ -7,31 +7,30 @@ using Microsoft.EntityFrameworkCore;
 using MyTime.App.Entries;
 using MyTime.Persistence;
 
-namespace Mytime.App.Entries.GetEntryList
+namespace Mytime.App.Entries.GetEntryList;
+
+public class GetEntryListQueryHandler : IRequestHandler<GetEntryListQuery, List<EntryModel>>
 {
-	public class GetEntryListQueryHandler : IRequestHandler<GetEntryListQuery, List<EntryModel>>
-	{
-		private readonly MyTimeSqlDbContext _context;
+  private readonly MyTimeSqlDbContext _context;
 
-		public GetEntryListQueryHandler(MyTimeSqlDbContext context)
-		{
-			_context = context;
-		}
-		
-		public async Task<List<EntryModel>> Handle(GetEntryListQuery request, CancellationToken cancellationToken)
-		{
-			var result = await _context
-													.Entries
-													.ToListAsync(cancellationToken);
+  public GetEntryListQueryHandler(MyTimeSqlDbContext context)
+  {
+    _context = context;
+  }
 
-			var response = new List<EntryModel>();
+  public async Task<List<EntryModel>> Handle(GetEntryListQuery request, CancellationToken cancellationToken)
+  {
+    List<MyTime.Persistence.Entities.Entry> result = await _context
+                        .Entries
+                        .ToListAsync(cancellationToken);
 
-			foreach (var item in result)
-			{
-				response.Add(new EntryModel(item));
-			}
+    var response = new List<EntryModel>();
 
-			return response;
-		}
-	}
+    foreach (MyTime.Persistence.Entities.Entry? item in result)
+    {
+      response.Add(new EntryModel(item));
+    }
+
+    return response;
+  }
 }

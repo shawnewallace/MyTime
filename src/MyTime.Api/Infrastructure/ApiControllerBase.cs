@@ -7,12 +7,12 @@ namespace MyTime.Api.Infrastructure;
 [Route("[controller]")]
 public abstract class ApiControllerBase : ControllerBase
 {
-	protected ApiControllerBase(IMediator mediator)
-	{
-		Mediator = mediator;
-	}
+  protected ApiControllerBase(IMediator mediator)
+  {
+    Mediator = mediator;
+  }
 
-	protected IMediator Mediator { get; }
+  protected IMediator Mediator { get; }
 
-	protected string GetCurrentUserId() => "not implemented";
+  protected string GetCurrentUserId() => "not implemented";
 }
