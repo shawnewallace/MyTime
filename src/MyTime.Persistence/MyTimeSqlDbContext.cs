@@ -9,6 +9,7 @@ public class MyTimeSqlDbContext : DbContext
 {
   public DbSet<Entry> Entries { get; set; }
   public DbSet<Category> Categories { get; set; }
+  public DbSet<User> Users { get; set; }
   public DbSet<CategoryReportModel> CategoryReportModels { get; set; } = null!;
   public DbSet<WeekSummaryModel> WeekSummaryModels { get; set; } = null!;
   public DbSet<DaySummaryModel> DaySummaryModels { get; set; } = null!;
@@ -23,6 +24,8 @@ public class MyTimeSqlDbContext : DbContext
       .WithMany()
       .HasForeignKey(e => e.CategoryId);
 
+    // modelBuilder.Entity<Entry>()
+    //   .HasQueryFilter(e => !e.IsDeleted);
 
     modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
 
