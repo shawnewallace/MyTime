@@ -11,7 +11,6 @@ public class Entry : AppEntityBase, IEntry
   [StringLength(255)] public string Description { get; set; } = string.Empty;
   public float Duration { get; set; }
   public bool IsUtilization { get; set; } = true;
-  [StringLength(50)] public string Category { get; set; } = string.Empty;
   public Guid? CategoryId { get; set; }
   public Category? CategoryN { get; set; } = null!;
   public string Notes { get; set; } = string.Empty;

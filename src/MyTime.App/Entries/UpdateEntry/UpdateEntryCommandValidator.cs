@@ -12,8 +12,5 @@ public class UpdateEntryCommandValidator : AbstractValidator<UpdateEntryCommand>
     RuleFor(x => x.Duration)
       .GreaterThanOrEqualTo(0.0F)
       .LessThan(24.0F);
-
-    RuleFor(x => x.Category)
-      .MaximumLength(50);
   }
 }

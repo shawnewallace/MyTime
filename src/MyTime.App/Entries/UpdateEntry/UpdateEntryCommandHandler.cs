@@ -41,11 +41,6 @@ public class UpdateEntryCommandHandler : IRequestHandler<UpdateEntryCommand, Ent
       entry.IsUtilization = request.IsUtilization.Value;
     }
 
-    if (!string.IsNullOrWhiteSpace(request.Category))
-    {
-      entry.Category = request.Category;
-    }
-
     if (request.CategoryId.HasValue)
     {
       entry.CategoryId = request.CategoryId.Value;

@@ -30,10 +30,6 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 
     await _context.SaveChangesAsync(cancellationToken);
 
-    _context.Entries
-      .Where(e => e.Category == oldCategoryName)
-      .ExecuteUpdate(e => e.SetProperty(s => s.Category, category.Name));
-
     return category;
   }
 }
