@@ -1,5 +1,7 @@
 using Carter;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MyTime.Api.Infrastructure;
 using MyTime.App;
 using MyTime.Persistence;
@@ -21,8 +23,9 @@ builder.Services.AddCarter();
 
 builder.Services
   .AddApp()
-  .AddPersistence(builder.Configuration.GetConnectionString("MyTimeSqlDbContextConnectionString"));
-
+  .AddPersistence(builder.Configuration.GetConnectionString("MyTimeSqlDbContextConnectionString"))
+  .AddHealthChecks()
+    .AddDbContextCheck<MyTimeSqlDbContext>();
 
 WebApplication app = builder.Build();
 
@@ -52,6 +55,27 @@ if (app.Environment.IsDevelopment())
 app.MapCarter();
 
 app.UseHttpsRedirection();
+
+// app.MapHealthChecks("/health", new HealthCheckOptions
+// {
+//   ResponseWriter = HealthCheckResponseWriters.WriteJsonResponse
+// }); 
+
+app.MapHealthChecks(pattern: "health", new HealthCheckOptions
+{
+  ResponseWriter = async (context, report) =>
+  {
+    context.Response.ContentType = "application/json";
+
+    var response = new
+    {
+      status = report.Status.ToString(),
+      errors = report.Entries.Select(e => new { key = e.Key, value = Enum.GetName(typeof(HealthStatus), e.Value.Status) })
+    };
+
+    await context.Response.WriteAsJsonAsync(response);
+  }
+});
 
 app.UseMiddleware<RequestLogContextMiddleware>();
 
