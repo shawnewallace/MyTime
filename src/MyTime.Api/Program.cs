@@ -56,11 +56,6 @@ app.MapCarter();
 
 app.UseHttpsRedirection();
 
-// app.MapHealthChecks("/health", new HealthCheckOptions
-// {
-//   ResponseWriter = HealthCheckResponseWriters.WriteJsonResponse
-// }); 
-
 app.MapHealthChecks(pattern: "health", new HealthCheckOptions
 {
   ResponseWriter = async (context, report) =>
